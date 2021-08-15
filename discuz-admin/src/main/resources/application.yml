@@ -1,0 +1,46 @@
+server:
+  port: 8080
+  max-http-header-size: 10240
+
+spring:
+  application:
+    # Application name
+    name: admin
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss.SSS
+    locale: zh_CN
+    serialization:
+      # 格式化输出
+      indent_output: false
+      
+mybatis-plus:
+  # Maven 多模块项目的扫描路径需以 classpath*: 开头 （即加载多个 jar 包下的 XML 文件）
+  mapper-locations: classpath*:mapper/**/*.xml
+  configuration:
+    # 是否开启自动驼峰命名规则（camel case）映射   此属性在 MyBatis 中原默认值为 false，在 MyBatis-Plus 中，此属性也将用于生成最终的 SQL 的 select body
+    map-underscore-to-camel-case: true
+    # 开启Mybatis二级缓存，默认为 true。
+    cache-enabled: true
+    lazy-loading-enabled: true
+    multiple-result-sets-enabled: true
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+  global-config:
+    # 是否控制台 print mybatis-plus 的 LOGO
+    banner: false
+    # 全局默认主键类型
+    id-type: assign_id
+    # 表名是否使用驼峰转下划线命名,只对表名生效
+    table-underline: true
+  # 是否初始化 SqlRunner(com.baomidou.mybatisplus.extension.toolkit.SqlRunner)
+  enable-sql-runner: true
+  configuration-properties:
+    prefix:
+    blobType: BLOB
+    boolValue: TRUE

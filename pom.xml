@@ -69,6 +69,15 @@
 		</dependencies>
 	</dependencyManagement>
 
+
+	<modules>
+		<module>discuz-core</module>
+		<module>discuz-system</module>
+		<module>discuz-admin</module>
+		<module>discuz-web</module>
+		<module>discuz-monitor</module>
+	</modules>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -83,11 +92,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	<modules>
-		<module>discuz-core</module>
-		<module>discuz-system</module>
-		<module>discuz-admin</module>
-		<module>discuz-web</module>
-		<module>discuz-base</module>
-	</modules>
 </project>

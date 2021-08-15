@@ -1,14 +1,16 @@
 package cn.chenyuxian.discuz.core.base.cache;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 
 import cn.chenyuxian.discuz.core.common.CacheKey;
 
@@ -18,30 +20,48 @@ import cn.chenyuxian.discuz.core.common.CacheKey;
  * @author chenyuxian
  * @date 2021-08-14
  */
+@Component
 public class DzqCache<T> {
 
 	private static final boolean CACHE_SWITCH = true;
 	
 	private static final boolean CACHE_TTL = true;
 	
-	@Resource
 	private final RedisTemplate<String, T> redisTemplate;
 	
+	@Autowired
 	public DzqCache(RedisTemplate<String, T> redisTemplate) {
 		super();
 		this.redisTemplate = redisTemplate;
 	}
 
+	/**
+	 * 设置键值对，若开启过期时间则设置过期时间
+	 *
+	 * @param key
+	 * @param value
+	 * @param ttl
+	 * @author chenyuxian
+	 * @date 2021-08-15
+	 */
 	public void set(String key, T value, int ttl) {
 		if(CACHE_TTL) {
-			redisTemplate.boundValueOps(key).set(value, ttl, TimeUnit.SECONDS);
+			redisTemplate.opsForValue().set(key, value, ttl, TimeUnit.SECONDS);
 		}else {
-			redisTemplate.boundValueOps(key).set(value);
+			redisTemplate.opsForValue().set(key, value);
 		}
 	}
 	
+	/**
+	 * 
+	 *
+	 * @param key
+	 * @return
+	 * @author chenyuxian
+	 * @date 2021-08-15
+	 */
 	public T get(String key) {
-		return redisTemplate.boundValueOps(key).get();
+		return redisTemplate.opsForValue().get(key);
 	}
 	
 	public void delKey(String key) {
@@ -52,6 +72,21 @@ public class DzqCache<T> {
 		List<String> keys = new ArrayList<>();
 		Collections.addAll(keys, key);
 		redisTemplate.delete(keys);
+	}
+	
+	public void delHashKey(String key, String... hashKey) {
+		redisTemplate.opsForHash().delete(key, hashKey);
+	}
+	
+	public void hSet(String key, String hashKey, T value) {
+		redisTemplate.boundHashOps(key).put(hashKey, value);
+	}
+	
+	public boolean exists(String key) {
+		if(CACHE_SWITCH) {
+			
+		}
+		return true;
 	}
 	
 	public void delListCache() {
