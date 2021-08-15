@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chenyuxian.discuz.system.modular.log.mapper.UserLoginFailLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.chenyuxian.discuz.system.modular.log.entity.UserLoginFailLog">
+        <id column="id" property="id" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="ip" property="ip" />
+        <result column="user_id" property="userId" />
+        <result column="username" property="username" />
+        <result column="count" property="count" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        created_at,
+        updated_at,
+        id, ip, user_id, username, count
+    </sql>
+
+</mapper>

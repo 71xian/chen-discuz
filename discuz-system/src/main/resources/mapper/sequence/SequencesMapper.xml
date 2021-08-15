@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chenyuxian.discuz.system.modular.sequence.mapper.SequencesMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.chenyuxian.discuz.system.modular.sequence.entity.Sequences">
+        <result column="category_ids" property="categoryIds" />
+        <result column="group_ids" property="groupIds" />
+        <result column="user_ids" property="userIds" />
+        <result column="topic_ids" property="topicIds" />
+        <result column="thread_ids" property="threadIds" />
+        <result column="block_user_ids" property="blockUserIds" />
+        <result column="block_topic_ids" property="blockTopicIds" />
+        <result column="block_thread_ids" property="blockThreadIds" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        category_ids, group_ids, user_ids, topic_ids, thread_ids, block_user_ids, block_topic_ids, block_thread_ids
+    </sql>
+
+</mapper>

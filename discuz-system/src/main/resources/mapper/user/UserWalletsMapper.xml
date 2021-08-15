@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chenyuxian.discuz.system.modular.user.mapper.UserWalletsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.chenyuxian.discuz.system.modular.user.entity.UserWallets">
+        <id column="user_id" property="userId" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="available_amount" property="availableAmount" />
+        <result column="freeze_amount" property="freezeAmount" />
+        <result column="wallet_status" property="walletStatus" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        created_at,
+        updated_at,
+        user_id, available_amount, freeze_amount, wallet_status
+    </sql>
+
+</mapper>

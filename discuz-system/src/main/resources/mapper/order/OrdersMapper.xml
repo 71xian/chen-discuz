@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chenyuxian.discuz.system.modular.order.mapper.OrdersMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.chenyuxian.discuz.system.modular.order.entity.Orders">
+        <id column="id" property="id" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="order_sn" property="orderSn" />
+        <result column="payment_sn" property="paymentSn" />
+        <result column="amount" property="amount" />
+        <result column="master_amount" property="masterAmount" />
+        <result column="author_amount" property="authorAmount" />
+        <result column="third_party_amount" property="thirdPartyAmount" />
+        <result column="be_scale" property="beScale" />
+        <result column="user_id" property="userId" />
+        <result column="payee_id" property="payeeId" />
+        <result column="third_party_id" property="thirdPartyId" />
+        <result column="type" property="type" />
+        <result column="group_id" property="groupId" />
+        <result column="thread_id" property="threadId" />
+        <result column="status" property="status" />
+        <result column="payment_type" property="paymentType" />
+        <result column="is_anonymous" property="isAnonymous" />
+        <result column="post_id" property="postId" />
+        <result column="refund" property="refund" />
+        <result column="expired_at" property="expiredAt" />
+        <result column="return_at" property="returnAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        created_at,
+        updated_at,
+        id, order_sn, payment_sn, amount, master_amount, author_amount, third_party_amount, be_scale, user_id, payee_id, third_party_id, type, group_id, thread_id, status, payment_type, is_anonymous, post_id, refund, expired_at, return_at
+    </sql>
+
+</mapper>

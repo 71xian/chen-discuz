@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chenyuxian.discuz.system.modular.log.mapper.UserWalletLogsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.chenyuxian.discuz.system.modular.log.entity.UserWalletLogs">
+        <id column="id" property="id" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="user_id" property="userId" />
+        <result column="source_user_id" property="sourceUserId" />
+        <result column="change_available_amount" property="changeAvailableAmount" />
+        <result column="change_freeze_amount" property="changeFreezeAmount" />
+        <result column="change_type" property="changeType" />
+        <result column="change_desc" property="changeDesc" />
+        <result column="order_id" property="orderId" />
+        <result column="user_wallet_cash_id" property="userWalletCashId" />
+        <result column="question_id" property="questionId" />
+        <result column="thread_id" property="threadId" />
+        <result column="post_id" property="postId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        created_at,
+        updated_at,
+        id, user_id, source_user_id, change_available_amount, change_freeze_amount, change_type, change_desc, order_id, user_wallet_cash_id, question_id, thread_id, post_id
+    </sql>
+
+</mapper>

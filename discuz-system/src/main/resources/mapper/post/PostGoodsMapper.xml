@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chenyuxian.discuz.system.modular.post.mapper.PostGoodsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.chenyuxian.discuz.system.modular.post.entity.PostGoods">
+        <id column="id" property="id" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="user_id" property="userId" />
+        <result column="post_id" property="postId" />
+        <result column="platform_id" property="platformId" />
+        <result column="title" property="title" />
+        <result column="price" property="price" />
+        <result column="image_path" property="imagePath" />
+        <result column="type" property="type" />
+        <result column="status" property="status" />
+        <result column="ready_content" property="readyContent" />
+        <result column="detail_content" property="detailContent" />
+        <result column="deleted_at" property="deletedAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        created_at,
+        updated_at,
+        id, user_id, post_id, platform_id, title, price, image_path, type, status, ready_content, detail_content, deleted_at
+    </sql>
+
+</mapper>

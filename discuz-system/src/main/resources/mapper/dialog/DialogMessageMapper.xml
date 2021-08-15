@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chenyuxian.discuz.system.modular.dialog.mapper.DialogMessageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.chenyuxian.discuz.system.modular.dialog.entity.DialogMessage">
+        <id column="id" property="id" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="dialog_id" property="dialogId" />
+        <result column="user_id" property="userId" />
+        <result column="attachment_id" property="attachmentId" />
+        <result column="message_text" property="messageText" />
+        <result column="read_status" property="readStatus" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        created_at,
+        updated_at,
+        id, dialog_id, user_id, attachment_id, message_text, read_status, status
+    </sql>
+
+</mapper>

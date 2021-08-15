@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chenyuxian.discuz.system.modular.group.mapper.GroupPaidUsersMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.chenyuxian.discuz.system.modular.group.entity.GroupPaidUsers">
+        <id column="id" property="id" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="user_id" property="userId" />
+        <result column="group_id" property="groupId" />
+        <result column="order_id" property="orderId" />
+        <result column="operator_id" property="operatorId" />
+        <result column="delete_type" property="deleteType" />
+        <result column="expiration_time" property="expirationTime" />
+        <result column="deleted_at" property="deletedAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        created_at,
+        updated_at,
+        id, user_id, group_id, order_id, operator_id, delete_type, expiration_time, deleted_at
+    </sql>
+
+</mapper>
