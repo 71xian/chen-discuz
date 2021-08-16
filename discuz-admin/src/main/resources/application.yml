@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
   max-http-header-size: 10240
 
 spring:
@@ -19,6 +19,34 @@ spring:
     serialization:
       # 格式化输出
       indent_output: false
+  security:
+    user:
+      name: "admin"
+      password: "admin"
+  boot:
+    admin:
+      client: 
+        url: http://localhost:8080
+        username: "admin"
+        password: "admin"
+        instance:
+          metadata:
+            user.name: ${spring.security.user.name}
+            user.password: ${spring.security.user.password}
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 5000
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
       
 mybatis-plus:
   # Maven 多模块项目的扫描路径需以 classpath*: 开头 （即加载多个 jar 包下的 XML 文件）

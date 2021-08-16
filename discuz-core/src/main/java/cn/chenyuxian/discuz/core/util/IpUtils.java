@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2021-08-15
  */
 @Slf4j
-public class IpUtil {
+public class IpUtils {
 
 	static String dbPath;
 	static DbConfig config;

@@ -18,6 +18,7 @@
 		<jjwt.version>0.9.1</jjwt.version>
 		<druid.version>1.2.3</druid.version>
 		<swagger.version>3.0.0</swagger.version>
+		<spring-boot-admin.version>2.3.1</spring-boot-admin.version>
 	</properties>
 
 	<dependencyManagement>
@@ -29,6 +30,14 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			
+			 <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-dependencies</artifactId>
+                <version>${spring-boot-admin.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
 			<dependency>
 				<groupId>com.baomidou</groupId>

@@ -1,5 +1,7 @@
 package cn.chenyuxian.discuz.core.response;
 
+import java.time.LocalDateTime;
+
 import lombok.Data;
 
 /**
@@ -16,7 +18,11 @@ public class DzqResponse<T> {
 	private final String message;
 
 	private final T data;
-
+	
+	private Long requestId;
+	
+	private LocalDateTime requestAt;
+	
 	public DzqResponse(ResponseCode response) {
 		this(response.getCode(), response.getMessage(), null);
 	}
@@ -37,5 +43,8 @@ public class DzqResponse<T> {
 		this.code = code;
 		this.message = message;
 		this.data = data;
+		this.requestId = Thread.currentThread().getId();
+		this.requestAt = LocalDateTime.now();
 	}
+	
 }

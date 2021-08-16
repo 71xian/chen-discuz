@@ -14,7 +14,7 @@ import cn.chenyuxian.discuz.core.holder.RequestHolder;
  * @author chenyuxian
  * @date 2021-08-15
  */
-public class RequestUtil {
+public class RequestUtils {
 
 	public static String getParameters() {
 		HttpServletRequest request = RequestHolder.getRequest();

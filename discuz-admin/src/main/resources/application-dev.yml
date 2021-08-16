@@ -5,6 +5,12 @@ spring:
     url: jdbc:mysql://localhost:3306/root?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=CTT
     username: root
     password: chenyuxian.cn
+    type: com.alibaba.druid.pool.DruidDataSource
     # 连接池大小根据实际情况调整
     max-active: 20
     max-pool-prepared-statement-per-connection-size: 20
+    
+rsa:
+  key:
+    publicFile: "D:\\Users\\chenyuxian\\eclipse-workspace\\chen-discuz\\rsa_key.pub"
+    privateFile: "D:\\Users\\chenyuxian\\eclipse-workspace\\chen-discuz\\rsa_key"
