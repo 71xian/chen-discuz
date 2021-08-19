@@ -1,0 +1,210 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /api
+  undertow:
+    io-threads: 16
+    worker-threads: 128
+    buffer-size: 1024
+    buffers-per-region: 1024
+    direct-buffers: true
+    
+spring:
+  application:
+    name: DiscuzQ
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  banner:
+    charset: UTF-8
+    location: classpath:config/banner.txt
+  servlet:
+    max-file-size: 5G
+    max-request-size: 5G
+    
+spring:
+  profiles:
+    active: dev
+    
+logging:
+  config: classpath:config/logback-spring.xml
+  file:
+    name: logs/${spring.application.name}.log
+    
+mybatis-plus:
+  check-config-location: true
+  typeEnumsPackage: cn.chenyuxian.discuz.**.enums
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: AUTO
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      filters: stat
+      maxPoolPreparedStatementPerConnectionSize: 20
+      useGlobalDataSourceStat: true
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+      
+spring:
+  redis:
+    timeout: 10s
+    lettuce:
+      pool:
+        max-active: 200
+        max-idel: 8
+        max-wait: 10s
+        min-idle: 2
+      shutdown-timeout: 3s
+      
+spring:
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:8000
+        username: admin
+        password: admin
+        instance:
+          name: ${spring.application.name}
+          service-base-url: http://127.0.0.1:${server.port}
+      monitor:
+        period: 100000
+        status-lifetime: 100000
+        connect-timeout: 100000
+        read-timeout: 100000
+        
+management:
+  endpoint:
+    health:
+      show-details: always
+    logfile:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+discuz:
+  enable-ansi: true
+  server-ip: 127.0.0.1
+  enable-verify-code: false
+  login-init-salt: chenyuxian.cn
+  login-init-password: admin
+  
+  swagger-paths: /webjars/**,/swagger**/**,/v3/**,/doc.html
+  
+  filter:
+    request:
+      enable: true
+      url-pattern: /*
+      order: 1
+      async: true
+    xss:
+      enable: true
+      url-pattern: /*
+      order: 2
+      async: true
+      
+  interceptor:
+    permission:
+      enable: false
+      include-paths: /**
+    resource:
+      enable: false
+      include-paths: ${discuz.resource-access-patterns}
+  
+  aop:
+    log:
+      enable: true
+      enable-request-id: true
+      request-id-type: IDWORK
+      log-print-type: ORDER
+      request-log-format: true
+      response-log-format: true
+      exclude-paths: /,/csrf
+    operation-log:
+      enable: true
+      exclude-paths:
+    login-log:
+      enable: true
+      login-path: /login
+      logout-path: /logout
+      
+  cors:
+    enable: true
+    path: /**
+    allowed-origins: '*'
+    allowed-headers: '*'
+    allow-credentials: true
+    allowed-methods: OPTION,GET,POST
+    exposed-headers: Authorization
+    max-age: 1800
+  
+  shiro:
+    enable: true
+    anon:
+      - /loing,/logout
+      - /static/**, /templates/**
+      - ${discuz.swagger-paths}
+      - /actuator/**
+      - /,/index.html
+      - /hello/world,/fooBar/**,/exampleOrder/**
+    filter-chain-definitions: |
+      /resource/**=anon
+      /upload/**=anon
+      /verficationCode/**=anon
+      /enum=anon
+      /getSysUserInfo=anon
+  
+  jwt:
+    token-name: Authorization
+    secret: Linuxprobe.com
+    issuer: ${spring.application.name}
+    audience: web
+    expire-second: 36000
+    refresh-token: true
+    refresh-token-countdown: 600
+    redis-check: true
+    single-login: false
+    salt-check: true
+    
+  swagger:
+    enable: true
+    contact:
+      email: root@chenyuxian.cn
+      name: chenyuxian
+      url: https://www.yxcling.cn
+    description:
+    title: ${spring.application.name} API Documents
+    url: https://www.yxcling.cn
+    version: ${project.version}
+    parameter-config:
+      - name: ${discuz.jwt.token-name}
+        description: Authorization Request Header
+        type: header
+        data-type: String
+        required: false
+        default-value:

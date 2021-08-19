@@ -1,4 +1,16 @@
+server:
+  port: 8080
+
 spring:
+  application:
+    name: minitor
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/root?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=CTT
+    username: root
+    password: chenyuxian.cn
+    type: com.alibaba.druid.pool.DruidDataSource
+      
   security:
     user:
       name: "admin"

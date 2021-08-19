@@ -1,0 +1,455 @@
+2021-08-19 14:02:35.735  INFO 12636 --- [main] c.c.discuz.monitor.MonitorApplication    : Starting MonitorApplication on DESKTOP-MQBQK5Q with PID 12636 (D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor\target\classes started by chenyuxian in D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor)
+2021-08-19 14:02:35.735  INFO 12636 --- [main] c.c.discuz.monitor.MonitorApplication    : The following profiles are active: dev
+2021-08-19 14:02:37.943  INFO 12636 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-08-19 14:02:37.972  INFO 12636 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-19 14:02:37.972  INFO 12636 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-08-19 14:02:38.114  INFO 12636 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-19 14:02:38.114  INFO 12636 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2285 ms
+2021-08-19 14:02:39.024  INFO 12636 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:02:39.242  WARN 12636 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-08-19 14:02:39.274  WARN 12636 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties': Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties]: Constructor threw exception; nested exception is java.lang.NoClassDefFoundError: org/springframework/dao/DataAccessException
+2021-08-19 14:02:39.274  INFO 12636 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:02:39.289  INFO 12636 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-0} closing ...
+2021-08-19 14:02:39.289  INFO 12636 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2021-08-19 14:02:39.383  INFO 12636 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-08-19 14:02:39.383 ERROR 12636 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties': Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties]: Constructor threw exception; nested exception is java.lang.NoClassDefFoundError: org/springframework/dao/DataAccessException
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1318)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1213)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:556)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:897)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:879)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:551)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:405)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at cn.chenyuxian.discuz.monitor.MonitorApplication.main(MonitorApplication.java:14)
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties]: Constructor threw exception; nested exception is java.lang.NoClassDefFoundError: org/springframework/dao/DataAccessException
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:217)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:87)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1310)
+	... 18 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: org/springframework/dao/DataAccessException
+	at org.springframework.boot.autoconfigure.jdbc.DataSourceProperties.<init>(DataSourceProperties.java:154)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:204)
+	... 20 common frames omitted
+Caused by: java.lang.ClassNotFoundException: org.springframework.dao.DataAccessException
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:382)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:418)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:355)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:351)
+	... 26 common frames omitted
+
+2021-08-19 14:06:00.337  INFO 1136 --- [main] c.c.discuz.monitor.MonitorApplication    : Starting MonitorApplication on DESKTOP-MQBQK5Q with PID 1136 (D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor\target\classes started by chenyuxian in D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor)
+2021-08-19 14:06:00.337  INFO 1136 --- [main] c.c.discuz.monitor.MonitorApplication    : The following profiles are active: dev
+2021-08-19 14:06:04.108  INFO 1136 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-08-19 14:06:04.132  INFO 1136 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-19 14:06:04.132  INFO 1136 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-08-19 14:06:04.287  INFO 1136 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-19 14:06:04.288  INFO 1136 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3853 ms
+2021-08-19 14:06:05.966  INFO 1136 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:06:06.321  WARN 1136 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-08-19 14:06:06.406  WARN 1136 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties': Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties]: Constructor threw exception; nested exception is java.lang.NoClassDefFoundError: org/springframework/dao/DataAccessException
+2021-08-19 14:06:06.406  INFO 1136 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:06:06.406  INFO 1136 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-0} closing ...
+2021-08-19 14:06:06.406  INFO 1136 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2021-08-19 14:06:06.566  INFO 1136 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-08-19 14:06:06.579 ERROR 1136 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties': Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties]: Constructor threw exception; nested exception is java.lang.NoClassDefFoundError: org/springframework/dao/DataAccessException
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1318)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1213)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:556)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:897)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:879)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:551)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:405)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at cn.chenyuxian.discuz.monitor.MonitorApplication.main(MonitorApplication.java:14)
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties]: Constructor threw exception; nested exception is java.lang.NoClassDefFoundError: org/springframework/dao/DataAccessException
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:217)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:87)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1310)
+	... 18 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: org/springframework/dao/DataAccessException
+	at org.springframework.boot.autoconfigure.jdbc.DataSourceProperties.<init>(DataSourceProperties.java:154)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:204)
+	... 20 common frames omitted
+Caused by: java.lang.ClassNotFoundException: org.springframework.dao.DataAccessException
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:382)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:418)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:355)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:351)
+	... 26 common frames omitted
+
+2021-08-19 14:09:07.795  INFO 3620 --- [main] c.c.discuz.monitor.MonitorApplication    : Starting MonitorApplication on DESKTOP-MQBQK5Q with PID 3620 (D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor\target\classes started by chenyuxian in D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor)
+2021-08-19 14:09:07.799  INFO 3620 --- [main] c.c.discuz.monitor.MonitorApplication    : The following profiles are active: dev
+2021-08-19 14:09:11.596  INFO 3620 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-08-19 14:09:11.601  INFO 3620 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-08-19 14:09:11.683  INFO 3620 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12ms. Found 0 Redis repository interfaces.
+2021-08-19 14:09:12.129  WARN 3620 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[cn.chenyuxian.discuz.monitor]' package. Please check your configuration.
+2021-08-19 14:09:14.469  WARN 3620 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2021-08-19 14:09:14.679  INFO 3620 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2021-08-19 14:09:14.680  INFO 3620 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6707 ms
+2021-08-19 14:09:16.291  INFO 3620 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:09:16.628  WARN 3620 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-08-19 14:09:20.227  INFO 3620 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@22ae905f, org.springframework.security.web.context.SecurityContextPersistenceFilter@5d5d3a5c, org.springframework.security.web.header.HeaderWriterFilter@27358a19, org.springframework.security.web.csrf.CsrfFilter@dc1fadd, org.springframework.security.web.authentication.logout.LogoutFilter@394a6d2b, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@53bb71e5, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@3407aa4f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7e18ced7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@221b77d7, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@748904e8, org.springframework.security.web.session.SessionManagementFilter@22865072, org.springframework.security.web.access.ExceptionTranslationFilter@4e5c8ef3, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4899799b]
+2021-08-19 14:09:20.484  INFO 3620 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-08-19 14:09:20.594  INFO 3620 --- [main] io.undertow                              : starting server: Undertow - 2.1.5.Final
+2021-08-19 14:09:20.645  INFO 3620 --- [main] org.xnio                                 : XNIO version 3.8.0.Final
+2021-08-19 14:09:20.729  INFO 3620 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.8.0.Final
+2021-08-19 14:09:20.914  INFO 3620 --- [main] org.jboss.threads                        : JBoss Threads version 3.1.0.Final
+2021-08-19 14:09:21.227  INFO 3620 --- [main] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port(s) 8080 (http)
+2021-08-19 14:09:21.243  INFO 3620 --- [main] c.c.discuz.monitor.MonitorApplication    : Started MonitorApplication in 14.403 seconds (JVM running for 15.237)
+2021-08-19 14:09:42.403  INFO 3620 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-19 14:09:42.404  INFO 3620 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-08-19 14:09:42.424  INFO 3620 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 19 ms
+2021-08-19 14:11:16.968  INFO 12528 --- [main] c.c.discuz.monitor.MonitorApplication    : Starting MonitorApplication on DESKTOP-MQBQK5Q with PID 12528 (D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor\target\classes started by chenyuxian in D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor)
+2021-08-19 14:11:16.968  INFO 12528 --- [main] c.c.discuz.monitor.MonitorApplication    : The following profiles are active: dev
+2021-08-19 14:11:18.948  INFO 12528 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-08-19 14:11:18.957  INFO 12528 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-08-19 14:11:18.988  INFO 12528 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10ms. Found 0 Redis repository interfaces.
+2021-08-19 14:11:19.209  WARN 12528 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[cn.chenyuxian.discuz.monitor]' package. Please check your configuration.
+2021-08-19 14:11:20.214  WARN 12528 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2021-08-19 14:11:20.244  INFO 12528 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2021-08-19 14:11:20.244  INFO 12528 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3169 ms
+2021-08-19 14:11:21.104  INFO 12528 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:11:21.410  WARN 12528 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-08-19 14:11:23.368  INFO 12528 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@117b2cc6, org.springframework.security.web.context.SecurityContextPersistenceFilter@698d6d30, org.springframework.security.web.header.HeaderWriterFilter@12cd129c, org.springframework.security.web.csrf.CsrfFilter@5fb7ab9c, org.springframework.security.web.authentication.logout.LogoutFilter@5599b5bb, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@781c2497, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@1b3a9ef4, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3407aa4f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@748904e8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6def0632, org.springframework.security.web.session.SessionManagementFilter@4cb00fa5, org.springframework.security.web.access.ExceptionTranslationFilter@54a056e4, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2b170932]
+2021-08-19 14:11:23.503  INFO 12528 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-08-19 14:11:23.582  INFO 12528 --- [main] io.undertow                              : starting server: Undertow - 2.1.5.Final
+2021-08-19 14:11:23.613  INFO 12528 --- [main] org.xnio                                 : XNIO version 3.8.0.Final
+2021-08-19 14:11:23.628  INFO 12528 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.8.0.Final
+2021-08-19 14:11:23.722  INFO 12528 --- [main] org.jboss.threads                        : JBoss Threads version 3.1.0.Final
+2021-08-19 14:11:23.800  INFO 12528 --- [main] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port(s) 8080 (http)
+2021-08-19 14:11:23.816  INFO 12528 --- [main] c.c.discuz.monitor.MonitorApplication    : Started MonitorApplication in 7.517 seconds (JVM running for 8.019)
+2021-08-19 14:11:29.001  INFO 12528 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-19 14:11:29.001  INFO 12528 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-08-19 14:11:29.011  INFO 12528 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 10 ms
+2021-08-19 14:27:00.894  INFO 13616 --- [main] c.c.discuz.monitor.MonitorApplication    : Starting MonitorApplication on DESKTOP-MQBQK5Q with PID 13616 (D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor\target\classes started by chenyuxian in D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor)
+2021-08-19 14:27:00.894  INFO 13616 --- [main] c.c.discuz.monitor.MonitorApplication    : The following profiles are active: dev
+2021-08-19 14:27:02.919  INFO 13616 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-08-19 14:27:02.927  INFO 13616 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-08-19 14:27:02.958  INFO 13616 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13ms. Found 0 Redis repository interfaces.
+2021-08-19 14:27:03.194  WARN 13616 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[cn.chenyuxian.discuz.monitor]' package. Please check your configuration.
+2021-08-19 14:27:04.201  WARN 13616 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2021-08-19 14:27:04.232  INFO 13616 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2021-08-19 14:27:04.232  INFO 13616 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3228 ms
+2021-08-19 14:27:04.878  INFO 13616 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:27:05.098  WARN 13616 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-08-19 14:27:05.129  INFO 13616 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2021-08-19 14:27:05.540  INFO 13616 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2021-08-19 14:27:07.466  INFO 13616 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5409dfdd, org.springframework.security.web.context.SecurityContextPersistenceFilter@1247c72e, org.springframework.security.web.header.HeaderWriterFilter@49e7e8f1, org.springframework.security.web.authentication.logout.LogoutFilter@7c7ed72a, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@40faff12, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@1c00d406, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5f61e002, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7ef8e623, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@45f9d394, org.springframework.security.web.session.SessionManagementFilter@464ede1f, org.springframework.security.web.access.ExceptionTranslationFilter@2a0963be, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@64f32e9e]
+2021-08-19 14:27:07.640  INFO 13616 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-08-19 14:27:07.843  INFO 13616 --- [main] io.undertow                              : starting server: Undertow - 2.1.5.Final
+2021-08-19 14:27:07.859  INFO 13616 --- [main] org.xnio                                 : XNIO version 3.8.0.Final
+2021-08-19 14:27:07.874  INFO 13616 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.8.0.Final
+2021-08-19 14:27:07.937  INFO 13616 --- [main] org.jboss.threads                        : JBoss Threads version 3.1.0.Final
+2021-08-19 14:27:08.047  INFO 13616 --- [main] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port(s) 8080 (http)
+2021-08-19 14:27:08.078  INFO 13616 --- [main] c.c.discuz.monitor.MonitorApplication    : Started MonitorApplication in 7.911 seconds (JVM running for 8.451)
+2021-08-19 14:27:17.455  INFO 13616 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-19 14:27:17.456  INFO 13616 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-08-19 14:27:17.467  INFO 13616 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 11 ms
+2021-08-19 14:29:12.583  INFO 7432 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : Starting MonitorApplication on DESKTOP-MQBQK5Q with PID 7432 (D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor\target\classes started by chenyuxian in D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor)
+2021-08-19 14:29:12.583  INFO 7432 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : The following profiles are active: dev
+2021-08-19 14:29:12.708  INFO 7432 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-08-19 14:29:12.708  INFO 7432 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-08-19 14:29:15.004  INFO 7432 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-08-19 14:29:15.012  INFO 7432 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-08-19 14:29:15.027  INFO 7432 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7ms. Found 0 Redis repository interfaces.
+2021-08-19 14:29:15.278  WARN 7432 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[cn.chenyuxian.discuz.monitor]' package. Please check your configuration.
+2021-08-19 14:29:16.649  WARN 7432 --- [restartedMain] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2021-08-19 14:29:16.665  INFO 7432 --- [restartedMain] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2021-08-19 14:29:16.665  INFO 7432 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3957 ms
+2021-08-19 14:29:17.616  INFO 7432 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:29:17.890  WARN 7432 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-08-19 14:29:17.927  INFO 7432 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2021-08-19 14:29:18.229  INFO 7432 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2021-08-19 14:29:20.127  INFO 7432 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@530f091d, org.springframework.security.web.context.SecurityContextPersistenceFilter@3cb6d846, org.springframework.security.web.header.HeaderWriterFilter@3e673cbb, org.springframework.security.web.authentication.logout.LogoutFilter@5f1a5e98, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@71b2b914, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@29f783dc, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@8c7987d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3cb7e327, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6125070a, org.springframework.security.web.session.SessionManagementFilter@3aa1505, org.springframework.security.web.access.ExceptionTranslationFilter@6ad07654, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3714116a]
+2021-08-19 14:29:20.476  INFO 7432 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-08-19 14:29:20.492  INFO 7432 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-08-19 14:29:20.623  INFO 7432 --- [restartedMain] io.undertow                              : starting server: Undertow - 2.1.5.Final
+2021-08-19 14:29:20.656  INFO 7432 --- [restartedMain] org.xnio                                 : XNIO version 3.8.0.Final
+2021-08-19 14:29:20.696  INFO 7432 --- [restartedMain] org.xnio.nio                             : XNIO NIO Implementation Version 3.8.0.Final
+2021-08-19 14:29:20.809  INFO 7432 --- [restartedMain] org.jboss.threads                        : JBoss Threads version 3.1.0.Final
+2021-08-19 14:29:20.882  INFO 7432 --- [restartedMain] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port(s) 8080 (http)
+2021-08-19 14:29:20.904  INFO 7432 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : Started MonitorApplication in 9.087 seconds (JVM running for 9.886)
+2021-08-19 14:30:07.611  INFO 7432 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-19 14:30:07.613  INFO 7432 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-08-19 14:30:07.650  INFO 7432 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 37 ms
+2021-08-19 14:38:10.693  INFO 5132 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : Starting MonitorApplication on DESKTOP-MQBQK5Q with PID 5132 (D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor\target\classes started by chenyuxian in D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor)
+2021-08-19 14:38:10.697  INFO 5132 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : The following profiles are active: dev
+2021-08-19 14:38:10.903  INFO 5132 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-08-19 14:38:10.903  INFO 5132 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-08-19 14:38:13.320  INFO 5132 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-08-19 14:38:13.323  INFO 5132 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-08-19 14:38:13.355  INFO 5132 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10ms. Found 0 Redis repository interfaces.
+2021-08-19 14:38:13.628  WARN 5132 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[cn.chenyuxian.discuz.monitor]' package. Please check your configuration.
+2021-08-19 14:38:15.147  WARN 5132 --- [restartedMain] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2021-08-19 14:38:15.182  INFO 5132 --- [restartedMain] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2021-08-19 14:38:15.183  INFO 5132 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4279 ms
+2021-08-19 14:38:16.115  INFO 5132 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:38:16.452  WARN 5132 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-08-19 14:38:16.503  INFO 5132 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2021-08-19 14:38:16.954  INFO 5132 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2021-08-19 14:38:19.564  INFO 5132 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4a87eec8, org.springframework.security.web.context.SecurityContextPersistenceFilter@3c6c7ec0, org.springframework.security.web.header.HeaderWriterFilter@7b67d6b8, org.springframework.security.web.authentication.logout.LogoutFilter@45fe5f83, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@3b69b597, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@7775bfce, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1dce0e61, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@473cdb38, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@564f2cd8, org.springframework.security.web.session.SessionManagementFilter@a0ab496, org.springframework.security.web.access.ExceptionTranslationFilter@4aea3ac8, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6bc53da4]
+2021-08-19 14:38:19.889  INFO 5132 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-08-19 14:38:19.901  INFO 5132 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-08-19 14:38:20.111  INFO 5132 --- [restartedMain] io.undertow                              : starting server: Undertow - 2.1.5.Final
+2021-08-19 14:38:20.137  INFO 5132 --- [restartedMain] org.xnio                                 : XNIO version 3.8.0.Final
+2021-08-19 14:38:20.154  INFO 5132 --- [restartedMain] org.xnio.nio                             : XNIO NIO Implementation Version 3.8.0.Final
+2021-08-19 14:38:20.232  INFO 5132 --- [restartedMain] org.jboss.threads                        : JBoss Threads version 3.1.0.Final
+2021-08-19 14:38:20.351  INFO 5132 --- [restartedMain] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port(s) 8080 (http)
+2021-08-19 14:38:20.396  INFO 5132 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : Started MonitorApplication in 10.559 seconds (JVM running for 11.301)
+2021-08-19 14:39:37.194  INFO 5132 --- [Thread-7] io.undertow                              : stopping server: Undertow - 2.1.5.Final
+2021-08-19 14:39:37.411  INFO 5132 --- [Thread-7] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2021-08-19 14:39:37.411  INFO 5132 --- [Thread-7] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2021-08-19 14:39:37.411  INFO 5132 --- [Thread-7] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:39:37.771  INFO 5132 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : Starting MonitorApplication on DESKTOP-MQBQK5Q with PID 5132 (D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor\target\classes started by chenyuxian in D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor)
+2021-08-19 14:39:37.771  INFO 5132 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : The following profiles are active: dev
+2021-08-19 14:39:38.363  INFO 5132 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-08-19 14:39:38.363  INFO 5132 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-08-19 14:39:38.376  INFO 5132 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6ms. Found 0 Redis repository interfaces.
+2021-08-19 14:39:38.439  WARN 5132 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[cn.chenyuxian.discuz.monitor]' package. Please check your configuration.
+2021-08-19 14:39:38.580  WARN 5132 --- [restartedMain] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2021-08-19 14:39:38.580  INFO 5132 --- [restartedMain] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2021-08-19 14:39:38.580  INFO 5132 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 794 ms
+2021-08-19 14:39:38.830  INFO 5132 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:39:38.889  WARN 5132 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-08-19 14:39:38.889  INFO 5132 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2021-08-19 14:39:38.951  INFO 5132 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-2} inited
+2021-08-19 14:39:39.330  INFO 5132 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@55c96f9, org.springframework.security.web.context.SecurityContextPersistenceFilter@66f691d2, org.springframework.security.web.header.HeaderWriterFilter@7b761ceb, org.springframework.security.web.authentication.logout.LogoutFilter@74874be0, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@7eec22c1, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@5e2fb742, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1eed8b7f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@55b75d0d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@27821f75, org.springframework.security.web.session.SessionManagementFilter@e6fb0c5, org.springframework.security.web.access.ExceptionTranslationFilter@24f5596, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@15d6e552]
+2021-08-19 14:39:39.393  INFO 5132 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-08-19 14:39:39.401  INFO 5132 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-08-19 14:39:39.433  INFO 5132 --- [restartedMain] io.undertow                              : starting server: Undertow - 2.1.5.Final
+2021-08-19 14:39:39.433  INFO 5132 --- [restartedMain] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port(s) 8080 (http)
+2021-08-19 14:39:39.448  INFO 5132 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : Started MonitorApplication in 1.745 seconds (JVM running for 90.357)
+2021-08-19 14:39:39.448  INFO 5132 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-08-19 14:40:10.499  INFO 5132 --- [Thread-9] io.undertow                              : stopping server: Undertow - 2.1.5.Final
+2021-08-19 14:40:10.511  INFO 5132 --- [Thread-9] com.alibaba.druid.pool.DruidDataSource   : {dataSource-2} closing ...
+2021-08-19 14:40:10.526  INFO 5132 --- [Thread-9] com.alibaba.druid.pool.DruidDataSource   : {dataSource-2} closed
+2021-08-19 14:40:10.526  INFO 5132 --- [Thread-9] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:40:10.823  INFO 5132 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : Starting MonitorApplication on DESKTOP-MQBQK5Q with PID 5132 (D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor\target\classes started by chenyuxian in D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor)
+2021-08-19 14:40:10.823  INFO 5132 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : The following profiles are active: dev
+2021-08-19 14:40:11.497  INFO 5132 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-08-19 14:40:11.497  INFO 5132 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-08-19 14:40:11.497  INFO 5132 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4ms. Found 0 Redis repository interfaces.
+2021-08-19 14:40:11.559  WARN 5132 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[cn.chenyuxian.discuz.monitor]' package. Please check your configuration.
+2021-08-19 14:40:11.732  WARN 5132 --- [restartedMain] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2021-08-19 14:40:11.732  INFO 5132 --- [restartedMain] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2021-08-19 14:40:11.732  INFO 5132 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 893 ms
+2021-08-19 14:40:11.919  INFO 5132 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:40:11.966  WARN 5132 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-08-19 14:40:11.966  INFO 5132 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2021-08-19 14:40:11.997  INFO 5132 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-3} inited
+2021-08-19 14:40:12.344  INFO 5132 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7ce2b2bb, org.springframework.security.web.context.SecurityContextPersistenceFilter@15f570c7, org.springframework.security.web.header.HeaderWriterFilter@6c71d232, org.springframework.security.web.authentication.logout.LogoutFilter@6bed994, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@38cb0f60, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@24b8a0ea, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5f729702, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3df02e9c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@609f8574, org.springframework.security.web.session.SessionManagementFilter@891b2ed, org.springframework.security.web.access.ExceptionTranslationFilter@13cb30d3, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@50a9991a]
+2021-08-19 14:40:12.390  INFO 5132 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-08-19 14:40:12.390  INFO 5132 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-08-19 14:40:12.422  INFO 5132 --- [restartedMain] io.undertow                              : starting server: Undertow - 2.1.5.Final
+2021-08-19 14:40:12.422  INFO 5132 --- [restartedMain] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port(s) 8080 (http)
+2021-08-19 14:40:12.437  INFO 5132 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : Started MonitorApplication in 1.71 seconds (JVM running for 123.35)
+2021-08-19 14:40:12.437  INFO 5132 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-08-19 14:40:22.978  INFO 5132 --- [XNIO-3 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-19 14:40:22.981  INFO 5132 --- [XNIO-3 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-08-19 14:40:23.018  INFO 5132 --- [XNIO-3 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 37 ms
+2021-08-19 14:40:26.617 ERROR 5132 --- [XNIO-3 task-1] io.undertow.request                      : UT005023: Exception handling request to /applications
+
+org.springframework.web.util.NestedServletException: Request processing failed; nested exception is java.lang.IllegalStateException: Async support must be enabled on a servlet and for all filters involved in async request processing. This is done in Java code using the Servlet API or by adding "<async-supported>true</async-supported>" to servlet and filter declarations in web.xml.
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:497)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:584)
+	at io.undertow.servlet.handlers.ServletHandler.handleRequest(ServletHandler.java:74)
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:129)
+	at de.codecentric.boot.admin.server.ui.web.servlet.HomepageForwardingFilter.doFilter(HomepageForwardingFilter.java:73)
+	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61)
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:124)
+	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61)
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:124)
+	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61)
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:320)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:126)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:90)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:118)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:137)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:111)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:158)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.www.BasicAuthenticationFilter.doFilterInternal(BasicAuthenticationFilter.java:155)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:200)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:92)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:77)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:105)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:56)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:215)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:178)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:358)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:271)
+	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61)
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61)
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61)
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61)
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61)
+	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+	at io.undertow.servlet.handlers.FilterHandler.handleRequest(FilterHandler.java:84)
+	at io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:62)
+	at io.undertow.servlet.handlers.ServletChain$1.handleRequest(ServletChain.java:68)
+	at io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)
+	at io.undertow.servlet.handlers.RedirectDirHandler.handleRequest(RedirectDirHandler.java:68)
+	at io.undertow.servlet.handlers.security.SSLInformationAssociationHandler.handleRequest(SSLInformationAssociationHandler.java:111)
+	at io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler.handleRequest(ServletAuthenticationCallHandler.java:57)
+	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.security.handlers.AbstractConfidentialityHandler.handleRequest(AbstractConfidentialityHandler.java:46)
+	at io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler.handleRequest(ServletConfidentialityConstraintHandler.java:64)
+	at io.undertow.security.handlers.AuthenticationMechanismsHandler.handleRequest(AuthenticationMechanismsHandler.java:60)
+	at io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler.handleRequest(CachedAuthenticatedSessionHandler.java:77)
+	at io.undertow.security.handlers.AbstractSecurityContextAssociationHandler.handleRequest(AbstractSecurityContextAssociationHandler.java:43)
+	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+	at io.undertow.servlet.handlers.SessionRestoringHandler.handleRequest(SessionRestoringHandler.java:119)
+	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:269)
+	at io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:78)
+	at io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:133)
+	at io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:130)
+	at io.undertow.servlet.core.ServletRequestContextThreadSetupAction$1.call(ServletRequestContextThreadSetupAction.java:48)
+	at io.undertow.servlet.core.ContextClassLoaderSetupAction$1.call(ContextClassLoaderSetupAction.java:43)
+	at io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:249)
+	at io.undertow.servlet.handlers.ServletInitialHandler.access$000(ServletInitialHandler.java:78)
+	at io.undertow.servlet.handlers.ServletInitialHandler$1.handleRequest(ServletInitialHandler.java:99)
+	at io.undertow.server.Connectors.executeRootHandler(Connectors.java:370)
+	at io.undertow.server.HttpServerExchange$1.run(HttpServerExchange.java:836)
+	at org.jboss.threads.ContextClassLoaderSavingRunnable.run(ContextClassLoaderSavingRunnable.java:35)
+	at org.jboss.threads.EnhancedQueueExecutor.safeRun(EnhancedQueueExecutor.java:2019)
+	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.doRunTask(EnhancedQueueExecutor.java:1558)
+	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1449)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Async support must be enabled on a servlet and for all filters involved in async request processing. This is done in Java code using the Servlet API or by adding "<async-supported>true</async-supported>" to servlet and filter declarations in web.xml.
+	at org.springframework.util.Assert.state(Assert.java:76)
+	at org.springframework.web.context.request.async.StandardServletAsyncWebRequest.startAsync(StandardServletAsyncWebRequest.java:112)
+	at org.springframework.web.context.request.async.WebAsyncManager.startAsyncProcessing(WebAsyncManager.java:483)
+	at org.springframework.web.context.request.async.WebAsyncManager.startDeferredResultProcessing(WebAsyncManager.java:463)
+	at org.springframework.web.servlet.mvc.method.annotation.ReactiveTypeHandler.handleValue(ReactiveTypeHandler.java:158)
+	at org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitterReturnValueHandler.handleReturnValue(ResponseBodyEmitterReturnValueHandler.java:159)
+	at org.springframework.web.method.support.HandlerMethodReturnValueHandlerComposite.handleReturnValue(HandlerMethodReturnValueHandlerComposite.java:82)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:123)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:878)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:792)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	... 99 common frames omitted
+
+2021-08-19 14:44:00.332  INFO 5132 --- [Thread-14] io.undertow                              : stopping server: Undertow - 2.1.5.Final
+2021-08-19 14:44:00.430  INFO 5132 --- [Thread-14] io.undertow.servlet                      : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2021-08-19 14:44:00.477  INFO 5132 --- [Thread-14] com.alibaba.druid.pool.DruidDataSource   : {dataSource-3} closing ...
+2021-08-19 14:44:00.479  INFO 5132 --- [Thread-14] com.alibaba.druid.pool.DruidDataSource   : {dataSource-3} closed
+2021-08-19 14:44:00.483  INFO 5132 --- [Thread-14] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:44:01.045  INFO 5132 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : Starting MonitorApplication on DESKTOP-MQBQK5Q with PID 5132 (D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor\target\classes started by chenyuxian in D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor)
+2021-08-19 14:44:01.046  INFO 5132 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : The following profiles are active: dev
+2021-08-19 14:44:02.046  INFO 5132 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-08-19 14:44:02.047  INFO 5132 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-08-19 14:44:02.158  INFO 5132 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 122ms. Found 0 Redis repository interfaces.
+2021-08-19 14:44:02.245  WARN 5132 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[cn.chenyuxian.discuz.monitor]' package. Please check your configuration.
+2021-08-19 14:44:02.490  WARN 5132 --- [restartedMain] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2021-08-19 14:44:02.494  INFO 5132 --- [restartedMain] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2021-08-19 14:44:02.494  INFO 5132 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1448 ms
+2021-08-19 14:44:02.745  INFO 5132 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:44:02.829  WARN 5132 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-08-19 14:44:02.829  INFO 5132 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2021-08-19 14:44:02.997  INFO 5132 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-4} inited
+2021-08-19 14:44:03.329  INFO 5132 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@39214041, org.springframework.security.web.context.SecurityContextPersistenceFilter@3518c478, org.springframework.security.web.header.HeaderWriterFilter@36b119fb, org.springframework.security.web.authentication.logout.LogoutFilter@5bda2b67, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@80dddf5, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@394d1db3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@b0618a3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3546b6f9, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@344ec9de, org.springframework.security.web.session.SessionManagementFilter@7a0ce8a0, org.springframework.security.web.access.ExceptionTranslationFilter@3df06a02, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@b40c447]
+2021-08-19 14:44:03.403  INFO 5132 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-08-19 14:44:03.408  INFO 5132 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-08-19 14:44:03.411  INFO 5132 --- [restartedMain] io.undertow                              : starting server: Undertow - 2.1.5.Final
+2021-08-19 14:44:03.427  INFO 5132 --- [restartedMain] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port(s) 8080 (http)
+2021-08-19 14:44:03.443  INFO 5132 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : Started MonitorApplication in 2.505 seconds (JVM running for 354.348)
+2021-08-19 14:44:03.443  INFO 5132 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-08-19 14:46:29.442  INFO 5132 --- [Thread-19] io.undertow                              : stopping server: Undertow - 2.1.5.Final
+2021-08-19 14:46:29.482  INFO 5132 --- [Thread-19] com.alibaba.druid.pool.DruidDataSource   : {dataSource-4} closing ...
+2021-08-19 14:46:29.483  INFO 5132 --- [Thread-19] com.alibaba.druid.pool.DruidDataSource   : {dataSource-4} closed
+2021-08-19 14:46:29.483  INFO 5132 --- [Thread-19] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:46:39.066  INFO 5132 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : Starting MonitorApplication on DESKTOP-MQBQK5Q with PID 5132 (D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor\target\classes started by chenyuxian in D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-monitor)
+2021-08-19 14:46:39.066  INFO 5132 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : The following profiles are active: dev
+2021-08-19 14:46:39.636  INFO 5132 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-08-19 14:46:39.637  INFO 5132 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-08-19 14:46:39.642  INFO 5132 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4ms. Found 0 Redis repository interfaces.
+2021-08-19 14:46:39.713  WARN 5132 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[cn.chenyuxian.discuz.monitor]' package. Please check your configuration.
+2021-08-19 14:46:39.813  WARN 5132 --- [restartedMain] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2021-08-19 14:46:39.816  INFO 5132 --- [restartedMain] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2021-08-19 14:46:39.816  INFO 5132 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 750 ms
+2021-08-19 14:46:39.972  INFO 5132 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-19 14:46:40.025  WARN 5132 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-08-19 14:46:40.040  INFO 5132 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2021-08-19 14:46:40.103  INFO 5132 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-5} inited
+2021-08-19 14:46:40.458  INFO 5132 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@502ca5c7, org.springframework.security.web.context.SecurityContextPersistenceFilter@16f2a94, org.springframework.security.web.header.HeaderWriterFilter@3d13581d, org.springframework.security.web.authentication.logout.LogoutFilter@6447b003, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@7fc11da3, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@248058e6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2a9d7322, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@d6905dc, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@521ac63a, org.springframework.security.web.session.SessionManagementFilter@5728ca96, org.springframework.security.web.access.ExceptionTranslationFilter@459dd89b, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@699d6535]
+2021-08-19 14:46:40.507  INFO 5132 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-08-19 14:46:40.510  INFO 5132 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-08-19 14:46:40.527  INFO 5132 --- [restartedMain] io.undertow                              : starting server: Undertow - 2.1.5.Final
+2021-08-19 14:46:40.533  INFO 5132 --- [restartedMain] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port(s) 8080 (http)
+2021-08-19 14:46:40.539  INFO 5132 --- [restartedMain] c.c.discuz.monitor.MonitorApplication    : Started MonitorApplication in 1.61 seconds (JVM running for 511.443)
+2021-08-19 14:46:40.541  INFO 5132 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged

@@ -1,6 +1,6 @@
 package cn.chenyuxian.discuz.system.modular.setting.service.impl;
 
-import cn.chenyuxian.discuz.core.common.CacheKey;
+import cn.chenyuxian.discuz.core.common.DiscuzQCacheKey;
 import cn.chenyuxian.discuz.system.modular.setting.entity.Settings;
 import cn.chenyuxian.discuz.system.modular.setting.mapper.SettingsMapper;
 import cn.chenyuxian.discuz.system.modular.setting.service.ISettingsService;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
  * @since 2021-08-13
  */
 @Service
-@CacheConfig(cacheNames = CacheKey.SETTINGS)
+@CacheConfig(cacheNames = DiscuzQCacheKey.SETTINGS)
 public class SettingsServiceImpl extends ServiceImpl<SettingsMapper, Settings> implements ISettingsService {
 
 	private String[] fillable = {
