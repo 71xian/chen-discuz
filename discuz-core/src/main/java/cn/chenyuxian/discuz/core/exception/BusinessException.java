@@ -1,7 +1,7 @@
 package cn.chenyuxian.discuz.core.exception;
 
 import cn.chenyuxian.discuz.core.base.exception.DiscuzQException;
-import cn.chenyuxian.discuz.core.common.response.DiscuzQCode;
+import cn.chenyuxian.discuz.core.enums.DiscuzQCode;
 
 /**
  * 业务方法异常

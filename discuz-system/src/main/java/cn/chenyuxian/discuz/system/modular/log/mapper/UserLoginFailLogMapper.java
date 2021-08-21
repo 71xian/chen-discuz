@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author chenyuxian
- * @since 2021-08-13
+ * @since 2021-08-21
  */
 public interface UserLoginFailLogMapper extends BaseMapper<UserLoginFailLog> {
 

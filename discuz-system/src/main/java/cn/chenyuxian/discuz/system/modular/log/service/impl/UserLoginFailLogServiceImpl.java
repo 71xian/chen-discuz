@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author chenyuxian
- * @since 2021-08-13
+ * @since 2021-08-21
  */
 @Service
 public class UserLoginFailLogServiceImpl extends ServiceImpl<UserLoginFailLogMapper, UserLoginFailLog> implements IUserLoginFailLogService {

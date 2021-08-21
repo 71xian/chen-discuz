@@ -1,11 +1,12 @@
 package cn.chenyuxian.discuz.system.modular.log.entity;
 
-import cn.chenyuxian.discuz.core.base.entity.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
+import cn.chenyuxian.discuz.system.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -13,39 +14,29 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author chenyuxian
- * @since 2021-08-13
+ * @since 2021-08-21
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
+@ApiModel(value="UserLoginFailLog对象", description="")
 public class UserLoginFailLog extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 日志 id
-     */
+    @ApiModelProperty(value = "日志 id")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    /**
-     * ip 地址
-     */
+    @ApiModelProperty(value = "ip 地址")
     private String ip;
 
-    /**
-     * 用户 id
-     */
+    @ApiModelProperty(value = "用户 id")
     private Long userId;
 
-    /**
-     * 用户名
-     */
+    @ApiModelProperty(value = "用户名")
     private String username;
 
-    /**
-     * 错误次数
-     */
+    @ApiModelProperty(value = "错误次数")
     private Integer count;
 
 

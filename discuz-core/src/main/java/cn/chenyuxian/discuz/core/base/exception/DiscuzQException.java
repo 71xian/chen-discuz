@@ -1,6 +1,6 @@
 package cn.chenyuxian.discuz.core.base.exception;
 
-import cn.chenyuxian.discuz.core.common.response.DiscuzQCode;
+import cn.chenyuxian.discuz.core.enums.DiscuzQCode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

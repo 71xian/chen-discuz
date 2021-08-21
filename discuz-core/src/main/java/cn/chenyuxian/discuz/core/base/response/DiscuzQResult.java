@@ -2,11 +2,12 @@ package cn.chenyuxian.discuz.core.base.response;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import cn.chenyuxian.discuz.core.common.response.DiscuzQCode;
+import cn.chenyuxian.discuz.core.enums.DiscuzQCode;
 import lombok.Data;
 
 /**
@@ -26,41 +27,25 @@ public class DiscuzQResult<T> implements Serializable {
 
 	private final T data;
 
-	private Long requestId;
+	private String requestId;
 
 	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime requestAt;
 
-	public static <T> DiscuzQResult<T> ok() {
-		return ok(DiscuzQCode.SUCCESS, null);
+	public DiscuzQResult(DiscuzQCode response) {
+		this(response.getCode(), response.getMessage());
 	}
 
-	public static <T> DiscuzQResult<T> ok(DiscuzQCode code, T data) {
-		return new DiscuzQResult<T>(code, data);
+	public DiscuzQResult(Integer code, String message) {
+		this(code, message, null);
 	}
-
-	public static <T> DiscuzQResult<T> fail(DiscuzQCode code) {
-		return fail(code.getCode(), code.getMessage());
-	}
-
-	public static <T> DiscuzQResult<T> fail(Integer code, String message) {
-		return new DiscuzQResult<T>(code, message, null);
-	}
-
-	public static <T> DiscuzQResult<T> response(DiscuzQCode code) {
-		return new DiscuzQResult<T>(code, null);
-	}
-
-	private DiscuzQResult(DiscuzQCode response, T data) {
-		this(response.getCode(), response.getMessage(), data);
-	}
-
-	private DiscuzQResult(Integer code, String message, T data) {
+	
+	public DiscuzQResult(Integer code, String message, T data) {
 		this.code = code;
 		this.message = message;
 		this.data = data;
-		this.requestId = Thread.currentThread().getId();
+		this.requestId = UUID.randomUUID().toString();
 		this.requestAt = LocalDateTime.now();
 	}
 
