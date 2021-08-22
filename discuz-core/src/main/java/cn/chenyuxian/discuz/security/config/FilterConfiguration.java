@@ -1,4 +1,4 @@
-package cn.chenyuxian.discuz.security;
+package cn.chenyuxian.discuz.security.config;
 
 import java.util.Arrays;
 
@@ -11,7 +11,7 @@ import cn.chenyuxian.discuz.security.filter.MyFilter;
 @Configuration
 public class FilterConfiguration {
 
-	//@Bean
+	@Bean
 	public FilterRegistrationBean<MyFilter> allFilter(){
 		FilterRegistrationBean<MyFilter> bean = new FilterRegistrationBean<>();
 		bean.setFilter(new MyFilter());
@@ -19,4 +19,6 @@ public class FilterConfiguration {
 		bean.setUrlPatterns(Arrays.asList("/*"));
 		return bean;
 	}
+	
+	
 }

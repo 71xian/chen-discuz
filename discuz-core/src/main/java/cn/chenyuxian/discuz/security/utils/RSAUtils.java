@@ -17,17 +17,15 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
+import cn.chenyuxian.discuz.security.auth.SecurityUser;
 import cn.chenyuxian.discuz.security.provider.RSA256Key;
-import cn.chenyuxian.discuz.security.provider.SecurityUser;
-import lombok.extern.slf4j.Slf4j;
 
 /**
- * 加解密工具类
+ * 非对称加解密工具类
  *
  * @author chenyuxian
  * @date 2021-08-21
  */
-@Slf4j
 public class RSAUtils {
 
 	private static final String KEY_ALGORITHM = "RSA";

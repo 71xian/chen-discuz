@@ -16,3 +16,12 @@ spring:
         max-wait: 10s
         min-idle: 2
       shutdown-timeout: 3s
+      
+jwt:
+  secret: chenyuxian.cn
+  header: Authorization
+  prefix: Bearer 
+  expired: 1
+  refresh-header: REFRESH-TOKEN
+  refresh: 7
+  

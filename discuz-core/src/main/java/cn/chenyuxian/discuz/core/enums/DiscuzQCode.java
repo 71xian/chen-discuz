@@ -130,6 +130,11 @@ public enum DiscuzQCode {
 	 * 无效token
 	 */
 	INVALID_TOKEN(-4011, "无效token"),
+	
+	/**
+	 * 未携带token
+	 */
+	EMPTY_TOKEN(-4012, "未携带token"),
 
 	/**
 	 * 网络错误

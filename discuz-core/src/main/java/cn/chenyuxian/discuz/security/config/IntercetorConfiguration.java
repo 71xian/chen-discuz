@@ -1,8 +1,10 @@
-package cn.chenyuxian.discuz.security;
+package cn.chenyuxian.discuz.security.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import cn.chenyuxian.discuz.security.interceptor.TokenInterceptor;
 
 /**
  * token拦截器配置
@@ -15,6 +17,8 @@ public class IntercetorConfiguration implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new TokenInterceptor()).addPathPatterns("/**");
+		
+		registry.addInterceptor(new TokenInterceptor()).addPathPatterns("/**").excludePathPatterns("/login","/logout");
+		
 	}
 }

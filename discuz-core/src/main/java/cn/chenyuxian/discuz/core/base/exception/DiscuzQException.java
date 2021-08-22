@@ -4,6 +4,12 @@ import cn.chenyuxian.discuz.core.enums.DiscuzQCode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * 应用基类异常
+ *
+ * @author chenyuxian
+ * @date 2021-08-22
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class DiscuzQException extends RuntimeException {

@@ -41,10 +41,10 @@ public enum UserStatus {
 	 */
 	NEED_FIELDS(10);
 
-	private final Integer status;
+	private final Integer code;
 
-	private UserStatus(Integer status) {
-		this.status = status;
+	private UserStatus(Integer code) {
+		this.code = code;
 	}
 
 }
