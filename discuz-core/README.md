@@ -1,2 +1,0 @@
-# discuz-core
-test
