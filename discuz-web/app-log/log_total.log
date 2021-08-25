@@ -1,0 +1,73 @@
+2021-08-22 02:18:54.616  INFO 9232 --- [restartedMain] cn.chenyuxian.discuz.web.WebApplication  : Starting WebApplication on DESKTOP-MQBQK5Q with PID 9232 (D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-web\target\classes started by chenyuxian in D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-web)
+2021-08-22 02:18:54.616  INFO 9232 --- [restartedMain] cn.chenyuxian.discuz.web.WebApplication  : The following profiles are active: dev
+2021-08-22 02:18:54.773  INFO 9232 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-08-22 02:18:54.773  INFO 9232 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-08-22 02:18:57.225  INFO 9232 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-08-22 02:18:57.232  INFO 9232 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-08-22 02:18:57.279  INFO 9232 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 24ms. Found 0 Redis repository interfaces.
+2021-08-22 02:18:58.452  INFO 9232 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'redisConfiguration' of type [cn.chenyuxian.discuz.system.config.RedisConfiguration$$EnhancerBySpringCGLIB$$f189b414] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-22 02:18:59.230  WARN 9232 --- [restartedMain] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2021-08-22 02:18:59.261  INFO 9232 --- [restartedMain] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2021-08-22 02:18:59.261  INFO 9232 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4488 ms
+2021-08-22 02:18:59.480  INFO 9232 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'threadPoolTaskExecutor'
+2021-08-22 02:19:01.443  INFO 9232 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2021-08-22 02:19:05.378  INFO 9232 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-08-22 02:19:06.323  INFO 9232 --- [restartedMain] io.undertow                              : starting server: Undertow - 2.1.5.Final
+2021-08-22 02:19:06.401  INFO 9232 --- [restartedMain] org.xnio                                 : XNIO version 3.8.0.Final
+2021-08-22 02:19:06.441  INFO 9232 --- [restartedMain] org.xnio.nio                             : XNIO NIO Implementation Version 3.8.0.Final
+2021-08-22 02:19:06.614  INFO 9232 --- [restartedMain] org.jboss.threads                        : JBoss Threads version 3.1.0.Final
+2021-08-22 02:19:06.863  INFO 9232 --- [restartedMain] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port(s) 8080 (http)
+2021-08-22 02:19:07.035  INFO 9232 --- [restartedMain] cn.chenyuxian.discuz.web.WebApplication  : Started WebApplication in 13.525 seconds (JVM running for 14.288)
+2021-08-22 02:21:54.611  INFO 9232 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-22 02:21:54.611  INFO 9232 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-08-22 02:21:54.634  INFO 9232 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 22 ms
+2021-08-22 02:21:54.756 ERROR 9232 --- [XNIO-1 task-1] cn.chenyuxian.discuz.core.utils.IpUtils  : null
+2021-08-22 02:21:55.136 ERROR 9232 --- [XNIO-1 task-1] cn.chenyuxian.discuz.core.utils.IpUtils  : null
+2021-08-22 02:21:56.879 ERROR 9232 --- [XNIO-1 task-1] cn.chenyuxian.discuz.core.utils.IpUtils  : null
+2021-08-22 02:21:57.657 ERROR 9232 --- [XNIO-1 task-1] cn.chenyuxian.discuz.core.utils.IpUtils  : null
+2021-08-22 02:21:58.181 ERROR 9232 --- [XNIO-1 task-1] cn.chenyuxian.discuz.core.utils.IpUtils  : null
+2021-08-22 02:21:58.602 ERROR 9232 --- [XNIO-1 task-1] cn.chenyuxian.discuz.core.utils.IpUtils  : null
+2021-08-22 02:21:59.001 ERROR 9232 --- [XNIO-1 task-1] cn.chenyuxian.discuz.core.utils.IpUtils  : null
+2021-08-22 02:37:33.507  INFO 9424 --- [restartedMain] cn.chenyuxian.discuz.web.WebApplication  : Starting WebApplication on DESKTOP-MQBQK5Q with PID 9424 (D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-web\target\classes started by chenyuxian in D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-web)
+2021-08-22 02:37:33.507  INFO 9424 --- [restartedMain] cn.chenyuxian.discuz.web.WebApplication  : The following profiles are active: dev
+2021-08-22 02:37:33.623  INFO 9424 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-08-22 02:37:33.623  INFO 9424 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-08-22 02:37:36.235  INFO 9424 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-08-22 02:37:36.248  INFO 9424 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-08-22 02:37:36.280  INFO 9424 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15ms. Found 0 Redis repository interfaces.
+2021-08-22 02:37:37.327  INFO 9424 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'redisConfiguration' of type [cn.chenyuxian.discuz.system.config.RedisConfiguration$$EnhancerBySpringCGLIB$$9dbcf62b] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-22 02:37:38.376  WARN 9424 --- [restartedMain] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2021-08-22 02:37:38.481  INFO 9424 --- [restartedMain] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2021-08-22 02:37:38.481  INFO 9424 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4858 ms
+2021-08-22 02:37:38.907  INFO 9424 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'threadPoolTaskExecutor'
+2021-08-22 02:37:40.847  INFO 9424 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2021-08-22 02:37:44.393  INFO 9424 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-08-22 02:37:45.067  INFO 9424 --- [restartedMain] io.undertow                              : starting server: Undertow - 2.1.5.Final
+2021-08-22 02:37:45.113  INFO 9424 --- [restartedMain] org.xnio                                 : XNIO version 3.8.0.Final
+2021-08-22 02:37:45.129  INFO 9424 --- [restartedMain] org.xnio.nio                             : XNIO NIO Implementation Version 3.8.0.Final
+2021-08-22 02:37:45.192  INFO 9424 --- [restartedMain] org.jboss.threads                        : JBoss Threads version 3.1.0.Final
+2021-08-22 02:37:45.332  INFO 9424 --- [restartedMain] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port(s) 8080 (http)
+2021-08-22 02:37:45.410  INFO 9424 --- [restartedMain] cn.chenyuxian.discuz.web.WebApplication  : Started WebApplication in 13.081 seconds (JVM running for 14.222)
+2021-08-22 02:38:21.922  INFO 9424 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-22 02:38:21.922  INFO 9424 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-08-22 02:38:21.935  INFO 9424 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 12 ms
+2021-08-22 17:33:42.241  INFO 4568 --- [restartedMain] cn.chenyuxian.discuz.web.WebApplication  : Starting WebApplication on DESKTOP-MQBQK5Q with PID 4568 (D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-web\target\classes started by chenyuxian in D:\Users\chenyuxian\eclipse-workspace\chen-discuz\discuz-web)
+2021-08-22 17:33:42.250  INFO 4568 --- [restartedMain] cn.chenyuxian.discuz.web.WebApplication  : The following profiles are active: dev
+2021-08-22 17:33:42.360  INFO 4568 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-08-22 17:33:42.366  INFO 4568 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-08-22 17:33:44.527  INFO 4568 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-08-22 17:33:44.534  INFO 4568 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-08-22 17:33:44.589  INFO 4568 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 26ms. Found 0 Redis repository interfaces.
+2021-08-22 17:33:46.021  INFO 4568 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'redisConfiguration' of type [cn.chenyuxian.discuz.system.config.RedisConfiguration$$EnhancerBySpringCGLIB$$d763d6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-22 17:33:46.903  WARN 4568 --- [restartedMain] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2021-08-22 17:33:46.950  INFO 4568 --- [restartedMain] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2021-08-22 17:33:46.951  INFO 4568 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4584 ms
+2021-08-22 17:33:47.197  INFO 4568 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'threadPoolTaskExecutor'
+2021-08-22 17:33:48.688  INFO 4568 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2021-08-22 17:33:52.723  INFO 4568 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-08-22 17:33:53.695  INFO 4568 --- [restartedMain] io.undertow                              : starting server: Undertow - 2.1.5.Final
+2021-08-22 17:33:53.765  INFO 4568 --- [restartedMain] org.xnio                                 : XNIO version 3.8.0.Final
+2021-08-22 17:33:53.815  INFO 4568 --- [restartedMain] org.xnio.nio                             : XNIO NIO Implementation Version 3.8.0.Final
+2021-08-22 17:33:53.992  INFO 4568 --- [restartedMain] org.jboss.threads                        : JBoss Threads version 3.1.0.Final
+2021-08-22 17:33:54.221  INFO 4568 --- [restartedMain] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port(s) 8080 (http)
+2021-08-22 17:33:54.360  INFO 4568 --- [restartedMain] cn.chenyuxian.discuz.web.WebApplication  : Started WebApplication in 13.692 seconds (JVM running for 14.921)
