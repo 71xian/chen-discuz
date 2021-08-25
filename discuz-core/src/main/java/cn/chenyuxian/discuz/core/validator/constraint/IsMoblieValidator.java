@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.util.StringUtils;
 
-import cn.chenyuxian.discuz.core.validator.annotion.IsMobile;
+import cn.chenyuxian.discuz.core.validator.annotion.Mobile;
 
 /**
  * 手机号验证
@@ -16,10 +16,10 @@ import cn.chenyuxian.discuz.core.validator.annotion.IsMobile;
  * @author chenyuxian
  * @date 2021-08-20
  */
-public class IsMoblieValidator implements ConstraintValidator<IsMobile, String> {
+public class IsMoblieValidator implements ConstraintValidator<Mobile, String> {
 
 	@Override
-	public void initialize(IsMobile constraintAnnotation) {
+	public void initialize(Mobile constraintAnnotation) {
 	}
 
 	@Override

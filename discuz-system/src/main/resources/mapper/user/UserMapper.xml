@@ -14,12 +14,13 @@
 		background, identity, realname, avatar_at, login_at, joined_at,
 		expired_at, bind_type
 	</sql>
-
-	<select id="selectUserByUsername" resultType="cn.chenyuxian.discuz.system.modular.user.entity.User">
-		select
-		<include refid="Base_Column_list"></include>
-		from user
-		where username = #{username}
+	
+	<select id="selectGroupByUserId" resultType="cn.chenyuxian.discuz.system.modular.group.entity.Group">
+	   select g.* from user u
+	   join group_user gu on u.id = gu.user_id
+	   join group g on g.id = gu.group_id
+	   where u.id = #{userId}
 	</select>
+	
 
 </mapper>

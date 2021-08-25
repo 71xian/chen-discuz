@@ -4,7 +4,8 @@ package cn.chenyuxian.discuz.system.modular.user.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
-import cn.chenyuxian.discuz.system.base.BaseController;
+
+import cn.chenyuxian.discuz.core.base.controller.BaseController;
 
 /**
  * <p>

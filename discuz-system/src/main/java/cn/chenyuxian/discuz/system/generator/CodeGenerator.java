@@ -19,8 +19,8 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
-import cn.chenyuxian.discuz.system.base.BaseController;
-import cn.chenyuxian.discuz.system.base.BaseEntity;
+import cn.chenyuxian.discuz.core.base.controller.BaseController;
+import cn.chenyuxian.discuz.core.base.entity.BaseEntity;
 
 public class CodeGenerator {
 	/**

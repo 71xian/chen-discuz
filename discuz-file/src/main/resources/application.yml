@@ -1,3 +1,5 @@
+server:
+  port: 8083
 spring:
   servlet:
     multipart:
@@ -5,7 +7,14 @@ spring:
       max-file-size: 5120MB
 
 minio:
+  enabled: false
   accessKey: "admin"
   secretKey: "chenyuxian.cn"
   endpoint: "1.15.68.129"
   port: 9000
+  
+qiniu:
+  access-key: "y5S-dm40nFe9fW39tIVRkryWtm3K9ydlLVGx11Cw"
+  secret-key: "Wl3oneugB-3qA_qgorSK1SB2zUAPDXHY3s8qUiUy"
+  bucket: "chen-aoe"
+  domain: "cdn.yxcling.cn"

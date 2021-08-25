@@ -1,8 +1,9 @@
 package cn.chenyuxian.discuz.system.modular.log.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import cn.chenyuxian.discuz.system.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableId;
+
+import cn.chenyuxian.discuz.core.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

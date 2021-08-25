@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.chenyuxian.discuz.core.annotion.BusinessLog;
-import cn.chenyuxian.discuz.core.utils.IpUtils;
+import cn.chenyuxian.discuz.core.util.IpUtil;
 
 @RestController
 @RequestMapping("/test")
@@ -16,8 +16,8 @@ public class HelloController {
 	@GetMapping("/aop")
 	@BusinessLog(value = "demo")
 	public String demo(HttpServletRequest request) {
-		String ip = IpUtils.getIp(request);
-		return IpUtils.getCityInfo(ip);
+		String ip = IpUtil.getIp(request);
+		return IpUtil.getCityInfo(ip);
 	}
 	
 }

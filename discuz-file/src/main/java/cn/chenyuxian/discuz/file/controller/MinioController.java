@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import cn.chenyuxian.discuz.file.utils.BucketOperation;
-import cn.chenyuxian.discuz.file.utils.ObjectOperation;
-import cn.chenyuxian.discuz.file.utils.PresignedOperation;
+import cn.chenyuxian.discuz.file.utils.minio.BucketOperation;
+import cn.chenyuxian.discuz.file.utils.minio.ObjectOperation;
+import cn.chenyuxian.discuz.file.utils.minio.PresignedOperation;
 
 /**
  * 使用minio操作文件

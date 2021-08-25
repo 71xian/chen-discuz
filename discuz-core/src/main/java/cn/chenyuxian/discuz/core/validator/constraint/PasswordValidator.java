@@ -8,8 +8,8 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.util.StringUtils;
 
-import cn.chenyuxian.discuz.core.enums.PasswordStrategy;
-import cn.chenyuxian.discuz.core.validator.annotion.PasswordValid;
+import cn.chenyuxian.discuz.core.validator.annotion.Password;
+import cn.chenyuxian.discuz.core.validator.annotion.Password.Strategy;
 
 /**
  * 密码验证
@@ -17,12 +17,12 @@ import cn.chenyuxian.discuz.core.validator.annotion.PasswordValid;
  * @author chenyuxian
  * @date 2021-08-20
  */
-public class PasswordValidator implements ConstraintValidator<PasswordValid, String> {
+public class PasswordValidator implements ConstraintValidator<Password, String> {
 
-	private PasswordStrategy strategy;
+	private Strategy strategy;
 	
 	@Override
-	public void initialize(PasswordValid constraintAnnotation) {
+	public void initialize(Password constraintAnnotation) {
 		this.strategy = constraintAnnotation.strategy();
 	}
 	

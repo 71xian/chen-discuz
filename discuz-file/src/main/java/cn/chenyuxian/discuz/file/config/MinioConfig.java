@@ -5,6 +5,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,6 +24,7 @@ import io.minio.errors.XmlParserException;
  * @date 2021-08-17
  */
 @Configuration
+@ConditionalOnProperty(prefix = "minio", name = "enabled", havingValue = "true")
 public class MinioConfig {
 
 	@Value("${minio.accessKey}")

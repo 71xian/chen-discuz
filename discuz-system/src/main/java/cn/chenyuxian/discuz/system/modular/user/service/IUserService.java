@@ -1,5 +1,6 @@
 package cn.chenyuxian.discuz.system.modular.user.service;
 
+import cn.chenyuxian.discuz.system.modular.group.entity.Group;
 import cn.chenyuxian.discuz.system.modular.user.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -14,4 +15,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IUserService extends IService<User> {
 
 	User getUserByUsername(String username);
+	
+	Group getGroupByUserId(Long userId);
 }
