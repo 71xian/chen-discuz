@@ -1,0 +1,3 @@
+[submodule "discuz-core"]
+	path = discuz-core
+	url = git@github.com:YXCLING/discuz-core.git
