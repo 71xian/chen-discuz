@@ -1,8 +1,7 @@
 package cn.chenyuxian.discuz.system.modular.group.entity;
 
 import java.time.LocalDateTime;
-
-import cn.chenyuxian.discuz.core.base.entity.BaseEntity;
+import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,12 +13,12 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author chenyuxian
- * @since 2021-08-23
+ * @since 2021-08-25
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @ApiModel(value="GroupUser对象", description="")
-public class GroupUser extends BaseEntity {
+public class GroupUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

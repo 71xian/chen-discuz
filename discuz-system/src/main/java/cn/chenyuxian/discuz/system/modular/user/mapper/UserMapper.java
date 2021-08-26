@@ -1,10 +1,6 @@
 package cn.chenyuxian.discuz.system.modular.user.mapper;
 
-import cn.chenyuxian.discuz.system.modular.group.entity.Group;
 import cn.chenyuxian.discuz.system.modular.user.entity.User;
-
-import org.springframework.stereotype.Repository;
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -13,10 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author chenyuxian
- * @since 2021-08-21
+ * @since 2021-08-25
  */
-@Repository
 public interface UserMapper extends BaseMapper<User> {
-	
-	Group selectGroupByUserId(Long userId);
+
 }

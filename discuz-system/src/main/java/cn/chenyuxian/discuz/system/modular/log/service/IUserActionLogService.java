@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author chenyuxian
- * @since 2021-08-21
+ * @since 2021-08-25
  */
 public interface IUserActionLogService extends IService<UserActionLog> {
 

@@ -2,6 +2,7 @@ package cn.chenyuxian.discuz.system.core.config;
 
 import java.time.Duration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,9 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 
+import cn.chenyuxian.discuz.system.core.cache.GroupCache;
+import cn.chenyuxian.discuz.system.modular.group.entity.DzqGroup;
+
 /**
  * Redis配置类
  *
@@ -26,6 +30,9 @@ import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 public class RedisConfiguration extends CachingConfigurerSupport {
 
 	private Duration duration = Duration.ofHours(12);
+	
+	@Autowired
+	private LettuceConnectionFactory factory;
 
 	@Bean
 	public RedisCacheManager cacheManager(LettuceConnectionFactory connectionFactory) {
@@ -39,18 +46,17 @@ public class RedisConfiguration extends CachingConfigurerSupport {
 				.transactionAware()
 				.build();
 	}
-
+	
 	@Bean
-	public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory redisConnectionFactory) {
-		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+	public GroupCache groupCache() {
+		RedisTemplate<String, DzqGroup> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setKeySerializer(new StringRedisSerializer()); 
-		// value序列化
-		redisTemplate.setValueSerializer(new FastJsonRedisSerializer<>(Object.class)); 
-		// Hash key序列化
+		redisTemplate.setValueSerializer(new FastJsonRedisSerializer<>(DzqGroup.class)); 
 		redisTemplate.setHashKeySerializer(new StringRedisSerializer()); 
-		// Hash value序列化
-		redisTemplate.setHashValueSerializer(new FastJsonRedisSerializer<>(Object.class));
-		redisTemplate.setConnectionFactory(redisConnectionFactory);
-		return redisTemplate;
+		redisTemplate.setHashValueSerializer(new FastJsonRedisSerializer<>(DzqGroup.class));
+		redisTemplate.setConnectionFactory(factory);
+		redisTemplate.afterPropertiesSet();
+		return new GroupCache(redisTemplate);
 	}
+	
 }

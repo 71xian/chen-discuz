@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import cn.chenyuxian.discuz.core.annotion.Permission;
 import cn.chenyuxian.discuz.core.base.exception.BaseException;
 import cn.chenyuxian.discuz.core.constant.AspectSort;
-import cn.chenyuxian.discuz.core.constant.ExpCode;
+import cn.chenyuxian.discuz.core.constant.ErrorCode;
 import cn.chenyuxian.discuz.core.context.security.SecurityContextHolder;
 import cn.chenyuxian.discuz.system.modular.user.entity.User;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +55,7 @@ public class PermissionAspect {
 		String permStr = method.getDeclaringClass().getSimpleName() + ":" + method.getName();
 		if(!user.getPermissions().contains(permStr)) {
 			log.error(">>> 没有权限");
-			throw new BaseException(ExpCode.UNAUTHORIZED);
+			throw new BaseException(ErrorCode.UNAUTHORIZED);
 		}
 	}
 }

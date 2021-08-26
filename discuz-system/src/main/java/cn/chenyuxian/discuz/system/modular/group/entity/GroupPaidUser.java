@@ -2,10 +2,8 @@ package cn.chenyuxian.discuz.system.modular.group.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-
-import cn.chenyuxian.discuz.core.base.entity.BaseEntity;
-
 import java.time.LocalDateTime;
+import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,12 +15,12 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author chenyuxian
- * @since 2021-08-23
+ * @since 2021-08-25
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @ApiModel(value="GroupPaidUser对象", description="")
-public class GroupPaidUser extends BaseEntity {
+public class GroupPaidUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,6 +45,12 @@ public class GroupPaidUser extends BaseEntity {
 
     @ApiModelProperty(value = "用户组到期时间")
     private LocalDateTime expirationTime;
+
+    @ApiModelProperty(value = "创建时间")
+    private LocalDateTime createdAt;
+
+    @ApiModelProperty(value = "更新时间")
+    private LocalDateTime updatedAt;
 
     @ApiModelProperty(value = "删除时间")
     private LocalDateTime deletedAt;

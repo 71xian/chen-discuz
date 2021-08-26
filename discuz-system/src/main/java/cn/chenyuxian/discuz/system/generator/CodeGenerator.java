@@ -19,9 +19,6 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
-import cn.chenyuxian.discuz.core.base.controller.BaseController;
-import cn.chenyuxian.discuz.core.base.entity.BaseEntity;
-
 public class CodeGenerator {
 	/**
 	 * <p>
@@ -126,13 +123,13 @@ public class CodeGenerator {
 		StrategyConfig strategy = new StrategyConfig();
 		strategy.setNaming(NamingStrategy.underline_to_camel);
 		strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-		strategy.setSuperEntityClass(BaseEntity.class);
+		//strategy.setSuperEntityClass(BaseEntity.class);
 		strategy.setEntityLombokModel(true);
 		strategy.setRestControllerStyle(true);
 		// 公共父类
-		strategy.setSuperControllerClass(BaseController.class);
+		//strategy.setSuperControllerClass(BaseController.class);
 		// 写于父类中的公共字段
-		strategy.setSuperEntityColumns("created_at", "updated_at");
+		//strategy.setSuperEntityColumns("created_at", "updated_at");
 		strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
 		strategy.setControllerMappingHyphenStyle(true);
 		// strategy.setTablePrefix(pc.getModuleName() + "_");

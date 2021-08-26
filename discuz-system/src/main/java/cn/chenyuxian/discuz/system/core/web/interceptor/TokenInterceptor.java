@@ -10,7 +10,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import cn.chenyuxian.discuz.core.annotion.Ignore;
 import cn.chenyuxian.discuz.core.base.exception.BaseException;
-import cn.chenyuxian.discuz.core.constant.ExpCode;
+import cn.chenyuxian.discuz.core.constant.ErrorCode;
 import cn.chenyuxian.discuz.core.util.TokenUtil;
 
 /**
@@ -24,12 +24,18 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		// 跨域请求前会先发送一个options请求，请求通过，才会发送post请求
+		System.out.println(request.getMethod());
+		if(request.getMethod().equals("OPTIONS")){
+			super.preHandle(request, response, handler);
+		}
 		Method method = null;
 		if (handler instanceof HandlerMethod) {
 			method = ((HandlerMethod) handler).getMethod();
 		}
 		// 匿名访问方法
 		if (method == null || method.getAnnotation(Ignore.class) != null) {
+			System.out.println(method.getName());
 			return super.preHandle(request, response, handler);
 		}
 
@@ -39,11 +45,11 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
 		if (TokenUtil.checkToken(access_token)) {
 			// token已过期
 			if (TokenUtil.exipreToken(access_token)) {
-				throw new BaseException(ExpCode.SESSION_TOKEN_EXPIRED);
+				throw new BaseException(ErrorCode.SESSION_TOKEN_EXPIRED);
 			}
 			return super.preHandle(request, response, handler);
 		} else {
-			throw new BaseException(ExpCode.INVALID_TOKEN);
+			throw new BaseException(ErrorCode.INVALID_TOKEN);
 		}
 	}
 }

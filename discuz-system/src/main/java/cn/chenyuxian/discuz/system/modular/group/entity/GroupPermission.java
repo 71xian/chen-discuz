@@ -1,6 +1,6 @@
 package cn.chenyuxian.discuz.system.modular.group.entity;
 
-import cn.chenyuxian.discuz.core.base.entity.BaseEntity;
+import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -12,12 +12,12 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author chenyuxian
- * @since 2021-08-23
+ * @since 2021-08-25
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @ApiModel(value="GroupPermission对象", description="")
-public class GroupPermission extends BaseEntity {
+public class GroupPermission implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,5 +26,6 @@ public class GroupPermission extends BaseEntity {
 
     @ApiModelProperty(value = "权限名称")
     private String permission;
+
 
 }

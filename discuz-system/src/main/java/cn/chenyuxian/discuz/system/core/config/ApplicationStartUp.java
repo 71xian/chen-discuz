@@ -4,7 +4,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
+import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -15,13 +16,7 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 
 import cn.chenyuxian.discuz.core.annotion.Permission;
-import cn.chenyuxian.discuz.system.core.cache.PermissionCache;
-import cn.chenyuxian.discuz.system.modular.group.entity.Group;
-import cn.chenyuxian.discuz.system.modular.group.entity.GroupPermission;
-import cn.chenyuxian.discuz.system.modular.group.service.IGroupPermissionService;
-import cn.chenyuxian.discuz.system.modular.group.service.IGroupService;
-import cn.chenyuxian.discuz.system.modular.setting.entity.Settings;
-import cn.chenyuxian.discuz.system.modular.setting.service.ISettingsService;
+import cn.chenyuxian.discuz.system.modular.group.service.IDzqGroupService;
 
 /**
  * 应用初始化配置
@@ -32,38 +27,16 @@ import cn.chenyuxian.discuz.system.modular.setting.service.ISettingsService;
 @Component
 public class ApplicationStartUp implements ApplicationRunner {
 
-	@Autowired
+	@Resource
 	private RequestMappingInfoHandlerMapping requestMappingInfoHandlerMapping;
 
 	@Autowired
-	private IGroupPermissionService groupPermissionService;
-	
-	@Autowired
-	private IGroupService groupService;
-	
-	@Autowired
-	private ISettingsService settingsService;
-	
+	private IDzqGroupService groupService;
+
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		List<String> resources = getPermissions();
-		groupPermissionService.removeById(1L);
-		List<GroupPermission> permissios = new ArrayList<>();
-		resources.forEach(r -> {
-			GroupPermission p = new GroupPermission();
-			p.setGroupId(1L);
-			p.setPermission(r);
-			permissios.add(p);
-		});
-		groupPermissionService.saveBatch(permissios);
-		List<Long> groupIds = groupService.list().stream().map(Group::getId).collect(Collectors.toList());
-		for(Long id : groupIds) {
-			PermissionCache.putPermissions(id, groupPermissionService.getPermissionByGroupId(id));
-		}
-		
-		for(Settings setting : settingsService.list()) {
-			ApplicationConfig.getSettings().put(setting.getKey(), setting.getValue());
-		}
+		groupService.editPermission(1L, resources, true);
 	}
 
 	private List<String> getPermissions() {
@@ -71,7 +44,8 @@ public class ApplicationStartUp implements ApplicationRunner {
 		Map<RequestMappingInfo, HandlerMethod> handlerMethods = requestMappingInfoHandlerMapping.getHandlerMethods();
 		handlerMethods.forEach((info, handlerMethod) -> {
 			Method method = handlerMethod.getMethod();
-			if (method.getAnnotation(Permission.class) != null) {
+			if (method.getDeclaringClass().getAnnotation(Permission.class) != null
+					|| method.getAnnotation(Permission.class) != null) {
 				String className = method.getDeclaringClass().getSimpleName();
 				String methodName = method.getName();
 				String permission = className + ":" + methodName;

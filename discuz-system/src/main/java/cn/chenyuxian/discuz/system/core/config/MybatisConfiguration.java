@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
-import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 
@@ -17,7 +16,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
  * @date 2021-08-20
  */
 @Configuration
-@MapperScan({"cn.chenyuxian.discuz.system.modular.*.mapper"})
+@MapperScan(basePackages = {"cn.chenyuxian.discuz.system.modular.*.mapper"})
 public class MybatisConfiguration {
 
 	 /**
@@ -36,15 +35,4 @@ public class MybatisConfiguration {
         return configuration -> configuration.setUseDeprecatedExecutor(false);
     }
     
-    /**
-     * 公共字段自动注入
-     *
-     * @return
-     * @author chenyuxian
-     * @date 2021-08-25
-     */
-    @Bean
-    public MetaObjectHandler metaObjectHandler() {
-    	return new DateTimeMetaObject();
-    }
 }

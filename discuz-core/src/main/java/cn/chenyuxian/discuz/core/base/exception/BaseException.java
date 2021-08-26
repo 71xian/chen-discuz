@@ -1,6 +1,6 @@
 package cn.chenyuxian.discuz.core.base.exception;
 
-import cn.chenyuxian.discuz.core.constant.ExpCode;
+import cn.chenyuxian.discuz.core.constant.ErrorCode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,37 +16,11 @@ public class BaseException extends RuntimeException {
 
 	private static final long serialVersionUID = -952771024717915650L;
 
-	private Integer code;
-
-	private String message;
+	private ErrorCode error;
 	
-	public BaseException() {
-		super();
-	}
-
-	public BaseException(String message) {
-		super(message);
-		this.message = message;
-	}
-
-	public BaseException(Integer code, String message) {
-		super(message);
-		this.code = code;
-		this.message = message;
-	}
-
-	public BaseException(ExpCode dzpCode) {
-		super(dzpCode.getMessage());
-		this.code = dzpCode.getCode();
-		this.message = dzpCode.getMessage();
-	}
-
-	public BaseException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public BaseException(Throwable cause) {
-		super(cause);
+	public BaseException(ErrorCode error) {
+		super(error.getMessage());
+		this.error = error;
 	}
 
 }

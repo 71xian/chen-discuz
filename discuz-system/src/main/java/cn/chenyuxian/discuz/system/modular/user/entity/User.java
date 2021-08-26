@@ -1,5 +1,6 @@
 package cn.chenyuxian.discuz.system.modular.user.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -7,7 +8,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 
-import cn.chenyuxian.discuz.core.base.entity.BaseEntity;
 import cn.chenyuxian.discuz.core.context.login.LoginUser;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -20,12 +20,12 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author chenyuxian
- * @since 2021-08-21
+ * @since 2021-08-25
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "User对象", description = "")
-public class User extends BaseEntity implements LoginUser{
+public class User implements Serializable, LoginUser {
 
 	private static final long serialVersionUID = 1L;
 
@@ -114,12 +114,18 @@ public class User extends BaseEntity implements LoginUser{
 	@ApiModelProperty(value = "付费到期时间")
 	private LocalDateTime expiredAt;
 
+	@ApiModelProperty(value = "创建时间")
+	private LocalDateTime createdAt;
+
+	@ApiModelProperty(value = "更新时间")
+	private LocalDateTime updatedAt;
+
 	@ApiModelProperty(value = "登录绑定类型；0：默认或微信；2：qq登录；")
 	private Integer bindType;
 
 	@TableField(exist = false)
 	private String role;
-	
+
 	@TableField(exist = false)
 	private List<String> permissions;
 

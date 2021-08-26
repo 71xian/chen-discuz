@@ -2,8 +2,8 @@ package cn.chenyuxian.discuz.system.modular.log.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-
-import cn.chenyuxian.discuz.core.base.entity.BaseEntity;
+import java.time.LocalDateTime;
+import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,12 +15,12 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author chenyuxian
- * @since 2021-08-21
+ * @since 2021-08-25
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @ApiModel(value="OperationLog对象", description="")
-public class OperationLog extends BaseEntity {
+public class OperationLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,6 +45,12 @@ public class OperationLog extends BaseEntity {
 
     @ApiModelProperty(value = "日志类型:0后台操作")
     private Integer type;
+
+    @ApiModelProperty(value = "创建时间")
+    private LocalDateTime createdAt;
+
+    @ApiModelProperty(value = "更新时间")
+    private LocalDateTime updatedAt;
 
 
 }

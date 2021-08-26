@@ -3,9 +3,11 @@ package cn.chenyuxian.discuz.system.core.config;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import lombok.Getter;
+import cn.chenyuxian.discuz.core.base.crypto.BCryptPasswordEncoder;
+import cn.chenyuxian.discuz.core.base.crypto.BCryptPasswordEncoder.BCryptVersion;
 
 /**
  * 系统配置容器
@@ -13,14 +15,22 @@ import lombok.Getter;
  * @author chenyuxian
  * @date 2021-08-25
  */
-@Component
+@Configuration
 public class ApplicationConfig {
 
-	@Getter
-	private static final Map<String, String> settings = new HashMap<>();
-	
-	public static int password_length() {
-		return Integer.valueOf(settings.get("password_length"));
+	private static final Map<String, String> config = new HashMap<>();
+
+	public int password_length() {
+		return Integer.valueOf(config.get("password_length"));
+	}
+
+	public Map<String, String> getConfig() {
+		return config;
 	}
 	
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder(BCryptVersion.$2Y, 10);
+	}
+
 }

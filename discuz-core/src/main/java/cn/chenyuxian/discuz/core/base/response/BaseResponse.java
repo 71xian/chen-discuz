@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import cn.chenyuxian.discuz.core.constant.ExpCode;
+import cn.chenyuxian.discuz.core.constant.ErrorCode;
 import lombok.Data;
 
 /**
@@ -31,7 +31,7 @@ public class BaseResponse<T> implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime requestAt;
 
-	public BaseResponse(ExpCode response) {
+	public BaseResponse(ErrorCode response) {
 		this(response.getCode(), response.getMessage());
 	}
 
@@ -55,7 +55,7 @@ public class BaseResponse<T> implements Serializable {
 		return new BaseResponse<>(0, "接口调用成功", data);
 	}
 
-	public static BaseResponse<String> fail(ExpCode code) {
+	public static BaseResponse<String> fail(ErrorCode code) {
 		return new BaseResponse<>(code);
 	}
 

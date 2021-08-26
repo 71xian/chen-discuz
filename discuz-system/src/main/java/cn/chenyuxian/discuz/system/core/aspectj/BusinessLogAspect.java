@@ -10,12 +10,10 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import cn.chenyuxian.discuz.core.constant.AspectSort;
 import cn.chenyuxian.discuz.core.util.IpUtil;
-import cn.chenyuxian.discuz.core.util.RedisUtil;
 import cn.chenyuxian.discuz.core.util.RequestUtil;
 import cn.chenyuxian.discuz.core.util.SpringUtil;
 import cn.chenyuxian.discuz.system.modular.log.entity.OperationLog;
@@ -34,12 +32,6 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Order(AspectSort.BUSINESS_LOG)
 public class BusinessLogAspect {
-
-	@Autowired
-	private ThreadPoolTaskExecutor threadPoolTaskExecutor;
-
-	@Autowired
-	private RedisUtil redisUtil;
 
 	@Autowired
 	private IOperationLogService operationLogService;

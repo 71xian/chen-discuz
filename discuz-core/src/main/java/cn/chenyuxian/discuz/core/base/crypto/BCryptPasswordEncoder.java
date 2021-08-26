@@ -6,10 +6,8 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Component;
 
-@Component
-public class BCryptPasswordEncoder {
+public class BCryptPasswordEncoder implements PasswordEncoder{
 	private Pattern BCRYPT_PATTERN = Pattern.compile("\\A\\$2(a|y|b)?\\$(\\d\\d)\\$[./0-9A-Za-z]{53}");
 	private final Log logger = LogFactory.getLog(getClass());
 

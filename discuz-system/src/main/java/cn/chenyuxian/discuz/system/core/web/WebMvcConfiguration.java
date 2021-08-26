@@ -25,7 +25,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer{
 		registry
 		.addMapping("/**")
 		.allowedOrigins("*")
-		.allowedMethods("POST","GET","PUT","DELETE")
+		.allowedMethods("*")
 		.maxAge(1800)
 		.allowCredentials(true)
 		.allowedHeaders("*")
@@ -43,7 +43,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer{
 	public FilterRegistrationBean<XssFilter> xssFilter(){
 		FilterRegistrationBean<XssFilter> bean = new FilterRegistrationBean<>();
 		bean.setFilter(new XssFilter());
-		bean.addUrlPatterns("/*");
+		bean.addUrlPatterns("/**");
 		bean.setOrder(Integer.MIN_VALUE);
 		return bean;
 	}

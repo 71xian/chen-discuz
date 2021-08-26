@@ -23,9 +23,9 @@ public class Token implements Serializable{
 	private Integer tokenId;
 	
 	/**
-	 * 用户名
+	 * 用户id
 	 */
-	private String username;
+	private Long userId;
 	
 	/**
 	 * 客户端id

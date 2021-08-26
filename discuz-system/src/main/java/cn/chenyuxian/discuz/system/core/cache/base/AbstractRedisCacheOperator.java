@@ -24,14 +24,21 @@ Guns采用APACHE LICENSE 2.0开源协议，您在使用过程中，需要注意�
  */
 package cn.chenyuxian.discuz.system.core.cache.base;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
+import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import cn.chenyuxian.discuz.core.cache.CacheOperator;
 import cn.chenyuxian.discuz.core.constant.Symbol;
-
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * 基于redis的缓存封装
@@ -41,7 +48,7 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractRedisCacheOperator<T> implements CacheOperator<T> {
 
-	protected final RedisTemplate<String, T> redisTemplate;
+	private final RedisTemplate<String, T> redisTemplate;
 
 	public AbstractRedisCacheOperator(RedisTemplate<String, T> redisTemplate) {
 		this.redisTemplate = redisTemplate;
@@ -49,6 +56,10 @@ public abstract class AbstractRedisCacheOperator<T> implements CacheOperator<T> 
 
 	@Override
 	public void put(String key, T value) {
+		System.out.println(redisTemplate);
+		BoundValueOperations<String,T> boundValueOps = redisTemplate.boundValueOps(getCommonKeyPrefix() + key);
+		System.out.println(boundValueOps);
+		boundValueOps.set(value);
 		redisTemplate.boundValueOps(getCommonKeyPrefix() + key).set(value);
 	}
 

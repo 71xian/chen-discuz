@@ -9,9 +9,8 @@ public class BaseParam implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	public @interface add {}
+	public @interface register{}
 	
-	public @interface edit {}
-	
+	public @interface login{}
 	
 }

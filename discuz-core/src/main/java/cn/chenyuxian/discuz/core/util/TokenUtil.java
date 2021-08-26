@@ -50,7 +50,7 @@ public final class TokenUtil implements Serializable{
 	 * @author chenyuxian
 	 * @date 2021-08-23
 	 */
-	public static Token generateToken(String username) {
+	public static Token generateToken(Long userId) {
 		Instant now = Instant.now();
 		// accessToken过期时间为2小时
 		Date accessTokenExpireDate = Date.from(now.plus(accessTokenExpireTime, ChronoUnit.HOURS));
@@ -58,11 +58,11 @@ public final class TokenUtil implements Serializable{
 		Date refreshTokenExpireDate = Date.from(now.plus(refreshTokenExpireTime * 7, ChronoUnit.DAYS));
 		
 		Token token = new Token();
-		token.setUsername(username);
+		token.setUserId(userId);
 		token.setIssuedAt(Date.from(now));
 		
 		String accessToken =  Jwts.builder()
-				.setSubject(username)
+				.setSubject(String.valueOf(userId))
 				.setExpiration(accessTokenExpireDate)
 				.signWith(SignatureAlgorithm.HS512, SECRET)
 				.compact();
@@ -70,7 +70,7 @@ public final class TokenUtil implements Serializable{
 		token.setAccessTokenExpireAt(accessTokenExpireDate);
 		
 		String refreshToken = Jwts.builder()
-				.setSubject(username)
+				.setSubject(String.valueOf(userId))
 				.setExpiration(refreshTokenExpireDate)
 				.signWith(SignatureAlgorithm.HS512, SECRET)
 				.compact();

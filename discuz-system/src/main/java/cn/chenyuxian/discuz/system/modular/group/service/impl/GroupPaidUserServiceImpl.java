@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author chenyuxian
- * @since 2021-08-23
+ * @since 2021-08-25
  */
 @Service
 public class GroupPaidUserServiceImpl extends ServiceImpl<GroupPaidUserMapper, GroupPaidUser> implements IGroupPaidUserService {

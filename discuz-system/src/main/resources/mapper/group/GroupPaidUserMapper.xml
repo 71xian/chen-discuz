@@ -4,9 +4,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        created_at,
-        updated_at,
-        id, user_id, group_id, order_id, operator_id, delete_type, expiration_time, deleted_at
+        id, user_id, group_id, order_id, operator_id, delete_type, expiration_time, created_at, updated_at, deleted_at
     </sql>
 
 </mapper>
