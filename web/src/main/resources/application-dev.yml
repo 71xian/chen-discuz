@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/root?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=UTC
+    username: root
+    password: chenyuxian.cn
+    type: com.alibaba.druid.pool.DruidDataSource
+    max-active: 20
+    max-pool-prepared-statement-per-connection-size: 20
+  redis:
+    timeout: 10s
+    lettuce:
+      pool:
+        max-active: 200
+        max-idel: 8
+        max-wait: 10s
+        min-idle: 2
+      shutdown-timeout: 3s
+      
+jwt:
+  secret: chenyuxian.cn
+  header: Authorization
+  prefix: Bearer 
+  expired: 1
+  refresh-header: REFRESH-TOKEN
+  refresh: 7
+  
+qiniu:
+  access: "y5S-dm40nFe9fW39tIVRkryWtm3K9ydlLVGx11Cw"
+  secret: "Wl3oneugB-3qA_qgorSK1SB2zUAPDXHY3s8qUiUy"
+  bucket: "chen-aoe"
+  domain: "cdn.yxcling.cn"

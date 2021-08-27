@@ -2,9 +2,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>cn.chenyuxian</groupId>
-	<artifactId>chen-discuz</artifactId>
-	<version>1.0.0</version>
+	<groupId>com.aoexe</groupId>
+	<artifactId>DiscuzQ</artifactId>
+	<version>1.0</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -24,13 +24,6 @@
 		<ip2region.version>1.7.2</ip2region.version>
 		<common-io.version>2.11.0</common-io.version>
 	</properties>
-
-	<modules>
-		<module>discuz-core</module>
-		<module>discuz-system</module>
-		<module>discuz-web</module>
-		<module>discuz-file</module>
-	</modules>
 
 	<dependencyManagement>
 		<dependencies>
@@ -126,5 +119,9 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<modules>
+		<module>core</module>
+		<module>system</module>
+		<module>web</module>
+	</modules>
 </project>
