@@ -1,6 +1,6 @@
 package com.aoexe.discuz.system.modular.group.service;
 
-import java.util.List;
+import java.util.Set;
 
 import com.aoexe.discuz.system.modular.group.entity.DzqGroup;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -40,7 +40,7 @@ public interface IDzqGroupService extends IService<DzqGroup> {
 	 * @author chenyuxian
 	 * @date 2021-08-26
 	 */
-	List<String> getPermissionByGroupId(Long groupId);
+	Set<String> getPermissionByGroupId(Long groupId);
 	
 	/**
 	 * 根据用户id查询用户组权限
@@ -50,7 +50,7 @@ public interface IDzqGroupService extends IService<DzqGroup> {
 	 * @author chenyuxian
 	 * @date 2021-08-26
 	 */
-	List<String> getPermissionByUserId(Long userId);
+	Set<String> getPermissionByUserId(Long userId);
 	
 	/**
 	 * 管理员进行权限初始化
@@ -62,7 +62,7 @@ public interface IDzqGroupService extends IService<DzqGroup> {
 	 * @author chenyuxian
 	 * @date 2021-08-26
 	 */
-	boolean editPermission(Long groupId, List<String> permission, boolean isAdmin);
+	boolean editPermission(Long groupId, Set<String> permission, boolean isAdmin);
 	
 	/**
 	 * 非管理员进行普通的编辑
@@ -73,7 +73,7 @@ public interface IDzqGroupService extends IService<DzqGroup> {
 	 * @author chenyuxian
 	 * @date 2021-08-26
 	 */
-	boolean editPermission(Long groupId, List<String> permission);
+	boolean editPermission(Long groupId, Set<String> permission);
 	
 	/**
 	 * 创建用户组

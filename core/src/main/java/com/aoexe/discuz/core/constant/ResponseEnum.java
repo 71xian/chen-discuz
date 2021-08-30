@@ -11,7 +11,7 @@ import lombok.Getter;
  * @date 2021-08-14
  */
 @Getter
-public enum ErrorCode implements Serializable{
+public enum ResponseEnum implements Serializable{
 
 	/**
 	 * 当前站点未安装
@@ -37,6 +37,11 @@ public enum ErrorCode implements Serializable{
 	 * 无效参数
 	 */
 	WECHAT_INVALID_ARGUMENT_EXCEPTION(-2004, "无效参数"),
+	
+	/**
+	 * 无法删除管理员
+	 */
+	NOT_DELETE_ADMIN(-2005, "无法删除管理员"),
 
 	/**
 	 * 跳转到登录页
@@ -532,7 +537,7 @@ public enum ErrorCode implements Serializable{
 
 	private final String message;
 
-	private ErrorCode(Integer code, String message) {
+	private ResponseEnum(Integer code, String message) {
 		this.code = code;
 		this.message = message;
 	}

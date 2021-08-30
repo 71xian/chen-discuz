@@ -27,28 +27,31 @@ import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
  */
 @RestController
 @RequestMapping("/group")
-@Permission
 public class DzqGroupController {
 
 	@Autowired
 	private IDzqGroupService groupService;
 	
 	@PostMapping("/c")
+	@Permission
 	public void create(@Validated @RequestBody DzqGroup group) {
 		
 	}
 	
 	@GetMapping("/r/{groupId}")
+	@Permission
 	public DzqGroup read(@PathVariable("groupId") Long groupId) {
 		return groupService.readGroup(groupId);
 	}
 	
 	@PutMapping("/u")
+	@Permission
 	public void update(@Validated @RequestBody DzqGroup group) {
 		
 	}
 	
 	@DeleteMapping("/d/{groupId}")
+	@Permission
 	public void delete(Long groupIds) {
 		
 	}

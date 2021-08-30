@@ -1,6 +1,5 @@
 package com.aoexe.discuz.system.modular.user.service;
 
-import com.aoexe.discuz.core.base.token.Token;
 import com.aoexe.discuz.system.modular.user.entity.User;
 import com.aoexe.discuz.system.modular.user.param.UserParam;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -23,7 +22,7 @@ public interface IUserService extends IService<User> {
 	 * @author chenyuxian
 	 * @date 2021-08-27
 	 */
-	Token register(UserParam param);
+	String register(UserParam param);
 
 	/**
 	 * 用户登录
@@ -33,7 +32,7 @@ public interface IUserService extends IService<User> {
 	 * @author chenyuxian
 	 * @date 2021-08-27
 	 */
-	Token login(UserParam param);
+	String login(UserParam param);
 	
 	/**
 	 * 刷新token
@@ -43,7 +42,7 @@ public interface IUserService extends IService<User> {
 	 * @author chenyuxian
 	 * @date 2021-08-27
 	 */
-	Token refresh(String accessToken);
+	String refresh(String accessToken);
 	
 	/**
 	 * 批量删除用户
@@ -52,5 +51,7 @@ public interface IUserService extends IService<User> {
 	 * @author chenyuxian
 	 * @date 2021-08-27
 	 */
-	void deleteBatchUser(Long[] ids);
+	void deleteBatchIds(Long[] ids);
+	
+	User getUserByUsername(String username);
 }

@@ -12,7 +12,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.aoexe.discuz.core.base.exception.BaseException;
 import com.aoexe.discuz.core.base.response.BaseResponse;
-import com.aoexe.discuz.core.constant.ErrorCode;
+import com.aoexe.discuz.core.constant.ResponseEnum;
 
 /**
  * 将Controller层返回的对象转成Response对象 规范返回对象的格式
@@ -32,14 +32,16 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object>{
 	public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
 			Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request,
 			ServerHttpResponse response) {
-		if(returnType.getGenericParameterType().equals(String.class)) {
+		if(body instanceof String) {
 			try {
-				return JSON.toJSONString(BaseResponse.ok(body));
-			} catch (JSONException e) {
-				throw new BaseException(ErrorCode.INVALID_PARAMETER);
+				return JSON.toJSONString(BaseResponse.ok(body));				
+			}catch (JSONException e) {
+				throw new BaseException(ResponseEnum.INTERNAL_ERROR);
 			}
 		}
 		return BaseResponse.ok(body);
 	}
 
+
+	
 }

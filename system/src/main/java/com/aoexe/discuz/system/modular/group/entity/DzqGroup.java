@@ -1,7 +1,7 @@
 package com.aoexe.discuz.system.modular.group.entity;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -68,7 +68,7 @@ public class DzqGroup implements Serializable {
     private Integer isCommission;
     
     @TableField(exist = false)
-	private List<String> permissions;
+	private Set<String> permissions;
 
 
 }

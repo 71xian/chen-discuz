@@ -1,15 +1,16 @@
 package com.aoexe.discuz.system.modular.group.service.impl;
 
-import static com.aoexe.discuz.core.constant.ErrorCode.GROUPNAME_HAS_EXIST;
-import static com.aoexe.discuz.core.constant.ErrorCode.GROUP_HAS_USER;
-import static com.aoexe.discuz.core.constant.ErrorCode.GROUP_NOT_FOUND;
-import static com.aoexe.discuz.core.constant.ErrorCode.INVALID_PARAMETER;
-import static com.aoexe.discuz.core.constant.ErrorCode.NOT_SETTING_DEFAULT_GROUP;
+import static com.aoexe.discuz.core.constant.ResponseEnum.GROUPNAME_HAS_EXIST;
+import static com.aoexe.discuz.core.constant.ResponseEnum.GROUP_HAS_USER;
+import static com.aoexe.discuz.core.constant.ResponseEnum.GROUP_NOT_FOUND;
+import static com.aoexe.discuz.core.constant.ResponseEnum.INVALID_PARAMETER;
+import static com.aoexe.discuz.core.constant.ResponseEnum.NOT_SETTING_DEFAULT_GROUP;
 import static com.aoexe.discuz.system.modular.group.consts.Constant.ADMIN;
 import static com.aoexe.discuz.system.modular.group.consts.Constant.DEFAULT_GROUP;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -56,7 +57,7 @@ public class DzqGroupServiceImpl extends ServiceImpl<DzqGroupMapper, DzqGroup> i
 			if (group == null) {
 				throw new BaseException(NOT_SETTING_DEFAULT_GROUP);
 			}
-			List<String> permissionByGroupId = permissionService.getPermissionByGroupId(group.getId());
+			Set<String> permissionByGroupId = permissionService.getPermissionByGroupId(group.getId());
 			group.setPermissions(permissionByGroupId);
 			cache.put(DEFAULT_GROUP, group);
 		}
@@ -79,18 +80,18 @@ public class DzqGroupServiceImpl extends ServiceImpl<DzqGroupMapper, DzqGroup> i
 	}
 
 	@Override
-	public List<String> getPermissionByGroupId(Long groupId) {
+	public Set<String> getPermissionByGroupId(Long groupId) {
 		return readGroup(groupId).getPermissions();
 	}
 
 	@Override
-	public List<String> getPermissionByUserId(Long userId) {
+	public Set<String> getPermissionByUserId(Long userId) {
 		Long groupId = groupUserService.getGroupIdByUserId(userId);
 		return getPermissionByGroupId(groupId);
 	}
 
 	@Override
-	public boolean editPermission(Long groupId, List<String> permission, boolean isAdmin) {
+	public boolean editPermission(Long groupId, Set<String> permission, boolean isAdmin) {
 		DzqGroup group = baseMapper.selectById(groupId);
 		// 如果不是管理员就进行相关的检查
 		if (!isAdmin) {
@@ -113,7 +114,7 @@ public class DzqGroupServiceImpl extends ServiceImpl<DzqGroupMapper, DzqGroup> i
 	}
 
 	@Override
-	public boolean editPermission(Long groupId, List<String> permission) {
+	public boolean editPermission(Long groupId, Set<String> permission) {
 		return editPermission(groupId, permission, false);
 	}
 
@@ -136,7 +137,7 @@ public class DzqGroupServiceImpl extends ServiceImpl<DzqGroupMapper, DzqGroup> i
 			if (group == null) {
 				throw new BaseException(GROUP_NOT_FOUND);
 			}
-			List<String> permissionByGroupId = permissionService.getPermissionByGroupId(group.getId());
+			Set<String> permissionByGroupId = permissionService.getPermissionByGroupId(group.getId());
 			group.setPermissions(permissionByGroupId);
 			cache.put(String.valueOf(groupId), group);
 		}

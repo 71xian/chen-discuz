@@ -1,6 +1,6 @@
 package com.aoexe.discuz.system.modular.group.service;
 
-import java.util.List;
+import java.util.Set;
 
 import com.aoexe.discuz.system.modular.group.entity.GroupPermission;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IGroupPermissionService extends IService<GroupPermission> {
 
-	List<String> getPermissionByGroupId(Long groupId);
+	Set<String> getPermissionByGroupId(Long groupId);
 
 	Integer removePermissionByGroupId(Long groupId);
 }

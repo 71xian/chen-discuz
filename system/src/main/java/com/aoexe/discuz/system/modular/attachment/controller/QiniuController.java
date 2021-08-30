@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.aoexe.discuz.core.annotion.Permission;
-import com.aoexe.discuz.system.core.util.QiniuUtils;
+import com.aoexe.discuz.system.config.QiniuConfiguration;
 import com.qiniu.common.QiniuException;
 
 /**
@@ -30,7 +30,7 @@ import com.qiniu.common.QiniuException;
 public class QiniuController {
 
 	@Autowired
-	private QiniuUtils utils;
+	private QiniuConfiguration utils;
 
 	/**
 	 * 上传文件
@@ -44,6 +44,7 @@ public class QiniuController {
 	 * @date 2021-08-27
 	 */
 	@PostMapping("/upload")
+	@Permission
 	public Map<String, String> upload(@RequestParam("file") MultipartFile file)
 			throws QiniuException, UnsupportedEncodingException, IOException {
 		return new HashMap<String, String>() {
@@ -67,6 +68,7 @@ public class QiniuController {
 	 * @date 2021-08-27
 	 */
 	@GetMapping("/download")
+	@Permission
 	public String download(@RequestParam("key") String key)
 			throws UnsupportedEncodingException, QiniuException {
 		return utils.download(key);

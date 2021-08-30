@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.aoexe.discuz.core.constant.ErrorCode;
+import com.aoexe.discuz.core.constant.ResponseEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
@@ -16,51 +16,39 @@ import lombok.Data;
  * @date 2021-08-15
  */
 @Data
-public class BaseResponse<T> implements Serializable {
+public class BaseResponse implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final Integer code;
+	private Integer code;
 
-	private final String message;
+	private String message;
 
-	private final T data;
+	private Object data;
 
 	private String requestId;
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime requestAt;
 
-	public BaseResponse(ErrorCode response) {
-		this(response.getCode(), response.getMessage());
-	}
-
-	public BaseResponse(Integer code, String message) {
-		this(code, message, null);
-	}
-
-	public BaseResponse(Integer code, String message, T data) {
+	public BaseResponse(Integer code, String message, Object data) {
 		this.code = code;
 		this.message = message;
 		this.data = data;
-		this.requestId = UUID.randomUUID().toString().toUpperCase();
+		this.requestId = UUID.randomUUID().toString();
 		this.requestAt = LocalDateTime.now();
 	}
 
-	public static BaseResponse<String> ok() {
-		return new BaseResponse<>(0, "接口调用成功");
+	public static BaseResponse ok(Object data) {
+		return new BaseResponse(0, "接口调用成功", data);
 	}
 
-	public static <T> BaseResponse<T> ok(T data) {
-		return new BaseResponse<>(0, "接口调用成功", data);
+	public static BaseResponse fail(ResponseEnum code) {
+		return new BaseResponse(code.getCode(), code.getMessage(), "");
 	}
 
-	public static BaseResponse<String> fail(ErrorCode code) {
-		return new BaseResponse<>(code);
-	}
-
-	public static BaseResponse<String> fail(Integer code, String message) {
-		return new BaseResponse<>(code, message);
+	public static BaseResponse fail(Integer code, String message) {
+		return new BaseResponse(code, message, "");
 	}
 
 }

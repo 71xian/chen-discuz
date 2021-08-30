@@ -17,5 +17,15 @@ public interface AspectSort {
 	 * 权限校验排序
 	 */
 	int PERMISSION = -100;
+	
+	/**
+	 * 清除Threadlocal
+	 */
+	int EXCEPTION = 200;
+	
+	/**
+	 * 数据范围
+	 */
+	int DATA_SCOPE = -50;
 
 }

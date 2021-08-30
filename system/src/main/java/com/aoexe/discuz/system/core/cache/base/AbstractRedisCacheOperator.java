@@ -34,7 +34,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import com.aoexe.discuz.core.cache.CacheOperator;
@@ -56,10 +55,6 @@ public abstract class AbstractRedisCacheOperator<T> implements CacheOperator<T> 
 
 	@Override
 	public void put(String key, T value) {
-		System.out.println(redisTemplate);
-		BoundValueOperations<String,T> boundValueOps = redisTemplate.boundValueOps(getCommonKeyPrefix() + key);
-		System.out.println(boundValueOps);
-		boundValueOps.set(value);
 		redisTemplate.boundValueOps(getCommonKeyPrefix() + key).set(value);
 	}
 

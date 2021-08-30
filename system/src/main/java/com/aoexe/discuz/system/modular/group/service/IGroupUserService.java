@@ -19,4 +19,6 @@ public interface IGroupUserService extends IService<GroupUser> {
 	
 	List<Long> getUserIdsByGroupId(Long groupId);
 	
+	void deleteUsers(List<Long> ids);
+	
 }

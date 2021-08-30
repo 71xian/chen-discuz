@@ -1,6 +1,6 @@
 package com.aoexe.discuz.system.config;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,12 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 
-import com.aoexe.discuz.core.annotion.Permission;
+import com.aoexe.discuz.core.context.constant.ConstantContext;
+import com.aoexe.discuz.system.core.cache.ResourceCache;
+import com.aoexe.discuz.system.modular.config.entity.Config;
+import com.aoexe.discuz.system.modular.config.service.IConfigService;
 import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
 
 /**
@@ -33,24 +35,27 @@ public class ApplicationStartUp implements ApplicationRunner {
 
 	@Autowired
 	private IDzqGroupService groupService;
+	
+	@Autowired
+	private IConfigService configService;
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		List<String> resources = getPermissions();
+		Set<String> resources = getPermissions();
+		ResourceCache.put(resources);
 		groupService.editPermission(1L, resources, true);
+		List<Config> list = configService.list();
+		list.forEach(config -> {
+			ConstantContext.putConstant(config.getConfigKey(), config.getConfigValue());
+		});
 	}
 
-	private List<String> getPermissions() {
-		List<String> resources = new ArrayList<>();
+	private Set<String> getPermissions() {
+		Set<String> resources = new HashSet<>();
 		Map<RequestMappingInfo, HandlerMethod> handlerMethods = requestMappingInfoHandlerMapping.getHandlerMethods();
-		handlerMethods.forEach((info, handlerMethod) -> {
-			if (handlerMethod.getBeanType().getAnnotation(Permission.class) == null
-					&& handlerMethod.getMethod().getAnnotation(Permission.class) == null) {
-				return;
-			}
-			Set<RequestMethod> methods = info.getMethodsCondition().getMethods();
-			String path = methods.toArray()[0] + ":" + info.getPatternsCondition().getPatterns().toArray()[0];
-			resources.add(path);
+		handlerMethods.keySet().forEach(info -> {
+			Set<String> methods = info.getPatternsCondition().getPatterns();
+			resources.addAll(methods);
 		});
 		return resources;
 	}

@@ -1,4 +1,4 @@
-package com.aoexe.discuz.system.core.util;
+package com.aoexe.discuz.system.config;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -22,7 +22,7 @@ import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 
 @Component
-public class QiniuUtils {
+public class QiniuConfiguration {
 
 	@Value("${qiniu.access}")
 	private String accessKey;

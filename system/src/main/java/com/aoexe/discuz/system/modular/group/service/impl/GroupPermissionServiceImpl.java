@@ -1,6 +1,7 @@
 package com.aoexe.discuz.system.modular.group.service.impl;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
@@ -29,11 +30,11 @@ public class GroupPermissionServiceImpl extends ServiceImpl<GroupPermissionMappe
 	private GroupCache cache;
 	
 	@Override
-	public List<String> getPermissionByGroupId(Long groupId) {
+	public Set<String> getPermissionByGroupId(Long groupId) {
 		QueryWrapper<GroupPermission> wrapper = new QueryWrapper<>();
 		wrapper.eq("group_id", groupId);
 		List<GroupPermission> list = baseMapper.selectList(wrapper);
-		return list.stream().map(GroupPermission::getPermission).collect(Collectors.toList());
+		return list.stream().map(GroupPermission::getPermission).collect(Collectors.toSet());
 	}
 
 	@Override

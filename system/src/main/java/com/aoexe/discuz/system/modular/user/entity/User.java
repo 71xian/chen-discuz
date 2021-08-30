@@ -2,11 +2,8 @@ package com.aoexe.discuz.system.modular.user.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
-import com.aoexe.discuz.core.context.login.LoginUser;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,7 +23,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "User对象", description = "")
-public class User implements Serializable, LoginUser {
+public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -124,11 +121,5 @@ public class User implements Serializable, LoginUser {
 
 	@ApiModelProperty(value = "登录绑定类型；0：默认或微信；2：qq登录；")
 	private Integer bindType;
-
-	@TableField(exist = false)
-	private String role;
-
-	@TableField(exist = false)
-	private List<String> permissions;
 
 }

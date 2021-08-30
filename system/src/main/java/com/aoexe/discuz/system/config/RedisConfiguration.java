@@ -53,8 +53,6 @@ public class RedisConfiguration extends CachingConfigurerSupport {
 		RedisTemplate<String, DzqGroup> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setKeySerializer(new StringRedisSerializer()); 
 		redisTemplate.setValueSerializer(new FastJsonRedisSerializer<>(DzqGroup.class)); 
-		redisTemplate.setHashKeySerializer(new StringRedisSerializer()); 
-		redisTemplate.setHashValueSerializer(new FastJsonRedisSerializer<>(DzqGroup.class));
 		redisTemplate.setConnectionFactory(factory);
 		redisTemplate.afterPropertiesSet();
 		return new GroupCache(redisTemplate);
@@ -65,8 +63,6 @@ public class RedisConfiguration extends CachingConfigurerSupport {
 		RedisTemplate<String, User> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setKeySerializer(new StringRedisSerializer()); 
 		redisTemplate.setValueSerializer(new FastJsonRedisSerializer<>(User.class)); 
-		redisTemplate.setHashKeySerializer(new StringRedisSerializer()); 
-		redisTemplate.setHashValueSerializer(new FastJsonRedisSerializer<>(User.class));
 		redisTemplate.setConnectionFactory(factory);
 		redisTemplate.afterPropertiesSet();
 		return new UserCache(redisTemplate);
