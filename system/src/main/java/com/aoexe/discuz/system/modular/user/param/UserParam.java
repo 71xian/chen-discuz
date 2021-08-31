@@ -1,6 +1,7 @@
 package com.aoexe.discuz.system.modular.user.param;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotBlank;
 
@@ -25,5 +26,15 @@ public class UserParam extends BaseParam implements Serializable{
 	
 	@NotBlank(message = "用户昵称不为空", groups = { register.class })
 	private String nickname;
+	
+	private String registerIp;
+	
+	private Integer registerPort;
+	
+	private String registerReason;
+	
+	private LocalDateTime createdAt;
+	
+	private LocalDateTime updatedAt;
 	
 }

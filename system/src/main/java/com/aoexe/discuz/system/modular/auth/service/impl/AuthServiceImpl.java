@@ -11,11 +11,15 @@ import static com.aoexe.discuz.system.modular.user.consts.UserStatus.MOD;
 import static com.aoexe.discuz.system.modular.user.consts.UserStatus.NEED_FIELDS;
 import static com.aoexe.discuz.system.modular.user.consts.UserStatus.REFUSE;
 
+import java.time.LocalDateTime;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -23,7 +27,11 @@ import org.springframework.stereotype.Service;
 import com.aoexe.discuz.core.base.exception.BaseException;
 import com.aoexe.discuz.core.constant.ResponseEnum;
 import com.aoexe.discuz.core.util.BeanUtil;
+import com.aoexe.discuz.core.util.IpUtil;
+import com.aoexe.discuz.core.util.RequestUtil;
 import com.aoexe.discuz.system.core.cache.UserCache;
+import com.aoexe.discuz.system.core.token.Token;
+import com.aoexe.discuz.system.core.token.TokenUtil;
 import com.aoexe.discuz.system.modular.auth.entity.LoginUser;
 import com.aoexe.discuz.system.modular.auth.service.IAuthService;
 import com.aoexe.discuz.system.modular.user.entity.User;
@@ -41,11 +49,14 @@ public class AuthServiceImpl implements IAuthService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userService.getUserByUsername(username);
-		return null;
+		LoginUser loginUser = new LoginUser();
+		loginUser = BeanUtil.trans(user, loginUser);
+		return loginUser;
 	}
 
 	@Override
 	public String login(String username, String password) {
+		HttpServletRequest request = RequestUtil.getRequest();
 		User user = userService.getUserByUsername(username);
 		if (user == null) {
 			throw new BaseException(ResponseEnum.NOT_FOUND_USER);
@@ -67,19 +78,45 @@ public class AuthServiceImpl implements IAuthService {
 		}
 		LoginUser loginUser = new LoginUser();
 		loginUser = BeanUtil.trans(user, loginUser);
-		return null;
-	}
-
-	@Override
-	public String getToken(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		Token token = new Token(user.getId(), user.getUsername());
+		String tokenStr = TokenUtil.generateToken(token);
+		cache.put(token.getUuid(), loginUser);
+		user.setLastLoginIp(IpUtil.getIp(request));
+		user.setLastLoginPort(request.getRemotePort());
+		user.setLoginAt(LocalDateTime.now());
+		userService.updateById(user);
+		this.setContextAuthentication(loginUser);
+		return tokenStr;
 	}
 
 	@Override
 	public void logout() {
-		// TODO Auto-generated method stub
+		String tokenStr = TokenUtil.getTokenString(RequestUtil.getRequest());
+		Token token = TokenUtil.getToken(tokenStr);
+		cache.remove(token.getUuid());
+	}
 
+	@Override
+	public void setContextAuthentication(LoginUser loginUser) {
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginUser, null,
+				loginUser.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(token);
+	}
+
+	@Override
+	public Authentication getAuthentication() {
+		return SecurityContextHolder.getContext().getAuthentication();
+	}
+
+	@Override
+	public LoginUser getLoginUserByToken(String tokenStr) {
+		Token token = TokenUtil.getToken(tokenStr);
+		LoginUser user = cache.get(token.getUuid());
+		if (user == null) {
+			throw new BaseException(ResponseEnum.AUTH_INFO_HAD_EXPIRED);
+		}
+		cache.put(token.getUuid(), user);
+		return user;
 	}
 
 }

@@ -37,11 +37,6 @@ public enum ResponseEnum implements Serializable{
 	 * 无效参数
 	 */
 	WECHAT_INVALID_ARGUMENT_EXCEPTION(-2004, "无效参数"),
-	
-	/**
-	 * 无法删除管理员
-	 */
-	NOT_DELETE_ADMIN(-2005, "无法删除管理员"),
 
 	/**
 	 * 跳转到登录页
@@ -487,16 +482,6 @@ public enum ResponseEnum implements Serializable{
 	 * 分类不存在
 	 */
 	CATEGORY_NOT_FOUNF(-7076, "分类不存在"),
-	
-	/**
-	 * 用户组不存在
-	 */
-	GROUP_NOT_FOUND(-7077, "用户组不存在"),
-	
-	/**
-	 * 用户组名已存在
-	 */
-	GROUPNAME_HAS_EXIST(-7078, "用户组名已存在"),
 	
 	/**
 	 * 当前用户组下存在用户

@@ -35,7 +35,7 @@ public class TokenEntryPoint implements AuthenticationEntryPoint, Serializable {
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		String uri = request.getRequestURI();
-		Set<String> apis = cache.get(Long.valueOf(1L).toString()).getPermissions();
+		Set<String> apis = cache.get("1").getPermissions();
 		if (apis.isEmpty()) {
 			throw new BaseException(ResponseEnum.INTERNAL_ERROR);
 		}

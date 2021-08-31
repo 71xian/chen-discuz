@@ -15,7 +15,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IGroupPermissionService extends IService<GroupPermission> {
 
-	Set<String> getPermissionByGroupId(Long groupId);
+	Set<String> getPermissionsByGroupId(Long groupId);
+	
+	Set<String> getPermissionsByGroupIds(Long[] groupIds);
 
-	Integer removePermissionByGroupId(Long groupId);
+	boolean removeByGroupId(Long groupId);
+	
+	boolean removeByGroupIds(Long[] groupIds);
+	
+	void insertByGroupId(Long groupId, Set<String> permissions);
 }

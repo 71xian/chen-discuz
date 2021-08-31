@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aoexe.discuz.system.modular.notification.mapper.NotificationTplsMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, notice_id, status, type, type_name, title, content, vars, template_id, first_data, keywords_data, remark_data, color, redirect_type, redirect_url, page_path, is_error, error_msg
+    </sql>
+
+</mapper>

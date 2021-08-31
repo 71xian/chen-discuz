@@ -14,44 +14,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserService extends IService<User> {
 
-	/**
-	 * 用户注册
-	 *
-	 * @param param
-	 * @return   登陆令牌
-	 * @author chenyuxian
-	 * @date 2021-08-27
-	 */
-	String register(UserParam param);
-
-	/**
-	 * 用户登录
-	 *
-	 * @param param
-	 * @return token令牌
-	 * @author chenyuxian
-	 * @date 2021-08-27
-	 */
-	String login(UserParam param);
-	
-	/**
-	 * 刷新token
-	 *
-	 * @param accessToken
-	 * @return
-	 * @author chenyuxian
-	 * @date 2021-08-27
-	 */
-	String refresh(String accessToken);
-	
-	/**
-	 * 批量删除用户
-	 *
-	 * @param ids
-	 * @author chenyuxian
-	 * @date 2021-08-27
-	 */
-	void deleteBatchIds(Long[] ids);
-	
 	User getUserByUsername(String username);
+	
+	boolean insertUser(UserParam param);
+	
+	boolean removeByUserIds(Long[] userIds);
+	
 }

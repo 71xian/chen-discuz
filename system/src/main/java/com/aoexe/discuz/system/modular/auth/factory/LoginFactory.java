@@ -10,6 +10,7 @@ import com.aoexe.discuz.core.util.RequestUtil;
 import com.aoexe.discuz.core.util.SpringUtil;
 import com.aoexe.discuz.system.modular.auth.entity.LoginUser;
 import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
+import com.aoexe.discuz.system.modular.group.service.IGroupUserService;
 
 /**
  * 登录用户工厂类
@@ -22,6 +23,7 @@ public class LoginFactory {
 	// 为什么要这么做呢，因为静态方法无法使用注入，所以直接通过ApplicationContext直接获取
 	private static final IDzqGroupService groupService = SpringUtil.getBean(IDzqGroupService.class);
 	
+	private static final IGroupUserService groupUserService = SpringUtil.getBean(IGroupUserService.class);
 	
 	/**
 	 * 填充登录用户相关信息
@@ -38,8 +40,6 @@ public class LoginFactory {
 			loginUser.setLoginAt(LocalDateTime.now());
 			
 			Long userId = loginUser.getId();
-			
-			Set<String> roles = 
 			Set<String> permission = groupService.getPermissionByUserId(userId);
 			loginUser.setPermissions(permission);
 			

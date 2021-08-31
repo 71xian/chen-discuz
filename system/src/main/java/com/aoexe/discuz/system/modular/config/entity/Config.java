@@ -1,6 +1,9 @@
 package com.aoexe.discuz.system.modular.config.entity;
 
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -28,6 +31,7 @@ public class Config implements Serializable {
     private String configValue;
 
     @ApiModelProperty(value = "设置项 tag")
+    @JsonIgnore
     private String configTag;
 
 

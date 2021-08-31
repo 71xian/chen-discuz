@@ -1,5 +1,8 @@
 package com.aoexe.discuz.system.modular.config.service;
 
+import java.util.List;
+import java.util.Set;
+
 import com.aoexe.discuz.system.modular.config.entity.Config;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IConfigService extends IService<Config> {
 
+	List<Config> getConfigByTag(String tag);
+	
+	Set<String> getTags();
 }

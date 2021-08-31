@@ -17,8 +17,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import com.aoexe.discuz.system.core.cache.GroupCache;
 import com.aoexe.discuz.system.core.cache.UserCache;
+import com.aoexe.discuz.system.modular.auth.entity.LoginUser;
 import com.aoexe.discuz.system.modular.group.entity.DzqGroup;
-import com.aoexe.discuz.system.modular.user.entity.User;
 
 /**
  * Redis配置类
@@ -60,9 +60,9 @@ public class RedisConfiguration extends CachingConfigurerSupport {
 	
 	@Bean
 	public UserCache userCache() {
-		RedisTemplate<String, User> redisTemplate = new RedisTemplate<>();
+		RedisTemplate<String, LoginUser> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setKeySerializer(new StringRedisSerializer()); 
-		redisTemplate.setValueSerializer(new FastJsonRedisSerializer<>(User.class)); 
+		redisTemplate.setValueSerializer(new FastJsonRedisSerializer<>(LoginUser.class)); 
 		redisTemplate.setConnectionFactory(factory);
 		redisTemplate.afterPropertiesSet();
 		return new UserCache(redisTemplate);

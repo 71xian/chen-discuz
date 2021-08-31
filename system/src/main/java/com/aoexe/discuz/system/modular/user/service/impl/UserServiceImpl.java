@@ -12,13 +12,15 @@ import static com.aoexe.discuz.system.modular.user.consts.UserStatus.NEED_FIELDS
 import static com.aoexe.discuz.system.modular.user.consts.UserStatus.REFUSE;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +28,6 @@ import com.aoexe.discuz.core.base.exception.BaseException;
 import com.aoexe.discuz.core.constant.ResponseEnum;
 import com.aoexe.discuz.core.util.IpUtil;
 import com.aoexe.discuz.core.util.RequestUtil;
-import com.aoexe.discuz.system.modular.group.entity.GroupUser;
 import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
 import com.aoexe.discuz.system.modular.group.service.IGroupUserService;
 import com.aoexe.discuz.system.modular.user.entity.User;
@@ -49,40 +50,17 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
 	@Resource
+	private PasswordEncoder encoder;
+
+	@Resource
+	private UserMapper mapper;
+
+	@Resource
 	private IGroupUserService groupUserService;
 
 	@Resource
 	private IDzqGroupService groupService;
 
-	@Override
-	public String register(UserParam param) {
-		QueryWrapper<User> wrapper = new QueryWrapper<>();
-		wrapper.eq("username", param.getUsername());
-		User user = baseMapper.selectOne(wrapper);
-		if (user != null) {
-			throw new BaseException(ResponseEnum.USERNAME_HAD_EXIST);
-		}
-		user = new User();
-		HttpServletRequest request = RequestUtil.getRequest();
-		String ip = IpUtil.getIp(request);
-		Integer port = request.getRemotePort();
-		user.setRegisterIp(ip);
-		user.setRegisterPort(port);
-		user.setRegisterReason("用户密码注册");
-		user.setUsername(param.getUsername());
-		user.setNickname(param.getNickname());
-		user.setCreatedAt(LocalDateTime.now());
-		user.setUpdatedAt(LocalDateTime.now());
-		baseMapper.insert(user);
-		GroupUser groupUser = new GroupUser();
-		groupUser.setGroupId(groupService.getDefaultGroup().getId());
-		groupUser.setUserId(user.getId());
-		groupUserService.save(groupUser);
-		user.setPassword(null);
-		return "null";
-	}
-
-	@Override
 	public String login(UserParam param) {
 		QueryWrapper<User> wrapper = new QueryWrapper<>();
 		wrapper.eq("username", param.getUsername());
@@ -113,31 +91,42 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 	}
 
 	@Override
-	public String refresh(String accessToken) {
-
-		return "";
-	}
-
-	@Override
-	public void deleteBatchIds(Long[] ids) {
-		List<Long> list = Arrays.asList(ids);
-		list.forEach(id -> {
-			if (id == 1L) {
-				throw new BaseException(ResponseEnum.NOT_DELETE_ADMIN);
-			}
-		});
-		List<String> str = list.stream().map(s -> s.toString()).collect(Collectors.toList());
-		String[] strlist = new String[list.size()];
-		str.toArray(strlist);
-		baseMapper.deleteBatchIds(list);
-		groupUserService.deleteUsers(list);
-	}
-
-	@Override
 	public User getUserByUsername(String username) {
-		QueryWrapper<User> wrapper = new QueryWrapper<>();
-		wrapper.eq("username", username);
-		return this.getOne(wrapper);
+		return mapper.findByColumnStr("username", username);
+	}
+
+	@Override
+	public boolean insertUser(UserParam param) {
+		HttpServletRequest request = RequestUtil.getRequest();
+		param.setRegisterIp(IpUtil.getIp(request));
+		param.setRegisterPort(request.getRemotePort());
+		param.setRegisterReason("用户密码注册");
+		param.setCreatedAt(LocalDateTime.now());
+		param.setUpdatedAt(LocalDateTime.now());
+		param.setPassword(encoder.encode(param.getPassword()));
+		mapper.insertUser(param);
+		return true;
+	}
+
+	@Override
+	public boolean removeByUserIds(Long[] userIds) {
+		for (Long id : userIds) {
+			if (id == 1L)
+				throw new BaseException(ResponseEnum.UNAUTHORIZED);
+		}
+		mapper.removeByColumns("id", arrayToStr(userIds));
+		return groupUserService.removeByUserIds(userIds);
+	}
+
+	private String arrayToStr(Long[] values) {
+		if (values.length == 0) {
+			log.error(">>>传入的数组长度为0");
+			throw new BaseException(ResponseEnum.DB_ERROR);
+		}
+		Set<Long> set = new HashSet<>();
+		Collections.addAll(set, values);
+		String str = set.stream().map(s -> s.toString()).collect(Collectors.joining(","));
+		return "(" + str + ")";
 	}
 
 }

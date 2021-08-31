@@ -1,21 +1,22 @@
 package com.aoexe.discuz.system.modular.group.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.annotation.Resource;
+
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aoexe.discuz.core.annotion.Permission;
 import com.aoexe.discuz.system.modular.group.entity.DzqGroup;
 import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
+
 
 /**
  * <p>
@@ -29,30 +30,18 @@ import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
 @RequestMapping("/group")
 public class DzqGroupController {
 
-	@Autowired
+	@Resource
 	private IDzqGroupService groupService;
 	
-	@PostMapping("/c")
-	@Permission
-	public void create(@Validated @RequestBody DzqGroup group) {
-		
+	@PostMapping
+	public DzqGroup create(@Validated @RequestBody DzqGroup group) {
+		return null;
 	}
 	
-	@GetMapping("/r/{groupId}")
-	@Permission
-	public DzqGroup read(@PathVariable("groupId") Long groupId) {
-		return groupService.readGroup(groupId);
-	}
-	
-	@PutMapping("/u")
-	@Permission
-	public void update(@Validated @RequestBody DzqGroup group) {
-		
-	}
-	
-	@DeleteMapping("/d/{groupId}")
-	@Permission
-	public void delete(Long groupIds) {
-		
+	@PostMapping("/permission")
+	public void permission(@RequestParam("permissions") String[] permissions, @RequestParam("groupId") Long groupId) {
+		Set<String> p = new HashSet<>();
+		Collections.addAll(p, permissions);
+		groupService.resetPermissions(groupId, p);
 	}
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aoexe.discuz.system.modular.thread.mapper.QuestionsMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, thread_id, user_id, be_user_id, content, ip, port, price, onlooker_unit_price, onlooker_price, onlooker_number, is_onlooker, is_answer, is_approved, updated_at, created_at, expired_at, answered_at
+    </sql>
+
+</mapper>

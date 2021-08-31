@@ -11,10 +11,10 @@ import com.aoexe.discuz.system.modular.group.entity.DzqGroup;
  * @author chenyuxian
  * @date 2021-08-30
  */
-public class GroupCache extends AbstractRedisCacheOperator<DzqGroup>{
+public class GroupCache extends AbstractRedisCacheOperator<DzqGroup> {
 
 	private static final String GROUP_CACHE_PREFIX = "GROUP_";
-	
+
 	public GroupCache(RedisTemplate<String, DzqGroup> redisTemplate) {
 		super(redisTemplate);
 	}
@@ -23,5 +23,4 @@ public class GroupCache extends AbstractRedisCacheOperator<DzqGroup>{
 	public String getCommonKeyPrefix() {
 		return GROUP_CACHE_PREFIX;
 	}
-
 }

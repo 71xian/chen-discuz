@@ -39,16 +39,20 @@ public class BaseResponse implements Serializable {
 		this.requestAt = LocalDateTime.now();
 	}
 
+	public BaseResponse(Integer code, String message) {
+		this(code, message, new Object[0]);
+	}
+
 	public static BaseResponse ok(Object data) {
 		return new BaseResponse(0, "接口调用成功", data);
 	}
 
 	public static BaseResponse fail(ResponseEnum code) {
-		return new BaseResponse(code.getCode(), code.getMessage(), "");
+		return new BaseResponse(code.getCode(), code.getMessage());
 	}
 
 	public static BaseResponse fail(Integer code, String message) {
-		return new BaseResponse(code, message, "");
+		return new BaseResponse(code, message);
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.aoexe.discuz.system.modular.group.service;
 
-import java.util.List;
+import java.util.Set;
 
 import com.aoexe.discuz.system.modular.group.entity.GroupUser;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -15,10 +15,17 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IGroupUserService extends IService<GroupUser> {
 
+	Set<Long> getUserIdsByGroupId(Long groupId);
+	
+	Set<Long> getGroupIdsByUserId(Long userId);
+	
 	Long getGroupIdByUserId(Long userId);
 	
-	List<Long> getUserIdsByGroupId(Long groupId);
+	boolean removeByGroupId(Long groupId);
 	
-	void deleteUsers(List<Long> ids);
+	boolean removeByUserId(Long userId);
 	
+	boolean removeByUserIds(Long[] userIds);
+	
+	boolean removeByGroupIds(Long[] groupIds);
 }

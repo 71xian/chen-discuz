@@ -39,6 +39,9 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object>{
 				throw new BaseException(ResponseEnum.INTERNAL_ERROR);
 			}
 		}
+		if(body instanceof Void) {
+			return BaseResponse.ok(new Object[0]);
+		}
 		return BaseResponse.ok(body);
 	}
 

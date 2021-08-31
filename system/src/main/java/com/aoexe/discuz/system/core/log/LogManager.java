@@ -9,7 +9,6 @@ import org.springframework.scheduling.concurrent.ScheduledExecutorFactoryBean;
 import com.aoexe.discuz.core.context.security.SecurityContextHolder;
 import com.aoexe.discuz.core.util.IpUtil;
 import com.aoexe.discuz.core.util.RequestUtil;
-import com.aoexe.discuz.system.modular.log.entity.UserLoginFailLog;
 import com.aoexe.discuz.system.modular.user.entity.User;
 
 /**
@@ -35,7 +34,7 @@ public class LogManager {
 		HttpServletRequest request = RequestUtil.getRequest();
 		String ip = IpUtil.getIp(request);
 		Long userId = ((User)SecurityContextHolder.getContext().getLoginUser()).getId();
-		UserLoginFailLog log = new UserLoginFailLog();
+		
 		
 	}
 }
