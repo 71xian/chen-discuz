@@ -1,9 +1,12 @@
 package com.aoexe.discuz.system.modular.user.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.Set;
 
+import com.aoexe.discuz.core.context.login.LoginUser;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,7 +26,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "User对象", description = "")
-public class User implements Serializable {
+public class User implements Serializable, LoginUser{
 
 	private static final long serialVersionUID = 1L;
 
@@ -102,24 +105,27 @@ public class User implements Serializable {
 	private String realname;
 
 	@ApiModelProperty(value = "头像修改时间")
-	private LocalDateTime avatarAt;
+	private Date avatarAt;
 
 	@ApiModelProperty(value = "最后登录时间")
-	private LocalDateTime loginAt;
+	private Date loginAt;
 
 	@ApiModelProperty(value = "付费加入时间")
-	private LocalDateTime joinedAt;
+	private Date joinedAt;
 
 	@ApiModelProperty(value = "付费到期时间")
-	private LocalDateTime expiredAt;
+	private Date expiredAt;
 
 	@ApiModelProperty(value = "创建时间")
-	private LocalDateTime createdAt;
+	private Date createdAt;
 
 	@ApiModelProperty(value = "更新时间")
-	private LocalDateTime updatedAt;
+	private Date updatedAt;
 
 	@ApiModelProperty(value = "登录绑定类型；0：默认或微信；2：qq登录；")
 	private Integer bindType;
+
+	@TableField(exist = false)
+	private Set<String> permissions;
 
 }

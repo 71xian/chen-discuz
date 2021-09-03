@@ -3,6 +3,7 @@ package com.aoexe.discuz.system.core.cache;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import com.aoexe.discuz.system.core.cache.base.AbstractRedisCacheOperator;
+import com.aoexe.discuz.system.modular.group.consts.Constant;
 import com.aoexe.discuz.system.modular.group.entity.DzqGroup;
 
 /**
@@ -22,5 +23,13 @@ public class GroupCache extends AbstractRedisCacheOperator<DzqGroup> {
 	@Override
 	public String getCommonKeyPrefix() {
 		return GROUP_CACHE_PREFIX;
+	}
+	
+	public DzqGroup getDefault() {
+		return get(Constant.DEFAULT_GROUP);
+	}
+	
+	public DzqGroup getTourist() {
+		return get(Constant.TOURIST_GROUP);
 	}
 }

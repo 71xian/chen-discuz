@@ -2,13 +2,8 @@ server:
   port: 8080
   servlet:
     context-path: /
-  undertow:
-    io-threads: 16
-    worker-threads: 128
-    buffer-size: 1024
-    buffers-per-region: 1024
-    direct-buffers: true
-    max-http-post-size: -1B
+  tomcat:
+    uri-encoding: UTF-8
 
 spring:
   profiles:
@@ -17,14 +12,13 @@ spring:
     name: DiscuzQ
   jackson:
     time-zone: GMT+8
-    date-format: yyyy-MM-dd HH:mm:ss.SSS
+    date-format: yyyy-MM-dd HH:mm:ss
     locale: zh_CN
     serialization:
       # 格式化输出
       indent_output: false
   servlet:
     multipart:
-      enabled: true
       max-file-size: 1024MB
       max-request-size: 1024MB
     

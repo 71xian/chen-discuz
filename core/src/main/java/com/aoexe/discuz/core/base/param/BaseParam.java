@@ -13,4 +13,6 @@ public class BaseParam implements Serializable{
 	
 	public @interface login{}
 	
+	public @interface edit{}
+	
 }

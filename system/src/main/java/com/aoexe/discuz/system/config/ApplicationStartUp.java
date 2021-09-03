@@ -3,6 +3,7 @@ package com.aoexe.discuz.system.config;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
@@ -54,14 +54,11 @@ public class ApplicationStartUp implements ApplicationRunner {
 		Set<String> resources = new HashSet<>();
 		Map<RequestMappingInfo, HandlerMethod> handlerMethods = requestMappingInfoHandlerMapping.getHandlerMethods();
 		handlerMethods.forEach((info, handlerMethod) -> {
-			Permission modulePermission = handlerMethod.getBeanType().getAnnotation(Permission.class);
-			Permission methodPermission = handlerMethod.getMethod().getAnnotation(Permission.class);
-			if(modulePermission == null || methodPermission == null) {
+			Permission permission= handlerMethod.getMethod().getAnnotation(Permission.class);
+			if(Objects.isNull(permission)) {
 				return;
 			}
-			Set<RequestMethod> methods = info.getMethodsCondition().getMethods();
-			String path = methods.toArray()[0] + ":" + info.getPatternsCondition().getPatterns();
-			resources.add(path);
+			resources.add(permission.value());
 		});
 		return resources;
 	}

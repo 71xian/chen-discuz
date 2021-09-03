@@ -9,4 +9,6 @@ public interface Constant {
 	long LOGIN = 10L;
 	
 	String DEFAULT_GROUP = "DEFAULT:";
+	
+	String TOURIST_GROUP = "TOURIST:";
 }

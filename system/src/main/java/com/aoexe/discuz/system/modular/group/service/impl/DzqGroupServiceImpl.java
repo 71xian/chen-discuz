@@ -70,11 +70,11 @@ public class DzqGroupServiceImpl extends ServiceImpl<DzqGroupMapper, DzqGroup> i
 	}
 
 	@Override
-	public Set<String> getPermissionByUserId(Long userId) {
+	public Set<String> getPermissionsByUserId(Long userId) {
 		Set<Long> groupIds = groupUserService.getGroupIdsByUserId(userId);
 		Set<String> permissions = new HashSet<>();
 		groupIds.forEach(g -> {
-			permissions.addAll(cache.get(g.toString()).getPermissions());
+			permissions.addAll(getPermissionsByGroupId(g));
 		});
 		return permissions;
 	}
@@ -105,7 +105,7 @@ public class DzqGroupServiceImpl extends ServiceImpl<DzqGroupMapper, DzqGroup> i
 	}
 
 	@Override
-	public DzqGroup select(Long groupId) {
+	public DzqGroup getGroupById(Long groupId) {
 		DzqGroup group = cache.get(groupId.toString());
 		if (group == null) {
 			group = mapper.findByColumn("id", groupId.toString());
@@ -141,6 +141,21 @@ public class DzqGroupServiceImpl extends ServiceImpl<DzqGroupMapper, DzqGroup> i
 				return false;
 		}
 		return true;
+	}
+
+	@Override
+	public Set<String> getPermissionsByGroupId(Long groupId) {
+		DzqGroup group = cache.get(groupId.toString());
+		if(group == null) {
+			group = getGroupById(groupId);
+			System.out.println(group);
+			if(group == null) {
+				throw new BaseException(ResponseEnum.RESOURCE_NOT_FOUND);
+			}
+			group.setPermissions(getPermissionsByGroupId(groupId));
+			cache.put(groupId.toString(), group);
+		}
+		return group.getPermissions();
 	}
 
 }

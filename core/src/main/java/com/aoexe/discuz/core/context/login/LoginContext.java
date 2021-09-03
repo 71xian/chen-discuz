@@ -1,15 +1,19 @@
 package com.aoexe.discuz.core.context.login;
 
-import java.util.Set;
+public class LoginContext {
 
-public interface LoginContext {
+	private static final ThreadLocal<LoginUser> CONTEXT_HOLDER = new ThreadLocal<>();
 	
-	Long getUserId();
+	public static void set(LoginUser loginUser) {
+		CONTEXT_HOLDER.set(loginUser);
+	}
 	
-	String getUsername();
+	public static LoginUser get() {
+		return CONTEXT_HOLDER.get();
+	}
 	
-	boolean hasLogin();
-	
-	Set<String> getPermissions();
+	public static void clear() {
+		CONTEXT_HOLDER.remove();
+	}
 	
 }

@@ -17,4 +17,5 @@ import java.lang.annotation.Target;
 @Target({ TYPE, METHOD })
 public @interface Permission {
 
+	String value() default "";
 }

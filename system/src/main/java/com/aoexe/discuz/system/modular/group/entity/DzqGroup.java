@@ -1,12 +1,13 @@
 package com.aoexe.discuz.system.modular.group.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

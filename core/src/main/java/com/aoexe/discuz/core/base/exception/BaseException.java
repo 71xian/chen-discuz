@@ -17,11 +17,18 @@ public class BaseException extends RuntimeException {
 
 	private static final long serialVersionUID = -952771024717915650L;
 
-	private ResponseEnum code;
-	
+	private Integer code;
+
+	private String message;
+
 	public BaseException(ResponseEnum code) {
-		super(code.getMessage());
+		this(code.getCode(), code.getMessage());
+	}
+
+	public BaseException(Integer code, String message) {
+		super(message);
 		this.code = code;
+		this.message = message;
 	}
 
 }

@@ -76,11 +76,4 @@ public class GroupUserServiceImpl extends ServiceImpl<GroupUserMapper, GroupUser
 		return "(" + str + ")";
 	}
 
-	@Override
-	public Long getGroupIdByUserId(Long userId) {
-		Set<Long> findByColumn = mapper.findByColumn("group_id", "user_id", userId);
-		
-		return null;
-	}
-
 }

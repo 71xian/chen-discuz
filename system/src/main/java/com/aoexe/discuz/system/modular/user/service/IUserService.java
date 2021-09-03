@@ -16,8 +16,18 @@ public interface IUserService extends IService<User> {
 
 	User getUserByUsername(String username);
 	
-	boolean insertUser(UserParam param);
+	void removeByUserIds(Long[] userIds);
 	
-	boolean removeByUserIds(Long[] userIds);
+	String register(UserParam param);
+	
+	String login(UserParam param);
+	
+	void logout();
+	
+	User updateAvatar(User user, String avatarUrl);
+	
+	User deleteAvatar(User user);
+	
+	User editUser(Long userId, UserParam param);
 	
 }

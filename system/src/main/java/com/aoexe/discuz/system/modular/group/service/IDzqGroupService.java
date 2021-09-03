@@ -18,14 +18,16 @@ public interface IDzqGroupService extends IService<DzqGroup> {
 	DzqGroup getDefaultGroup();
 
 	void setDefaultGroup(Long groupId);
-
-	Set<String> getPermissionByUserId(Long userId);
+	
+	Set<String> getPermissionsByGroupId(Long groupId);
+	
+	Set<String> getPermissionsByUserId(Long userId);
 	
 	void resetPermissions(Long groupId, Set<String> permissions);
 
 	void create(String name);
 
-	DzqGroup select(Long groupId);
+	DzqGroup getGroupById(Long groupId);
 	
 	boolean remove(Long groupId);
 

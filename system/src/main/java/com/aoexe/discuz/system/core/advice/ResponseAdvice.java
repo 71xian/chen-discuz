@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONException;
-import com.aoexe.discuz.core.base.exception.BaseException;
 import com.aoexe.discuz.core.base.response.BaseResponse;
-import com.aoexe.discuz.core.constant.ResponseEnum;
 
 /**
  * 将Controller层返回的对象转成Response对象 规范返回对象的格式
@@ -20,7 +17,7 @@ import com.aoexe.discuz.core.constant.ResponseEnum;
  * @author chenyuxian
  * @date 2021-08-25
  */
-@RestControllerAdvice(basePackages = {"com.aoexe.discuz.system.modular.*.controller"})
+@RestControllerAdvice(basePackages = "com.aoexe.discuz.system.modular")
 public class ResponseAdvice implements ResponseBodyAdvice<Object>{
 
 	@Override
@@ -33,14 +30,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object>{
 			Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request,
 			ServerHttpResponse response) {
 		if(body instanceof String) {
-			try {
-				return JSON.toJSONString(BaseResponse.ok(body));				
-			}catch (JSONException e) {
-				throw new BaseException(ResponseEnum.INTERNAL_ERROR);
-			}
-		}
-		if(body instanceof Void) {
-			return BaseResponse.ok(new Object[0]);
+			return JSON.toJSONString(BaseResponse.ok(body));
 		}
 		return BaseResponse.ok(body);
 	}

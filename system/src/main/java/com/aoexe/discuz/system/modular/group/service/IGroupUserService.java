@@ -19,8 +19,6 @@ public interface IGroupUserService extends IService<GroupUser> {
 	
 	Set<Long> getGroupIdsByUserId(Long userId);
 	
-	Long getGroupIdByUserId(Long userId);
-	
 	boolean removeByGroupId(Long groupId);
 	
 	boolean removeByUserId(Long userId);

@@ -1,9 +1,11 @@
 package com.aoexe.discuz.system.modular.user.param;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.aoexe.discuz.core.base.param.BaseParam;
 
@@ -12,29 +14,41 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UserParam extends BaseParam implements Serializable{
+public class UserParam extends BaseParam implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	
-	@NotBlank(message = "用户名不为空", groups = { register.class, login.class })
+	@NotNull(groups = { register.class, login.class })
+	@NotBlank(groups = { register.class, login.class })
+	@Length(max = 15, groups = {register.class, login.class})
 	private String username;
-	
-	@NotBlank(message = "用户密码不为空", groups = { register.class, login.class })
+
+	@NotNull(groups = { register.class, login.class })
+	@NotBlank(groups = { register.class, login.class })
 	private String password;
 	
-	@NotBlank(message = "用户昵称不为空", groups = { register.class })
+	private String newPassword;
+
+	@NotNull(groups = { register.class })
+	@NotBlank(groups = { register.class })
+	@Length(max = 15, groups = {register.class, login.class})
 	private String nickname;
 	
-	private String registerIp;
+	private String password_confirmation;
 	
-	private Integer registerPort;
+	private String payPassword;
 	
-	private String registerReason;
+	private String pay_password_confirmation;
 	
-	private LocalDateTime createdAt;
+	private String pay_password_token;
 	
-	private LocalDateTime updatedAt;
+	private String mobile;
 	
+	private Integer status;
+	
+	private String refuse_message;
+	
+	private String signature;
+	
+	private String register_reason;
 }

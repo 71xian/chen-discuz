@@ -2,8 +2,8 @@ package com.aoexe.discuz.system.core.cache;
 
 import org.springframework.data.redis.core.RedisTemplate;
 
+import com.aoexe.discuz.core.context.login.LoginUser;
 import com.aoexe.discuz.system.core.cache.base.AbstractRedisCacheOperator;
-import com.aoexe.discuz.system.modular.auth.entity.LoginUser;
 
 /**
  * 缓存当前登录用户的信息
@@ -25,6 +25,11 @@ public class UserCache extends AbstractRedisCacheOperator<LoginUser>{
 	@Override
 	public String getCommonKeyPrefix() {
 		return LOGIN_USER_CACHE_PREFIX;
+	}
+	
+	@Override
+	public void put(String key, LoginUser value) {
+		super.put(key, value, 2 * 60 * 60L);
 	}
 	
 }
