@@ -23,5 +23,5 @@ public interface IGroupPermissionService extends IService<GroupPermission> {
 	
 	boolean removeByGroupIds(Long[] groupIds);
 	
-	void insertByGroupId(Long groupId, Set<String> permissions);
+	boolean insertByGroupId(Long groupId, Set<String> permissions);
 }

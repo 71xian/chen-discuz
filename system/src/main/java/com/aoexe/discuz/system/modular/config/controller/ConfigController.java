@@ -1,22 +1,16 @@
 package com.aoexe.discuz.system.modular.config.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.aoexe.discuz.system.modular.config.entity.Config;
 import com.aoexe.discuz.system.modular.config.service.IConfigService;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.exception.CosClientException;
@@ -24,7 +18,7 @@ import com.qcloud.cos.exception.CosServiceException;
 import com.qcloud.cos.model.ObjectMetadata;
 import com.qcloud.cos.model.PutObjectResult;
 
-import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 
 /**
@@ -37,7 +31,7 @@ import io.swagger.v3.oas.annotations.Operation;
  */
 @RestController
 @RequestMapping("/config")
-@Api(tags = "站点配置接口")
+@ApiOperation(value = "站点配置")
 public class ConfigController {
 
 	@Resource
@@ -69,11 +63,4 @@ public class ConfigController {
 		return "success";
 	}
 
-	@GetMapping("/forum")
-	public Map<String, List<Config>> forum() {
-		Set<String> tags = configService.getTags();
-		Map<String, List<Config>> map = new HashMap<>();
-		tags.forEach(t -> map.put(t, configService.getConfigByTag(t)));
-		return map;
-	}
 }

@@ -1,14 +1,12 @@
 package com.aoexe.discuz.system.config;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -17,8 +15,7 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 
 import com.aoexe.discuz.core.annotion.Permission;
-import com.aoexe.discuz.core.context.constant.ConstantContext;
-import com.aoexe.discuz.system.modular.config.entity.Config;
+import com.aoexe.discuz.system.core.cache.ConfigCache;
 import com.aoexe.discuz.system.modular.config.service.IConfigService;
 import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
 
@@ -34,20 +31,20 @@ public class ApplicationStartUp implements ApplicationRunner {
 	@Resource
 	private RequestMappingInfoHandlerMapping requestMappingInfoHandlerMapping;
 
-	@Autowired
+	@Resource
 	private IDzqGroupService groupService;
 	
-	@Autowired
+	@Resource
 	private IConfigService configService;
+	
+	@Resource
+	private ConfigCache configCache;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		Set<String> resources = getPermissions();
 		groupService.resetPermissions(1L, resources);
-		List<Config> list = configService.list();
-		list.forEach(config -> {
-			ConstantContext.putConstant(config.getConfigKey(), config.getConfigValue());
-		});
+		configService.list().forEach(c -> configCache.set(c));
 	}
 
 	private Set<String> getPermissions() {

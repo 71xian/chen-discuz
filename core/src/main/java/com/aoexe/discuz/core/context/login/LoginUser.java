@@ -8,7 +8,5 @@ public interface LoginUser {
 
 	String getUsername();
 	
-	Long getGroupId();
-	
 	Set<String> getPermissions();
 }

@@ -45,6 +45,7 @@ public class User implements Serializable, LoginUser{
 	private String nickname;
 
 	@ApiModelProperty(value = "支付密码")
+	@JsonIgnore
 	private String payPassword;
 
 	@ApiModelProperty(value = "手机号")

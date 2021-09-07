@@ -1,48 +1,36 @@
 package com.aoexe.discuz.system.modular.user.service.impl;
 
-import static com.aoexe.discuz.core.constant.ResponseEnum.USER_BAN;
-import static com.aoexe.discuz.core.constant.ResponseEnum.USER_IN_REVIEW;
-import static com.aoexe.discuz.core.constant.ResponseEnum.USER_NEED_SIGNIN_FIELDS;
-import static com.aoexe.discuz.core.constant.ResponseEnum.VALIDATE_IGNORE;
-import static com.aoexe.discuz.core.constant.ResponseEnum.VALIDATE_REJECT;
-import static com.aoexe.discuz.system.modular.user.consts.UserStatus.BAN;
-import static com.aoexe.discuz.system.modular.user.consts.UserStatus.IGNORE;
-import static com.aoexe.discuz.system.modular.user.consts.UserStatus.MOD;
-import static com.aoexe.discuz.system.modular.user.consts.UserStatus.NEED_FIELDS;
-import static com.aoexe.discuz.system.modular.user.consts.UserStatus.REFUSE;
-
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import com.aoexe.discuz.core.base.exception.BaseException;
 import com.aoexe.discuz.core.constant.ResponseEnum;
-import com.aoexe.discuz.core.context.login.LoginContext;
-import com.aoexe.discuz.core.token.Token;
+import com.aoexe.discuz.core.context.session.SessionContext;
 import com.aoexe.discuz.core.util.BCryptPasswordEncoder;
-import com.aoexe.discuz.core.util.IpUtil;
-import com.aoexe.discuz.core.util.RequestUtil;
-import com.aoexe.discuz.core.util.TokenUtil;
 import com.aoexe.discuz.system.core.cache.GroupCache;
+import com.aoexe.discuz.system.core.cache.TokenCache;
 import com.aoexe.discuz.system.core.cache.UserCache;
-import com.aoexe.discuz.system.modular.group.entity.GroupUser;
 import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
 import com.aoexe.discuz.system.modular.group.service.IGroupPermissionService;
 import com.aoexe.discuz.system.modular.group.service.IGroupUserService;
+import com.aoexe.discuz.system.modular.user.entity.ExcelUser;
 import com.aoexe.discuz.system.modular.user.entity.User;
+import com.aoexe.discuz.system.modular.user.extra.StatusMap;
+import com.aoexe.discuz.system.modular.user.extra.UserParam;
+import com.aoexe.discuz.system.modular.user.extra.UserResult;
 import com.aoexe.discuz.system.modular.user.mapper.UserMapper;
-import com.aoexe.discuz.system.modular.user.param.UserParam;
 import com.aoexe.discuz.system.modular.user.service.IUserService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**
@@ -61,9 +49,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 	private BCryptPasswordEncoder encoder;
 
 	@Resource
-	private UserMapper mapper;
-
-	@Resource
 	private IGroupUserService groupUserService;
 
 	@Resource
@@ -78,76 +63,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 	@Resource
 	private UserCache userCache;
 
-	@Override
-	public String login(UserParam param) {
-		User user = getUserByUsername(param.getUsername());
-		String password = param.getPassword();
-		if (validUser(user, password)) {
-			fillLoginUserInfo(user);
-			updateById(user);
-			Token token = new Token(user.getId(), user.getUsername());
-			String tokenStr = TokenUtil.generateToken(token);
-			user.setPermissions(groupService.getPermissionsByUserId(user.getId()));
-			userCache.put(token.getUuid(), user);
-			return tokenStr;
-		}
-		return null;
-	}
+	@Resource
+	private TokenCache tokenCache;
 
 	@Override
 	public User getUserByUsername(String username) {
-		return mapper.findByColumnStr("username", username);
+		QueryWrapper<User> wrapper = new QueryWrapper<>();
+		wrapper.eq("username", username);
+		return getOne(wrapper);
 	}
 
 	@Override
-	public void removeByUserIds(Long[] userIds) {
-		for (Long id : userIds) {
-			if (id == 1L)
-				throw new BaseException(ResponseEnum.UNAUTHORIZED);
+	public boolean removeByUserIds(List<Long> userIds) {
+		if (userIds.contains(1L)) {
+			throw new BaseException(ResponseEnum.UNAUTHORIZED);
 		}
-		mapper.removeByColumns("id", arrayToStr(userIds));
-		groupUserService.removeByUserIds(userIds);
-	}
-
-	private String arrayToStr(Long[] values) {
-		if (values.length == 0) {
-			log.error(">>>传入的数组长度为0");
-			throw new BaseException(ResponseEnum.DB_ERROR);
-		}
-		Set<Long> set = new HashSet<>();
-		Collections.addAll(set, values);
-		String str = set.stream().map(s -> s.toString()).collect(Collectors.joining(","));
-		return "(" + str + ")";
+		QueryWrapper<User> wrapper = new QueryWrapper<>();
+		wrapper.in("id", userIds);
+		// 未完善
+		return remove(wrapper) && groupUserService.removeByUserIds(userIds);
 	}
 
 	@Override
-	public String register(UserParam param) {
-		if (getUserByUsername(param.getUsername()) != null) {
-			throw new BaseException(ResponseEnum.USERNAME_HAD_EXIST);
-		}
-		User user = new User();
-		fillRegisterUserInfo(param, user);
-		save(user);
-		GroupUser groupUser = new GroupUser();
-		groupUser.setUserId(user.getId());
-		groupUser.setGroupId(groupService.getDefaultGroup().getId());
-		groupUserService.save(groupUser);
-		Token token = new Token(user.getId(), user.getUsername());
-		return TokenUtil.generateToken(token);
-	}
-
-	@Override
-	public void logout() {
-		if (Objects.nonNull(LoginContext.get())) {
-			String tokenStr = TokenUtil.getTokenString(RequestUtil.getRequest());
-			Token token = TokenUtil.getTokenFromStr(tokenStr);
-			LoginContext.clear();
-			userCache.remove(token.getUuid());
-		}
-	}
-
-	@Override
-	public User updateAvatar(User user, String avatarUrl) {
+	public User updateAvatar(Long userId, String avatarUrl) {
+		User user = getById(userId);
 		user.setAvatar(avatarUrl);
 		Date now = new Date();
 		user.setAvatarAt(now);
@@ -157,71 +96,140 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 	}
 
 	@Override
-	public User deleteAvatar(User user) {
-		return updateAvatar(user, "");
+	public UserResult updateUser(Long userId, UserParam param) {
+		User user = getById(userId);
+		if (Objects.isNull(user)) {
+			throw new BaseException(ResponseEnum.NOT_FOUND_USER);
+		}
+		updateUsername(user, param);
+		updateNickname(user, param);
+		updatePassword(user, param);
+		updatePayPassword(user, param);
+		// 用户签名未加入敏感词校验
+		if (Objects.nonNull(param.getSignature())) {
+			user.setSignature(param.getSignature());
+		}
+		if (Objects.nonNull(param.getStatus())) {
+			user.setStatus(param.getStatus());
+		}
+		if (Objects.nonNull(param.getMobile())) {
+			user.setMobile(param.getMobile());
+		}
+		user.setUpdatedAt(new Date());
+		updateById(user);
+		updateUserCache(user);
+		UserResult result = new UserResult();
+		result.setUser(user);
+		if (user.getUsernameBout() < 5) {
+			result.setCanEditUsername(true);
+		}
+		return result;
 	}
 
 	@Override
-	public User editUser(Long userId, UserParam param) {
-		if(LoginContext.get().getId() == userId) {
-			if(StringUtils.isEmpty(param.getPassword())) {
-				throw new BaseException(ResponseEnum.PASSWORD_ILLEGALITY);
-			}
-		}
-		if(param.getNewPassword().contains(" ")) {
-			throw new BaseException(ResponseEnum.PASSWORD_NOT_ALLOW_HAS_SPACE);
-		}
-		if(!param.getNewPassword().equals(param.getPassword_confirmation())) {
-			throw new BaseException(ResponseEnum.PASSWORD_ILLEGALITY.getCode(), "密码不相同");
-		}
-		return null;
-	}
-	
-	private void fillLoginUserInfo(User user) {
-		HttpServletRequest request = RequestUtil.getRequest();
-		if (request != null) {
-			user.setLastLoginIp(IpUtil.getIp(request));
-			user.setLastLoginPort(request.getRemotePort());
-			user.setLoginAt(new Date());
-		}
+	public UserResult viewUser(Long userId) {
+		UserResult result = new UserResult();
+		result.setUser(getById(userId));
+		result.setCanDelete(false);
+		result.setCanEdit(true);
+		result.setCanEditUsername(true);
+		return result;
 	}
 
-	private void fillRegisterUserInfo(UserParam param, User user) {
-		HttpServletRequest request = RequestUtil.getRequest();
-		if (request != null) {
-			user.setUsername(param.getUsername());
-			user.setPassword(encoder.encode(param.getPassword()));
-			user.setNickname(param.getNickname());
-			user.setRegisterIp(IpUtil.getIp(request));
-			user.setRegisterPort(request.getRemotePort());
-			user.setRegisterReason("用户密码注册");
-			Date now = new Date();
-			user.setCreatedAt(now);
-			user.setUpdatedAt(now);
+	@Override
+	public List<ExcelUser> buildExcelUser(Long[] ids) {
+		List<User> users = null;
+		List<ExcelUser> excelUsers = new ArrayList<>();
+		if (Objects.isNull(ids) || ids.length == 0) {
+			users = list();
+		} else {
+			QueryWrapper<User> wrapper = new QueryWrapper<>();
+			wrapper.in("id", Arrays.asList(ids));
+			users = list(wrapper);
 		}
+		users.forEach(u -> {
+			ExcelUser e = new ExcelUser();
+			e.setUserId(u.getId());
+			e.setUsername(u.getUsername());
+			e.setStatus(StatusMap.get(u.getStatus()));
+			e.setGroupName(groupService.getById(groupUserService.getGroupIdByUserId(u.getId())).getName());
+			e.setRegisterAt(u.getCreatedAt());
+			e.setRegisterIp(u.getRegisterIp());
+			e.setRegisterPort(u.getRegisterPort());
+			e.setLoginAt(u.getLoginAt());
+			e.setLastLoginPort(u.getLastLoginPort());
+			e.setLastLoginPort(u.getLastLoginPort());
+			excelUsers.add(e);
+		});
+		return excelUsers;
 	}
 
-	
-	private boolean validUser(User user, String password) {
-		if (user == null) {
-			throw new BaseException(ResponseEnum.NOT_FOUND_USER);
+	/**
+	 * 只适用于更新自己，不能更新其他用户
+	 * 
+	 * @author chenyuxian
+	 * @date 2021-09-07 00:01:05
+	 * @param user
+	 */
+	private void updateUserCache(User user) {
+		userCache.set(user.getId().toString(), SessionContext.get(), user);
+	}
+
+	private void updatePassword(User user, UserParam param) {
+		// 密码为空
+		if (Objects.isNull(param.getPassword())) {
+			return;
 		}
-		if (!encoder.matches(password, user.getPassword())) {
+		// 验证旧密码失败
+		if (!encoder.matches(user.getPassword(), user.getPassword())) {
 			throw new BaseException(ResponseEnum.USERNAME_OR_PASSWORD_ERROR);
 		}
-		switch (user.getStatus()) {
-		case BAN:
-			throw new BaseException(USER_BAN);
-		case MOD:
-			throw new BaseException(USER_IN_REVIEW);
-		case REFUSE:
-			throw new BaseException(VALIDATE_REJECT);
-		case IGNORE:
-			throw new BaseException(VALIDATE_IGNORE);
-		case NEED_FIELDS:
-			throw new BaseException(USER_NEED_SIGNIN_FIELDS);
+
+		// 新旧密码不得相同
+		if (encoder.matches(user.getPassword(), param.getNewPassword())) {
+			throw new BaseException(ResponseEnum.USER_UPDATE_ERROR);
 		}
-		return true;
+		user.setPassword(encoder.encode(param.getPassword()));
 	}
 
+	private void updateUsername(User user, UserParam param) {
+		// 用户名为空
+		if (Objects.isNull(param.getUsername())) {
+			return;
+		}
+		// 用户名重复
+		if (Objects.nonNull(getUserByUsername(param.getUsername()))) {
+			throw new BaseException(ResponseEnum.USERNAME_HAD_EXIST);
+		}
+		user.setUsername(param.getUsername());
+		user.setUsernameBout(user.getUsernameBout() + 1);
+	}
+
+	private void updateNickname(User user, UserParam param) {
+		// 昵称为空
+		if (Objects.isNull(param.getUsername())) {
+			return;
+		}
+		user.setNickname(param.getNickname());
+	}
+
+	private void updatePayPassword(User user, UserParam param) {
+		if (Objects.nonNull(param.getPayPassword())) {
+			// 新建支付密码
+			if (user.getPayPassword().isEmpty()) {
+				user.setPayPassword(param.getPayPassword());
+			} else {
+				// 修改支付密码
+				user.setPayPassword(param.getPayPassword());
+			}
+		}
+	}
+
+	@Override
+	public Page<User> search(HttpServletRequest request) {
+		Page<User> page = new Page<>(1, 10);
+		QueryWrapper<User> wrapper = new QueryWrapper<>();
+		
+		return null;
+	}
 }

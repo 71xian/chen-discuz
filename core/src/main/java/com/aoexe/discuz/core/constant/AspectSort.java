@@ -27,5 +27,10 @@ public interface AspectSort {
 	 * 数据范围
 	 */
 	int DATA_SCOPE = -50;
+	
+	/**
+	 * 数据源
+	 */
+	int DATA_SOURCE = -90;
 
 }

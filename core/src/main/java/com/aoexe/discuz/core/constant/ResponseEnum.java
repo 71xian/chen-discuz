@@ -4,12 +4,6 @@ import java.io.Serializable;
 
 import lombok.Getter;
 
-/**
- * 错误响应码
- *
- * @author chenyuxian
- * @date 2021-08-14
- */
 @Getter
 public enum ResponseEnum implements Serializable{
 
@@ -487,6 +481,11 @@ public enum ResponseEnum implements Serializable{
 	 * 当前用户组下存在用户
 	 */
 	GROUP_HAS_USER(-7079, "当前用户组下存在用户"),
+	
+	/**
+	 * 密码两次输入不一致
+	 */
+	NEW_PASSWORD_ERROR(-7080, "密码两次输入不一致"),
 
 	/**
 	 * 需要绑定微信

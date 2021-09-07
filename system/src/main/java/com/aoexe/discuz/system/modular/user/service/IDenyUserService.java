@@ -1,6 +1,7 @@
 package com.aoexe.discuz.system.modular.user.service;
 
 import com.aoexe.discuz.system.modular.user.entity.DenyUser;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -13,4 +14,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IDenyUserService extends IService<DenyUser> {
 
+	DenyUser denyUser(Long userId);
+	
+	void removeDenyUser(Long userId);
+	
+	Page<DenyUser> denyUserList(Long userId);
 }

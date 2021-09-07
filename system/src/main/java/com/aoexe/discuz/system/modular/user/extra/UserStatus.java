@@ -1,4 +1,4 @@
-package com.aoexe.discuz.system.modular.user.consts;
+package com.aoexe.discuz.system.modular.user.extra;
 
 public interface UserStatus {
 

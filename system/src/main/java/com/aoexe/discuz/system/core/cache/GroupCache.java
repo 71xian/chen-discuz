@@ -1,8 +1,10 @@
 package com.aoexe.discuz.system.core.cache;
 
-import org.springframework.data.redis.core.RedisTemplate;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-import com.aoexe.discuz.system.core.cache.base.AbstractRedisCacheOperator;
+import org.springframework.stereotype.Component;
+
 import com.aoexe.discuz.system.modular.group.consts.Constant;
 import com.aoexe.discuz.system.modular.group.entity.DzqGroup;
 
@@ -12,24 +14,26 @@ import com.aoexe.discuz.system.modular.group.entity.DzqGroup;
  * @author chenyuxian
  * @date 2021-08-30
  */
-public class GroupCache extends AbstractRedisCacheOperator<DzqGroup> {
+@Component
+public class GroupCache {
 
-	private static final String GROUP_CACHE_PREFIX = "GROUP_";
+	// 使用字符串作为key，而不是使用Long作为key
+	// 这样子可以放一个"DEFAULT"键进去，设置默认用户组
+	private static final Map<String, DzqGroup> GROUP_MAPPING = new ConcurrentHashMap<>();
 
-	public GroupCache(RedisTemplate<String, DzqGroup> redisTemplate) {
-		super(redisTemplate);
+	public DzqGroup getDefaultGroup() {
+		return GROUP_MAPPING.get(Constant.DEFAULT_GROUP);
 	}
 
-	@Override
-	public String getCommonKeyPrefix() {
-		return GROUP_CACHE_PREFIX;
+	public DzqGroup get(String key) {
+		return GROUP_MAPPING.get(key);
+	}
+
+	public void put(String key, DzqGroup group) {
+		GROUP_MAPPING.put(key, group);
 	}
 	
-	public DzqGroup getDefault() {
-		return get(Constant.DEFAULT_GROUP);
-	}
-	
-	public DzqGroup getTourist() {
-		return get(Constant.TOURIST_GROUP);
+	public void remove(String key) {
+		GROUP_MAPPING.remove(key);
 	}
 }

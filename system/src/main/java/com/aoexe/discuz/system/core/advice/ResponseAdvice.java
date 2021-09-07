@@ -17,7 +17,7 @@ import com.aoexe.discuz.core.base.response.BaseResponse;
  * @author chenyuxian
  * @date 2021-08-25
  */
-@RestControllerAdvice(basePackages = "com.aoexe.discuz.system.modular")
+@RestControllerAdvice(basePackages = {"com.aoexe.discuz.web.controller", "com.aoexe.discuz.admin.controller"})
 public class ResponseAdvice implements ResponseBodyAdvice<Object>{
 
 	@Override

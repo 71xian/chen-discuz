@@ -21,7 +21,8 @@ public class CosConfig {
 
 	@Bean
 	public COSClient cosClient() {
-		
+		String secretId = "AKID4xaw1qPlqgFXYImzuYv1rQjlW0EDvMXR";
+		String secretKey = "f39yXppY1D8mB1btv1rRknZ4IFvKSKvK";
 		COSCredentials cred = new BasicCOSCredentials(secretId, secretKey);
 		Region region = new Region("ap-guangzhou");
 		ClientConfig clientConfig = new ClientConfig(region);

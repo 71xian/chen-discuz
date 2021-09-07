@@ -1,9 +1,10 @@
 package com.aoexe.discuz.system.core.cache;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
-import com.aoexe.discuz.core.context.login.LoginUser;
-import com.aoexe.discuz.system.core.cache.base.AbstractRedisCacheOperator;
+import com.aoexe.discuz.system.modular.user.entity.User;
 
 /**
  * 缓存当前登录用户的信息
@@ -11,25 +12,31 @@ import com.aoexe.discuz.system.core.cache.base.AbstractRedisCacheOperator;
  * @author chenyuxian
  * @date 2021-08-25
  */
-public class UserCache extends AbstractRedisCacheOperator<LoginUser>{
+@Component
+public class UserCache {
 
 	/**
 	 * 登录用户缓存前缀
 	 */
 	public static final String LOGIN_USER_CACHE_PREFIX = "LOGIN_USER_";
-	
-	public UserCache(RedisTemplate<String, LoginUser> redisTemplate) {
-		super(redisTemplate);
-	}
 
-	@Override
-	public String getCommonKeyPrefix() {
+	@Autowired
+	private RedisTemplate<String, User> redisTemplate;
+
+	public String getCommonKey() {
 		return LOGIN_USER_CACHE_PREFIX;
 	}
-	
-	@Override
-	public void put(String key, LoginUser value) {
-		super.put(key, value, 2 * 60 * 60L);
+
+	public void set(String id, String uuid, User value) {
+		redisTemplate.boundHashOps(getCommonKey() + id).put(uuid, value);
 	}
-	
+
+	public User get(String id, String uuid) {
+		return (User) redisTemplate.boundHashOps(getCommonKey() + id).get(uuid);
+	}
+
+	public Long remove(String id, String uuid) {
+		return redisTemplate.boundHashOps(getCommonKey() + id).delete(uuid);
+	}
+
 }

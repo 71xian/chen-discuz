@@ -1,19 +1,21 @@
 package com.aoexe.discuz.system.config;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.support.http.StatViewServlet;
-import com.alibaba.druid.support.http.WebStatFilter;
-import com.aoexe.discuz.system.config.properties.DruidProperties;
+import com.aoexe.discuz.core.annotion.DataSource.SourceName;
+import com.aoexe.discuz.system.core.datasource.DynamicDataSource;
 
 /**
  * druid配置多数据源
@@ -22,49 +24,42 @@ import com.aoexe.discuz.system.config.properties.DruidProperties;
  * @date 2021-08-20
  */
 @Configuration
+@Profile("prod")
 public class DruidConfig {
-
-	 /**
-     * druid配置
-     */
-    @Bean
-    @ConfigurationProperties(prefix = "spring.datasource")
-    public DruidProperties druidProperties() {
-        return new DruidProperties();
-    }
-
-    /**
-     * druid数据库连接池
-     */
-    @Bean(initMethod = "init")
-    public DruidDataSource dataSource() {
-        DruidDataSource dataSource = new DruidDataSource();
-        druidProperties().config(dataSource);
-        return dataSource;
-    }
 	
-	@Bean
-	public ServletRegistrationBean<StatViewServlet> druidServletRegistration() {
-		HashMap<String, String> statViewServletParams = new HashMap<>(4);
-		statViewServletParams.put("resetEnable", "true");
-		statViewServletParams.put("loginUsername", "admin");
-		statViewServletParams.put("loginPassword", "admin");
-
-		ServletRegistrationBean<StatViewServlet> registration = new ServletRegistrationBean<>(new StatViewServlet());
-		registration.addUrlMappings("/druid/*");
-		registration.setInitParameters(statViewServletParams);
-		return registration;
+	@Bean(destroyMethod = "close", initMethod = "init")
+	@ConfigurationProperties(prefix = "spring.datasource.master")
+	public DataSource master() {
+		return druidDataSource();
+	}
+	
+	@Bean(destroyMethod = "close", initMethod = "init")
+	@ConfigurationProperties(prefix = "spring.datasource.slave")
+	public DataSource slave() {
+		return druidDataSource();
 	}
 	
 	@Bean
-    public FilterRegistrationBean<WebStatFilter> webStatFilter(){
-        FilterRegistrationBean<WebStatFilter> filterRegistrationBean = new FilterRegistrationBean<>();
-        filterRegistrationBean.setFilter(new WebStatFilter());
-        Map<String,String> initParams = new HashMap<>();
-        initParams.put("exclusions","*.js,*.css,/druid/*");
-        filterRegistrationBean.setInitParameters(initParams);
-        filterRegistrationBean.setUrlPatterns(Arrays.asList("/*"));
-        return filterRegistrationBean;
-    }
+	@Primary  //自动装配时当出现多个Bean候选者时，被注解为@Primary的Bean将作为首选者，否则将抛出异常
+	public DataSource dataSource() {
+		DynamicDataSource dynamicDataSource = new DynamicDataSource();
+		Map<Object, Object> dataSourceMap = new HashMap<>(2);
+		dataSourceMap.put(SourceName.MASTER.name(), master());
+		dataSourceMap.put(SourceName.SLVAE.name(), slave());
+		// 将master作为默认的数据源
+		dynamicDataSource.setDefaultTargetDataSource(master());
+		// 将master和slave作为指定的数据源
+		dynamicDataSource.setTargetDataSources(dataSourceMap);
+		return dynamicDataSource;
+	}
+	
+	@Bean
+	public PlatformTransactionManager transactionManager() {
+		return new DataSourceTransactionManager(dataSource());
+	}
+	
+	public DataSource druidDataSource() {
+		return new DruidDataSource();
+	}
 
 }

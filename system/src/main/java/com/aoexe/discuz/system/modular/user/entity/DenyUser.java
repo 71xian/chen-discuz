@@ -1,7 +1,8 @@
 package com.aoexe.discuz.system.modular.user.entity;
 
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -27,7 +28,7 @@ public class DenyUser implements Serializable {
     private Long denyUserId;
 
     @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
 
 }

@@ -1,7 +1,5 @@
 package com.aoexe.discuz.system.config;
 
-import javax.annotation.Resource;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -18,12 +16,9 @@ import com.aoexe.discuz.system.core.security.core.SecurityFilter;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-	@Resource
-	private SecurityFilter securityFilter;
-
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(securityFilter).addPathPatterns("/**").excludePathPatterns("/druid/**", "/webjars/**",
+		registry.addInterceptor(new SecurityFilter()).addPathPatterns("/**").excludePathPatterns("/druid/**", "/webjars/**",
 				"/swagger-ui.html", "/swagger-ui/*", "/v2/api-docs", "/v3/api-docs", "/swagger-resources/**");
 	}
 

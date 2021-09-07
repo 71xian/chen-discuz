@@ -1,20 +1,18 @@
 package com.aoexe.discuz.system.modular.group.service.impl;
 
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aoexe.discuz.core.base.exception.BaseException;
-import com.aoexe.discuz.core.constant.ResponseEnum;
 import com.aoexe.discuz.system.modular.group.entity.GroupPermission;
 import com.aoexe.discuz.system.modular.group.mapper.GroupPermissionMapper;
 import com.aoexe.discuz.system.modular.group.service.IGroupPermissionService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**
@@ -30,44 +28,44 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 public class GroupPermissionServiceImpl extends ServiceImpl<GroupPermissionMapper, GroupPermission>
 		implements IGroupPermissionService {
 
-	@Resource
-	private GroupPermissionMapper mapper;
-
 	@Override
 	public Set<String> getPermissionsByGroupId(Long groupId) {
-		return mapper.findByColumn("group_id", groupId);
+		QueryWrapper<GroupPermission> wrapper = new QueryWrapper<>();
+		wrapper.eq("group_id", groupId);
+		return list(wrapper).stream().map(GroupPermission::getPermission).collect(Collectors.toSet());
 	}
 
 	@Override
 	public Set<String> getPermissionsByGroupIds(Long[] groupIds) {
-		return mapper.findByColumns("group_id", arrayToStr(groupIds));
+		QueryWrapper<GroupPermission> wrapper = new QueryWrapper<>();
+		wrapper.in("group_id", Arrays.asList(groupIds));
+		return list(wrapper).stream().map(GroupPermission::getPermission).collect(Collectors.toSet());
 	}
 
 	@Override
 	public boolean removeByGroupId(Long groupId) {
-		return mapper.removeByColumn("group_id", groupId);
+		QueryWrapper<GroupPermission> wrapper = new QueryWrapper<>();
+		wrapper.eq("group_id", groupId);
+		return remove(wrapper);
 	}
 
 	@Override
 	public boolean removeByGroupIds(Long[] groupIds) {
-		return mapper.removeByColumns("group_id", arrayToStr(groupIds));
-	}
-
-	private String arrayToStr(Long[] values) {
-		if (values.length == 0) {
-			throw new BaseException(ResponseEnum.DB_ERROR);
-		}
-		Set<Long> set = new HashSet<>();
-		Collections.addAll(set, values);
-		String sql = set.stream().map(s -> s.toString()).collect(Collectors.joining(","));
-		return "(" + sql + ")";
+		QueryWrapper<GroupPermission> wrapper = new QueryWrapper<>();
+		wrapper.in("group_id", Arrays.asList(groupIds));
+		return remove(wrapper);
 	}
 
 	@Override
-	public void insertByGroupId(Long groupId, Set<String> permissions) {
-		String sql = permissions.stream().map(p -> "(" + groupId.toString() + ",'" + p + "')")
-				.collect(Collectors.joining(","));
-		mapper.insertByGroupId(groupId, sql);
+	public boolean insertByGroupId(Long groupId, Set<String> permissions) {
+		List<GroupPermission> groupPermissions = new ArrayList<>(permissions.size());
+		permissions.forEach(p -> {
+			GroupPermission g = new GroupPermission();
+			g.setGroupId(groupId);
+			g.setPermission(p);
+			groupPermissions.add(g);
+		});
+		return saveBatch(groupPermissions);
 	}
 
 }

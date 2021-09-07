@@ -2,10 +2,11 @@ package com.aoexe.discuz.core.base.response;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
+import java.util.Map;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.aoexe.discuz.core.constant.ResponseEnum;
+import com.aoexe.discuz.core.context.session.SessionContext;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +30,8 @@ public class BaseResponse<T> implements Serializable {
 	private String message;
 
 	private T data;
+	
+	private Map<String, String> extra;
 
 	private String requestId;
 
@@ -39,7 +42,7 @@ public class BaseResponse<T> implements Serializable {
 		this.code = code;
 		this.message = message;
 		this.data = data;
-		this.requestId = UUID.randomUUID().toString();
+		this.requestId = SessionContext.get();
 		this.requestAt = new Date();
 	}
 

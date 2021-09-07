@@ -1,7 +1,14 @@
 package com.aoexe.discuz.system.modular.user.service;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.aoexe.discuz.system.modular.user.entity.ExcelUser;
 import com.aoexe.discuz.system.modular.user.entity.User;
-import com.aoexe.discuz.system.modular.user.param.UserParam;
+import com.aoexe.discuz.system.modular.user.extra.UserParam;
+import com.aoexe.discuz.system.modular.user.extra.UserResult;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -15,19 +22,16 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IUserService extends IService<User> {
 
 	User getUserByUsername(String username);
+
+	boolean removeByUserIds(List<Long> userIds);
+
+	User updateAvatar(Long userId, String avatarUrl);
 	
-	void removeByUserIds(Long[] userIds);
+	UserResult updateUser(Long userId, UserParam param);
 	
-	String register(UserParam param);
+	UserResult viewUser(Long userId);
 	
-	String login(UserParam param);
+	List<ExcelUser> buildExcelUser(Long[] ids);
 	
-	void logout();
-	
-	User updateAvatar(User user, String avatarUrl);
-	
-	User deleteAvatar(User user);
-	
-	User editUser(Long userId, UserParam param);
-	
+	Page<User> search(HttpServletRequest request);
 }

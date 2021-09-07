@@ -10,19 +10,24 @@ import com.aoexe.discuz.core.constant.ResponseEnum;
 import com.aoexe.discuz.core.context.login.LoginContext;
 import com.aoexe.discuz.core.context.login.LoginUser;
 
+/**
+ * 权限校验
+ *
+ * @author chenyuxian
+ * @date 2021-09-06 00:14:46
+ */
 public class PermissionFilter implements Filter {
 
 	@Override
 	public boolean filter(HttpServletRequest request, HttpServletResponse response) {
-		LoginUser user = LoginContext.get();
-		if (Objects.isNull(user)) {
-			throw new BaseException(ResponseEnum.USER_LOGIN_STATUS_NOT_NULL);
-		}
-		if (user.getId() == 1L) {
+		String permission = (String) request.getAttribute("permission");
+		if (Objects.isNull(permission) || permission.equals("null")) {
 			return true;
 		}
-
-		if (!user.getPermissions().contains(request.getAttribute("permission"))) {
+		
+		LoginUser user = LoginContext.get();
+		
+		if (!user.getPermissions().contains(permission)) {
 			throw new BaseException(ResponseEnum.UNAUTHORIZED);
 		}
 		return true;

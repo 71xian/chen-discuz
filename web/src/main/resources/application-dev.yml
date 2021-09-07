@@ -1,12 +1,37 @@
 spring:
   datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/root?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
     password: chenyuxian.cn
-    type: com.alibaba.druid.pool.DruidDataSource
-    max-active: 20
-    max-pool-prepared-statement-per-connection-size: 20
+    #----数据库连接池配置----------------------
+    # 下面为连接池的补充设置，应用到上面所有数据源中
+    # 初始化大小，最小，最大
+    initialSize: 5
+    minIdle: 1
+    maxActive: 50
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: false
+    #maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,slf4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties:
+      druid:
+        stat:
+        mergeSql: true
+        slowSqlMillis: 5000
   redis:
     timeout: 10s
     lettuce:
@@ -24,9 +49,3 @@ jwt:
   expired: 1
   refresh-header: REFRESH-TOKEN
   refresh: 7
-  
-qiniu:
-  access: "y5S-dm40nFe9fW39tIVRkryWtm3K9ydlLVGx11Cw"
-  secret: "Wl3oneugB-3qA_qgorSK1SB2zUAPDXHY3s8qUiUy"
-  bucket: "chen-aoe"
-  domain: "cdn.yxcling.cn"

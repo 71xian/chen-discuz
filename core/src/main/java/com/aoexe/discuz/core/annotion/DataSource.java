@@ -9,6 +9,13 @@ import java.lang.annotation.Target;
 
 @Retention(RUNTIME)
 @Target({ TYPE, METHOD })
-public @interface Ignore {
+public @interface DataSource {
 
+	SourceName value();
+
+	public enum SourceName {
+		MASTER,
+
+		SLVAE
+	}
 }
