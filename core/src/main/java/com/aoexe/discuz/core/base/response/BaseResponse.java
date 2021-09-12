@@ -1,8 +1,7 @@
 package com.aoexe.discuz.core.base.response;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Map;
+import java.time.LocalDateTime;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.aoexe.discuz.core.constant.ResponseEnum;
@@ -31,19 +30,17 @@ public class BaseResponse<T> implements Serializable {
 
 	private T data;
 	
-	private Map<String, String> extra;
-
 	private String requestId;
 
 	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
-	private Date requestAt;
+	private LocalDateTime requestAt;
 
 	public BaseResponse(Integer code, String message, T data) {
 		this.code = code;
 		this.message = message;
 		this.data = data;
 		this.requestId = SessionContext.get();
-		this.requestAt = new Date();
+		this.requestAt = LocalDateTime.now();
 	}
 
 	public static <T> BaseResponse<T> ok(T data){

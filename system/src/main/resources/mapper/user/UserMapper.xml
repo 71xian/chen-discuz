@@ -5,8 +5,7 @@
 
 	<!-- 通用查询结果列 -->
 	<sql id="Base_Column_List">
-		id, username, password, nickname, pay_password, mobile,
-		signature,
+		id, username, password, nickname, pay_password, mobile, signature,
 		last_login_ip, last_login_port, register_ip, register_port,
 		register_reason, reject_reason, username_bout, thread_count,
 		follow_count, fans_count, liked_count, question_count, status, avatar,
@@ -14,17 +13,15 @@
 		expired_at, created_at, updated_at, bind_type
 	</sql>
 
-	<!-- 注册用户 -->
-	<insert id="insertUser"
-		useGeneratedKeys="true" keyProperty="id">
-		insert into User (username,
-		password, nickname, register_ip,
-		register_port, register_reason,
-		created_at, updated_at) values
-		(#{username}, #{password}, #{nickname},
-		#{register_ip},
-		#{register_port}, #{register_reason}, #{created_at},
-		#{updated_at})
-	</insert>
+	<!-- 批量删除用户 -->
+	<delete id="removeIds">
+		delete user, group_user from
+		user u left join
+		group_user gu on u.id = gu.user_id
+		where u.id in
+		<foreach collection="ids" separator="," item="id">
+			(#{id})
+		</foreach>
+	</delete>
 
 </mapper>

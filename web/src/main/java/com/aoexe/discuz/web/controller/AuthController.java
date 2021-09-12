@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.aoexe.discuz.core.base.exception.BaseException;
 import com.aoexe.discuz.core.constant.ResponseEnum;
-import com.aoexe.discuz.system.modular.auth.param.LoginParam;
-import com.aoexe.discuz.system.modular.auth.param.RegisterParam;
-import com.aoexe.discuz.system.modular.auth.param.TokenParam;
-import com.aoexe.discuz.system.modular.auth.result.AuthResult;
+import com.aoexe.discuz.system.modular.auth.model.param.LoginParam;
+import com.aoexe.discuz.system.modular.auth.model.param.RegisterParam;
+import com.aoexe.discuz.system.modular.auth.model.param.TokenParam;
+import com.aoexe.discuz.system.modular.auth.model.result.AuthResult;
 import com.aoexe.discuz.system.modular.auth.service.IAuthService;
 
 import io.swagger.annotations.Api;
@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
  * @date 2021-09-01
  */
 @RestController
-@Api(value = "用户认证模块", tags = "用户认证模块")
+@Api(value = "用户认证", tags = "用户认证")
 public class AuthController {
 
 	@Resource

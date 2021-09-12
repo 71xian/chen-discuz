@@ -1,36 +1,35 @@
 package com.aoexe.discuz.system.modular.user.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.aoexe.discuz.core.base.exception.BaseException;
 import com.aoexe.discuz.core.constant.ResponseEnum;
 import com.aoexe.discuz.core.context.session.SessionContext;
 import com.aoexe.discuz.core.util.BCryptPasswordEncoder;
-import com.aoexe.discuz.system.core.cache.GroupCache;
-import com.aoexe.discuz.system.core.cache.TokenCache;
+import com.aoexe.discuz.core.util.BeanUtil;
 import com.aoexe.discuz.system.core.cache.UserCache;
+import com.aoexe.discuz.system.modular.config.service.IConfigService;
 import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
-import com.aoexe.discuz.system.modular.group.service.IGroupPermissionService;
-import com.aoexe.discuz.system.modular.group.service.IGroupUserService;
-import com.aoexe.discuz.system.modular.user.entity.ExcelUser;
-import com.aoexe.discuz.system.modular.user.entity.User;
-import com.aoexe.discuz.system.modular.user.extra.StatusMap;
-import com.aoexe.discuz.system.modular.user.extra.UserParam;
-import com.aoexe.discuz.system.modular.user.extra.UserResult;
 import com.aoexe.discuz.system.modular.user.mapper.UserMapper;
+import com.aoexe.discuz.system.modular.user.model.entity.User;
+import com.aoexe.discuz.system.modular.user.model.enums.StatusMap;
+import com.aoexe.discuz.system.modular.user.model.param.UserParam;
+import com.aoexe.discuz.system.modular.user.model.result.ExcelUser;
+import com.aoexe.discuz.system.modular.user.model.result.UserResult;
 import com.aoexe.discuz.system.modular.user.service.IUserService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**
@@ -39,65 +38,48 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * </p>
  *
  * @author chenyuxian
- * @since 2021-08-25
+ * @since 2021-09-10
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
-	@Resource
+	@Autowired
 	private BCryptPasswordEncoder encoder;
 
-	@Resource
-	private IGroupUserService groupUserService;
-
-	@Resource
+	@Autowired
 	private IDzqGroupService groupService;
 
-	@Resource
-	private IGroupPermissionService groupPermissionService;
+	@Autowired
+	private IConfigService configService;
 
-	@Resource
-	private GroupCache groupCache;
-
-	@Resource
+	@Autowired
 	private UserCache userCache;
 
-	@Resource
-	private TokenCache tokenCache;
-
 	@Override
-	public User getUserByUsername(String username) {
-		QueryWrapper<User> wrapper = new QueryWrapper<>();
-		wrapper.eq("username", username);
-		return getOne(wrapper);
-	}
-
-	@Override
-	public boolean removeByUserIds(List<Long> userIds) {
-		if (userIds.contains(1L)) {
-			throw new BaseException(ResponseEnum.UNAUTHORIZED);
-		}
-		QueryWrapper<User> wrapper = new QueryWrapper<>();
-		wrapper.in("id", userIds);
-		// 未完善
-		return remove(wrapper) && groupUserService.removeByUserIds(userIds);
+	public int removeByUserIds(Collection<Long> ids) {
+		LambdaQueryChainWrapper<User> lambdaQuery = this.lambdaQuery().in(User::getId, ids);
+		this.remove(lambdaQuery);
+		return baseMapper.removeByIds(ids);
 	}
 
 	@Override
 	public User updateAvatar(Long userId, String avatarUrl) {
-		User user = getById(userId);
+		User user = baseMapper.selectById(userId);
 		user.setAvatar(avatarUrl);
-		Date now = new Date();
-		user.setAvatarAt(now);
-		user.setUpdatedAt(now);
-		updateById(user);
+		baseMapper.updateById(user);
 		return user;
 	}
 
 	@Override
+	public User getUserByUsername(String username) {
+		LambdaQueryWrapper<User> lambdaQuery = Wrappers.lambdaQuery(User.class);
+		lambdaQuery.eq(User::getUsername, username);
+		return this.getOne(lambdaQuery);
+	}
+
+	@Override
 	public UserResult updateUser(Long userId, UserParam param) {
-		User user = getById(userId);
+		User user = baseMapper.selectById(userId);
 		if (Objects.isNull(user)) {
 			throw new BaseException(ResponseEnum.NOT_FOUND_USER);
 		}
@@ -115,44 +97,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 		if (Objects.nonNull(param.getMobile())) {
 			user.setMobile(param.getMobile());
 		}
-		user.setUpdatedAt(new Date());
+		user.setUpdatedAt(LocalDateTime.now());
 		updateById(user);
 		updateUserCache(user);
-		UserResult result = new UserResult();
-		result.setUser(user);
-		if (user.getUsernameBout() < 5) {
-			result.setCanEditUsername(true);
+		UserResult result = buildResult(user);
+		if (user.getUsernameBout() < Integer.valueOf(configService.getValueByKey("site_bound"))) {
 		}
 		return result;
 	}
 
 	@Override
-	public UserResult viewUser(Long userId) {
+	public UserResult buildResult(User user) {
 		UserResult result = new UserResult();
-		result.setUser(getById(userId));
-		result.setCanDelete(false);
-		result.setCanEdit(true);
-		result.setCanEditUsername(true);
+		BeanUtil.copyProperties(user, result);
 		return result;
 	}
 
 	@Override
-	public List<ExcelUser> buildExcelUser(Long[] ids) {
-		List<User> users = null;
+	public List<ExcelUser> buildExcelUser(Collection<Long> ids) {
+		LambdaQueryWrapper<User> lambdaQuery = Wrappers.lambdaQuery(User.class);
+		lambdaQuery.in(User::getId, ids);
+		List<User> users = this.list(lambdaQuery);
 		List<ExcelUser> excelUsers = new ArrayList<>();
-		if (Objects.isNull(ids) || ids.length == 0) {
-			users = list();
-		} else {
-			QueryWrapper<User> wrapper = new QueryWrapper<>();
-			wrapper.in("id", Arrays.asList(ids));
-			users = list(wrapper);
-		}
 		users.forEach(u -> {
 			ExcelUser e = new ExcelUser();
 			e.setUserId(u.getId());
 			e.setUsername(u.getUsername());
 			e.setStatus(StatusMap.get(u.getStatus()));
-			e.setGroupName(groupService.getById(groupUserService.getGroupIdByUserId(u.getId())).getName());
+			e.setGroupName(String.join(",", groupService.getNamesByUserId(u.getId())));
 			e.setRegisterAt(u.getCreatedAt());
 			e.setRegisterIp(u.getRegisterIp());
 			e.setRegisterPort(u.getRegisterPort());
@@ -164,6 +136,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 		return excelUsers;
 	}
 
+	@Override
+	public IPage<User> search(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/**
 	 * 只适用于更新自己，不能更新其他用户
 	 * 
@@ -172,7 +150,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 	 * @param user
 	 */
 	private void updateUserCache(User user) {
-		userCache.set(user.getId().toString(), SessionContext.get(), user);
+		userCache.hset(user.getId().toString(), SessionContext.get(), user);
 	}
 
 	private void updatePassword(User user, UserParam param) {
@@ -225,11 +203,4 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 		}
 	}
 
-	@Override
-	public Page<User> search(HttpServletRequest request) {
-		Page<User> page = new Page<>(1, 10);
-		QueryWrapper<User> wrapper = new QueryWrapper<>();
-		
-		return null;
-	}
 }

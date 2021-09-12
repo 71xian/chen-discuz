@@ -1,12 +1,12 @@
 package com.aoexe.discuz.system.config;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 
 import com.aoexe.discuz.core.annotion.Permission;
-import com.aoexe.discuz.system.core.cache.ConfigCache;
+import com.aoexe.discuz.core.util.RedisUtil;
 import com.aoexe.discuz.system.modular.config.service.IConfigService;
 import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
 
@@ -28,31 +28,35 @@ import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
 @Component
 public class ApplicationStartUp implements ApplicationRunner {
 
-	@Resource
+	@Autowired
 	private RequestMappingInfoHandlerMapping requestMappingInfoHandlerMapping;
 
-	@Resource
+	@Autowired
 	private IDzqGroupService groupService;
-	
-	@Resource
+
+	@Autowired
 	private IConfigService configService;
 	
-	@Resource
-	private ConfigCache configCache;
-	
+	@Autowired
+	private RedisUtil redisUtil;
+
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		Set<String> resources = getPermissions();
-		groupService.resetPermissions(1L, resources);
-		configService.list().forEach(c -> configCache.set(c));
+		List<String> resources = getPermissions();
+		groupService.editPermissions(1L, resources);
+		configService.list().forEach(c -> {
+			if(c.getConfigValue() != null) {
+				redisUtil.set(c.getConfigKey(), c.getConfigValue(), 1L, TimeUnit.HOURS);				
+			}
+		});
 	}
 
-	private Set<String> getPermissions() {
-		Set<String> resources = new HashSet<>();
+	private List<String> getPermissions() {
+		List<String> resources = new ArrayList<>();
 		Map<RequestMappingInfo, HandlerMethod> handlerMethods = requestMappingInfoHandlerMapping.getHandlerMethods();
 		handlerMethods.forEach((info, handlerMethod) -> {
-			Permission permission= handlerMethod.getMethod().getAnnotation(Permission.class);
-			if(Objects.isNull(permission)) {
+			Permission permission = handlerMethod.getMethod().getAnnotation(Permission.class);
+			if (Objects.isNull(permission)) {
 				return;
 			}
 			resources.add(permission.value());

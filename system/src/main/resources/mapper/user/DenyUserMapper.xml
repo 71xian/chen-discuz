@@ -7,4 +7,14 @@
         user_id, deny_user_id, created_at
     </sql>
 
+    <delete id="deleteDenyUser">
+        delete from deny_user where user_id = #{userId} and deny_user_id = #{denyUserId}
+    </delete>
+    
+    <select id="selectPage" resultType="com.aoexe.discuz.system.modular.user.model.result.DenyUserResult">
+        select avatar, deny_user_id, nickname, user_id, username
+         from deny_user du join user on user.id = du.user_id 
+        ${ew.customsqlSegment}
+    </select>
+
 </mapper>

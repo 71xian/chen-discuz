@@ -1,21 +1,33 @@
 package com.aoexe.discuz.system.modular.group.service.impl;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.aoexe.discuz.core.base.exception.BaseException;
 import com.aoexe.discuz.core.constant.ResponseEnum;
-import com.aoexe.discuz.system.core.cache.GroupCache;
-import com.aoexe.discuz.system.modular.group.consts.Constant;
-import com.aoexe.discuz.system.modular.group.entity.DzqGroup;
+import com.aoexe.discuz.core.util.RedisUtil;
+import com.aoexe.discuz.system.modular.config.service.IConfigService;
 import com.aoexe.discuz.system.modular.group.mapper.DzqGroupMapper;
+import com.aoexe.discuz.system.modular.group.model.entity.DzqGroup;
+import com.aoexe.discuz.system.modular.group.model.entity.GroupPermission;
+import com.aoexe.discuz.system.modular.group.model.entity.GroupUser;
+import com.aoexe.discuz.system.modular.group.model.param.GroupParam;
+import com.aoexe.discuz.system.modular.group.model.result.GroupResult;
 import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
 import com.aoexe.discuz.system.modular.group.service.IGroupPermissionService;
 import com.aoexe.discuz.system.modular.group.service.IGroupUserService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**
@@ -24,134 +36,168 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * </p>
  *
  * @author chenyuxian
- * @since 2021-08-25
+ * @since 2021-09-11
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class DzqGroupServiceImpl extends ServiceImpl<DzqGroupMapper, DzqGroup> implements IDzqGroupService {
 
-	@Resource
-	private GroupCache cache;
+	private static final String GROUP_PREFIX = "GROUP:";
 
-	@Resource
-	private IGroupPermissionService groupPermissionService;
+	@Autowired
+	private RedisUtil redisUtil;
 
-	@Resource
+	@Autowired
+	private IConfigService configService;
+
+	@Autowired
 	private IGroupUserService groupUserService;
 
-	@Override
-	public DzqGroup getDefaultGroup() {
-		DzqGroup group = cache.get(Constant.DEFAULT_GROUP);
-		if (group == null) {
-			QueryWrapper<DzqGroup> wrapper = new QueryWrapper<>();
-			wrapper.eq("is_default", 1);
-			group = getOne(wrapper);
-			Set<String> permissions = groupPermissionService.getPermissionsByGroupId(group.getId());
-			group.setPermissions(permissions);
-			cache.put(Constant.DEFAULT_GROUP, group);
-		}
-		return group;
-	}
+	@Autowired
+	private IGroupPermissionService groupPermissionService;
 
 	@Override
-	public void setDefaultGroup(Long groupId) {
-		if (groupId == 1L) {
-			throw new BaseException(ResponseEnum.UNAUTHORIZED);
+	public DzqGroup create(GroupParam dto) {
+		if(lambdaQuery().eq(DzqGroup::getName, dto.getName()).one() != null) {
+			throw new BaseException(ResponseEnum.GROUP_HAS_EXIST);			
 		}
-		DzqGroup newGroup = cache.get(groupId.toString());
-		if (newGroup == null) {
-			throw new BaseException(ResponseEnum.RESOURCE_NOT_FOUND);
-		}
-		newGroup.setPermissions(groupPermissionService.getPermissionsByGroupId(groupId));
-		DzqGroup oldGroup = cache.get(Constant.DEFAULT_GROUP);
-		oldGroup.setIsDefault(0);
-		newGroup.setIsDefault(1);
-		updateById(oldGroup);
-		updateById(newGroup);
-		cache.put(Constant.DEFAULT_GROUP, newGroup);
-	}
-	
-	@Override
-	public Set<String> getPermissionsByUserId(Long userId) {
-		Long groupId = groupUserService.getGroupIdByUserId(userId);
-		return getPermissionsByGroupId(groupId);
-	}
-
-	@Override
-	public void resetPermissions(Long groupId, Set<String> permissions) {
-		DzqGroup group = getById(groupId);
-		if (group == null) {
-			throw new BaseException(ResponseEnum.RESOURCE_NOT_FOUND);
-		}
-		group.setPermissions(permissions);
-		cache.put(groupId.toString(), group);
-		groupPermissionService.removeByGroupId(groupId);
-		groupPermissionService.insertByGroupId(groupId, permissions);
-	}
-
-	@Override
-	public void create(String name) {
-		QueryWrapper<DzqGroup> wrapper = new QueryWrapper<>();
-		wrapper.eq("name", name);
-		DzqGroup group = getOne(wrapper);
-		if (group != null) {
-			throw new BaseException(ResponseEnum.RESOURCE_EXIST);
-		}
-		group = new DzqGroup();
-		group.setName(name);
+		DzqGroup group = new DzqGroup();
+		BeanUtils.copyProperties(dto, group);
 		this.save(group);
-		cache.put(group.getId().toString(), group);
-	}
-
-	@Override
-	public DzqGroup getGroupById(Long groupId) {
-		DzqGroup group = cache.get(groupId.toString());
-		if (group == null) {
-			group = getById(groupId);
-			if (group == null) {
-				throw new BaseException(ResponseEnum.RESOURCE_NOT_FOUND);
-			}
-			group.setPermissions(groupPermissionService.getPermissionsByGroupId(groupId));
-			cache.put(groupId.toString(), group);
-		}
 		return group;
 	}
 
 	@Override
-	public boolean remove(Long groupId) {
-		if (groupId == 1L) {
+	public void createGroupUser(Long groupId, Long userId) {
+		GroupUser groupUser = new GroupUser();
+		groupUser.setGroupId(groupId);
+		groupUser.setUserId(userId);
+		groupUserService.saveOrUpdate(groupUser);
+	}
+
+	@Override
+	public void createGroupUsers(Long groupId, List<Long> userIds) {
+		List<GroupUser> groupUsers = new ArrayList<>(userIds.size());
+		userIds.forEach(userId -> {
+			GroupUser groupUser = new GroupUser();
+			groupUser.setGroupId(groupId);
+			groupUser.setUserId(userId);
+			groupUsers.add(groupUser);
+		});
+		groupUserService.saveOrUpdateBatch(groupUsers);
+	}
+
+	@Override
+	public void remove(Long groupId) {
+		if (groupId == 1L || groupId == 6L || groupId == 10L) {
 			throw new BaseException(ResponseEnum.UNAUTHORIZED);
 		}
-		if (!groupUserService.getUserIdsByGroupId(groupId).isEmpty()) {
-			throw new BaseException(ResponseEnum.GROUP_HAS_USER);
-		}
+		this.removeById(groupId);
+		groupUserService.removeByGroupId(groupId);
 		groupPermissionService.removeByGroupId(groupId);
-		boolean result = removeById(groupId);
-		cache.remove(groupId.toString());
-		return result;
 	}
 
 	@Override
-	public boolean removes(Long[] groupIds) {
-		for (Long id : groupIds) {
-			boolean result = remove(id);
-			if (!result)
-				return false;
-		}
-		return true;
+	public DzqGroup update(Long groupId, GroupParam dto) {
+		DzqGroup group = this.getById(groupId);
+		BeanUtils.copyProperties(dto, group);
+		this.updateById(group);
+		return group;
 	}
 
 	@Override
-	public Set<String> getPermissionsByGroupId(Long groupId) {
-		DzqGroup group = cache.get(groupId.toString());
-		if (group == null) {
-			group = getGroupById(groupId);
-			if (group == null) {
-				throw new BaseException(ResponseEnum.RESOURCE_NOT_FOUND);
-			}
-			group.setPermissions(getPermissionsByGroupId(groupId));
-			cache.put(groupId.toString(), group);
+	public DzqGroup updateDefault(Long groupId) {
+		DzqGroup group = this.getById(groupId);
+		DzqGroup defaultGroup = this.getById(Long.valueOf(configService.getValueByKey("group_id")));
+		group.setIsDefault(1);
+		defaultGroup.setIsDefault(0);
+		this.updateById(defaultGroup);
+		this.updateById(group);
+		configService.updateByKey("group_id", groupId.toString());
+		return group;
+	}
+
+	@Override
+	public DzqGroup updateIcon(Long groupId, String icon) {
+		DzqGroup group = this.getById(groupId);
+		group.setIcon(icon);
+		this.updateById(group);
+		return group;
+	}
+
+	@Override
+	public void editPermissions(Long groupId, List<String> permissions) {
+		System.out.println(permissions.size());
+		if(permissions.isEmpty()) {
+			return;
 		}
-		return group.getPermissions();
+		String key = GROUP_PREFIX + groupId.toString();
+		redisUtil.remove(key);
+		redisUtil.leftPush(key, permissions);
+		groupPermissionService.removeByGroupId(groupId);
+		List<GroupPermission> groupPermissions = new ArrayList<>(permissions.size());
+		permissions.forEach(p -> {
+			GroupPermission groupPermission = new GroupPermission();
+			groupPermission.setGroupId(groupId);
+			groupPermission.setPermission(p);
+			groupPermissions.add(groupPermission);
+		});
+		groupPermissionService.saveBatch(groupPermissions);
+	}
+
+	@Override
+	public GroupResult getGroupVO(Long groupId, boolean isInclude) {
+		GroupResult vo = new GroupResult();
+		BeanUtils.copyProperties(this.getById(groupId), vo);
+		if (isInclude) {
+			vo.setPermissions(groupPermissionService.getByGroupId(groupId));
+		}
+		return vo;
+	}
+
+	@Override
+	public List<String> getPermissionsByGroupId(Long groupId) {
+		String key = GROUP_PREFIX + groupId.toString();
+		List<String> permissions = redisUtil.leftAll(key);
+		if (Objects.isNull(permissions)) {
+			List<GroupPermission> groupPermissions = groupPermissionService.getByGroupId(groupId);
+			permissions = groupPermissions.stream().map(GroupPermission::getPermission).collect(Collectors.toList());
+			redisUtil.leftPush(key, permissions);
+		}
+		return permissions;
+	}
+
+	@Override
+	public List<String> getPermissionsByUserId(Long userId) {
+		List<GroupUser> groupUsers = groupUserService.getByUserId(userId);
+		List<String> permissions = new ArrayList<>();
+		groupUsers.forEach(g -> {
+			Long groupId = g.getGroupId();
+			permissions.addAll(getPermissionsByGroupId(groupId));
+		});
+		return permissions;
+	}
+
+	@Override
+	public List<String> getNamesByUserId(Long userId) {
+		List<GroupUser> groupUsers = groupUserService.getByUserId(userId);
+		List<String> names = new ArrayList<>(groupUsers.size());
+		LambdaQueryWrapper<DzqGroup> lambdaQuery = Wrappers.lambdaQuery(DzqGroup.class);
+		lambdaQuery.select(DzqGroup::getName);
+		groupUsers.forEach(g -> {
+			lambdaQuery.eq(DzqGroup::getId, g.getGroupId());
+			names.add(this.getOne(lambdaQuery).getName());
+		});
+		return names;
+	}
+
+	@Override
+	public IPage<GroupResult> selectPage(Wrapper<GroupResult> wrapper, Page<GroupResult> page, boolean isInclude) {
+		IPage<GroupResult> pages = baseMapper.selectPage(page, wrapper);
+		if (isInclude) {
+			pages.getRecords().forEach(vo -> vo.setPermissions(groupPermissionService.getByGroupId(vo.getId())));
+		}
+		return pages;
 	}
 
 }

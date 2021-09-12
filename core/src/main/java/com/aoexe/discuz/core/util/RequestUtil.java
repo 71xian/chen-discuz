@@ -1,8 +1,11 @@
 package com.aoexe.discuz.core.util;
 
+import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +43,7 @@ public class RequestUtil {
 		}
 		return servletRequestAttributes.getRequest();
 	}
-	
+
 	/**
 	 * 获取当前Response
 	 *
@@ -58,7 +61,7 @@ public class RequestUtil {
 		}
 		return servletRequestAttributes.getResponse();
 	}
-	
+
 	/**
 	 * 获取当前session
 	 *
@@ -149,7 +152,7 @@ public class RequestUtil {
 		}
 		return servletRequestAttributes.getAttributeNames(RequestAttributes.SCOPE_SESSION);
 	}
-	
+
 	public static String getParameters() {
 		HttpServletRequest request = getRequest();
 		if (null == request) {
@@ -173,6 +176,26 @@ public class RequestUtil {
 			return new HashMap<>();
 		}
 		return request.getParameterMap();
+	}
+
+	// 构造查询语句
+	public static Map<String, Object> buildSearchSql(HttpServletRequest request, Class<?> clazz) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		Enumeration<String> parameters = request.getParameterNames();
+		while (parameters.hasMoreElements()) {
+			String parameter = parameters.nextElement();
+			Field field = clazz.getDeclaredField(parameter);
+			if (Objects.nonNull(field)) {
+				field.setAccessible(true);
+				Class<?> type = field.getType();
+				if (type.equals(Date.class)) {
+					continue;
+				}
+				map.put(StringUtil.humpToLine(parameter),
+						type.getMethod("valueOf").invoke(null, request.getParameter(parameter)));
+			}
+		}
+		return map;
 	}
 
 }

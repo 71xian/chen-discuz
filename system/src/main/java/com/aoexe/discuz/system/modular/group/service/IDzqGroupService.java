@@ -1,8 +1,13 @@
 package com.aoexe.discuz.system.modular.group.service;
 
-import java.util.Set;
+import java.util.List;
 
-import com.aoexe.discuz.system.modular.group.entity.DzqGroup;
+import com.aoexe.discuz.system.modular.group.model.entity.DzqGroup;
+import com.aoexe.discuz.system.modular.group.model.param.GroupParam;
+import com.aoexe.discuz.system.modular.group.model.result.GroupResult;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,26 +16,34 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author chenyuxian
- * @since 2021-08-25
+ * @since 2021-09-11
  */
 public interface IDzqGroupService extends IService<DzqGroup> {
 
-	DzqGroup getDefaultGroup();
+	DzqGroup create(GroupParam dto);
 
-	void setDefaultGroup(Long groupId);
-	
-	Set<String> getPermissionsByGroupId(Long groupId);
-	
-	Set<String> getPermissionsByUserId(Long userId);
-	
-	void resetPermissions(Long groupId, Set<String> permissions);
+	void createGroupUser(Long groupId, Long userId);
 
-	void create(String name);
+	void createGroupUsers(Long groupId, List<Long> userIds);
 
-	DzqGroup getGroupById(Long groupId);
+	void remove(Long groupId);
+
+	DzqGroup update(Long groupId, GroupParam dto);
+
+	DzqGroup updateDefault(Long groupId);
+
+	DzqGroup updateIcon(Long groupId, String icon);
+
+	void editPermissions(Long groupId, List<String> permissions);
+
+	GroupResult getGroupVO(Long groupId, boolean isInclude);
 	
-	boolean remove(Long groupId);
+	List<String> getPermissionsByGroupId(Long groupId);
 
-	boolean removes(Long[] groupIds);
+	List<String> getPermissionsByUserId(Long userId);
+
+	List<String> getNamesByUserId(Long userId);
+	
+	IPage<GroupResult> selectPage(Wrapper<GroupResult> wrapper, Page<GroupResult> page, boolean isInclude);
 
 }

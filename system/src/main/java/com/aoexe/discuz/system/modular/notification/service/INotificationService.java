@@ -1,6 +1,9 @@
 package com.aoexe.discuz.system.modular.notification.service;
 
-import com.aoexe.discuz.system.modular.notification.entity.Notification;
+import javax.servlet.http.HttpServletRequest;
+
+import com.aoexe.discuz.system.modular.notification.model.entity.Notification;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface INotificationService extends IService<Notification> {
 
+	IPage<Notification> list(HttpServletRequest request) throws Exception;
 }
