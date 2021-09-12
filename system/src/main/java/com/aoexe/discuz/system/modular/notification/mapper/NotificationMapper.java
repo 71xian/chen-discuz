@@ -1,6 +1,6 @@
 package com.aoexe.discuz.system.modular.notification.mapper;
 
-import com.aoexe.discuz.system.modular.notification.entity.Notification;
+import com.aoexe.discuz.system.modular.notification.model.entity.Notification;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aoexe.discuz.system.modular.mapper.DzqGroupMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, type, color, icon, is_default, is_display, is_paid, fee, days, scale, is_subordinate, is_commission
+    </sql>
+    
+    <!-- 批量插入权限 -->
+    <insert id="insertPermissions">
+        insert into group_permission values
+        <foreach collection="permissions" separator="," item="permission">
+            (#{groupId}, #{permission})
+        </foreach>
+    </insert>
+    
+    <!-- 关联用户 -->
+    <insert id="insertUserId">
+        insert into group_user(group_id, user_id) values (#{groupId}, #{userId})
+    </insert>
+    
+    <!-- 批量关联用户 -->
+    <insert id="insertUserIds">
+        insert into group_user(group_id, user_id) values 
+        <foreach collection="userIds" separator="," item="userId" >
+            (#{groupId}, #{userId})
+        </foreach>
+    </insert>
+    
+    <!-- 删除用户组 -->
+    <delete id="deleteGroup">
+        delete dzq_group, group_permission, group_user
+        from dzq_group g
+        left join group_permission gp
+        on gp.group_id = g.id
+        left join group_user gu
+        on gu.group_id = g.id
+        where g.id = #{groupId}
+    </delete>
+    
+    <!-- 删除权限 -->
+    <delete id="deletePermissionsByGroupId">
+        delete from group_permission where group_id = #{groupId}
+    </delete>
+    
+    <!-- 根据用户id查询用户组id -->
+    <select id="selectGroupIdByUserId">
+        select group_id from group_user where user_id = #{userId}
+    </select>
+    
+    <!-- 根据用户组id查询权限 -->
+    <select id="selectPermissionsByGroupId" resultType="java.lang.String">
+        select permission from group_permission where group_id = #{groupId}
+    </select>
+
+    <!-- 根据用户id查询权限 -->
+    <select id="selectPermissionsByUserId" resultType="java.lang.String">
+        select gp.permission from group_permission gp
+        right join group_user gu gu.group_id = gp.group_id
+        where gu.user_id = #{id}
+    </select>
+    
+    <!-- 根据用户id查找用户组名 -->
+    <select id="selectNamesByUserId" resultType="java.lang.String">
+        select g.name from 
+        group_user gu
+        left join
+        group g on g.id = gu.group_id
+        where gu.user_id = #{userId}
+    </select>
+
+</mapper>

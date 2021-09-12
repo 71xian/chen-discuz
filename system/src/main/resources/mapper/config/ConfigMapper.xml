@@ -7,4 +7,14 @@
         config_key, config_value, config_tag
     </sql>
 
+    <!-- 根据key查找配置 -->
+    <select id="selectByKey" resultType="com.aoexe.discuz.system.modular.config.model.entity.Config">
+        select * from config where config_key = #{key}
+    </select>
+    
+    <!-- 修改配置项 -->
+    <update id="updateByKey">
+        update config set config_value = #{value} where config_key = #{key}
+    </update>
+
 </mapper>

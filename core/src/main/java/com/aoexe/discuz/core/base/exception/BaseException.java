@@ -20,7 +20,7 @@ public class BaseException extends RuntimeException {
 	private Integer code;
 
 	private String message;
-
+	
 	public BaseException(ResponseEnum code) {
 		this(code.getCode(), code.getMessage());
 	}

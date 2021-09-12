@@ -1,6 +1,6 @@
 package com.aoexe.discuz.core.context.login;
 
-import java.util.Set;
+import java.util.List;
 
 public interface LoginUser {
 	
@@ -8,5 +8,5 @@ public interface LoginUser {
 
 	String getUsername();
 	
-	Set<String> getPermissions();
+	List<String> getPermissions();
 }

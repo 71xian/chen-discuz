@@ -4,7 +4,15 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, description, icon, sort, property, thread_count, moderators, ip, parentid, created_at, updated_at
+        id, name, description, icon, sort, property, thread_count, moderators, ip, parent_id, created_at, updated_at
     </sql>
+
+    <delete id="removeCategory">
+        delete from category where id = #{cid} or parent_id = #{cid}
+    </delete>
+    
+    <select id="selectIds" resultType="java.lang.Long">
+        select id from category where parent_id = #{cid}
+    </select>
 
 </mapper>

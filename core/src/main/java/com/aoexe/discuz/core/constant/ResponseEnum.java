@@ -475,7 +475,17 @@ public enum ResponseEnum implements Serializable{
 	/**
 	 * 分类不存在
 	 */
-	CATEGORY_NOT_FOUNF(-7076, "分类不存在"),
+	CATEGORY_NOT_FOUND(-7076, "分类不存在"),
+	
+	/**
+	 * 分类已存在
+	 */
+	CATEGORY_HAS_EXIST(-7077, "分类名已存在"),
+	
+	/**
+	 * 用户组不存在
+	 */
+	GROUP_NOT_FOUND(-7078, "用户组不存在"),
 	
 	/**
 	 * 当前用户组下存在用户
@@ -488,6 +498,11 @@ public enum ResponseEnum implements Serializable{
 	NEW_PASSWORD_ERROR(-7080, "密码两次输入不一致"),
 
 	/**
+	 * 用户组已存在
+	 */
+	GROUP_HAS_EXIST(-7081, "用户组已存在"),
+	
+	/**
 	 * 需要绑定微信
 	 */
 	NEED_BIND_WECHAT(-8000, "需要绑定微信"),
@@ -496,7 +511,7 @@ public enum ResponseEnum implements Serializable{
 	 * 需要绑定手机
 	 */
 	NEED_BIND_PHONE(-8001, "需要绑定手机"),
-
+	
 	/**
 	 * 短信未开启
 	 */

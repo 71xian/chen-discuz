@@ -1,6 +1,8 @@
 package com.aoexe.discuz.system.modular.category.mapper;
 
-import com.aoexe.discuz.system.modular.category.entity.Category;
+import java.util.List;
+
+import com.aoexe.discuz.system.modular.category.model.entity.Category;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -13,4 +15,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CategoryMapper extends BaseMapper<Category> {
 
+	void removeCategory(Long cid);
+	
+	List<Long> selectIds(Long cid);
 }

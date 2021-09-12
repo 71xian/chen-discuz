@@ -1,7 +1,7 @@
 package com.aoexe.discuz.system.core.security.core;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +15,7 @@ import com.aoexe.discuz.system.core.cache.UserCache;
 import com.aoexe.discuz.system.core.util.TokenUtil;
 import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
 import com.aoexe.discuz.system.modular.group.service.impl.DzqGroupServiceImpl;
-import com.aoexe.discuz.system.modular.user.entity.User;
+import com.aoexe.discuz.system.modular.user.model.entity.User;
 
 import io.jsonwebtoken.Claims;
 
@@ -38,9 +38,9 @@ public class TokenFilter implements Filter {
 		String accessToken = tokenUtil.getAccessToken(request);
 		if (Objects.nonNull(accessToken)) {
 			Claims claims = tokenUtil.getClaims(accessToken);
-			User user = userCache.get(claims.getSubject(), claims.getId());
+			User user = userCache.hget(claims.getSubject(), claims.getId());
 			if (Objects.nonNull(user)) {
-				Set<String> permissions = groupService.getPermissionsByUserId(user.getId());
+				List<String> permissions = groupService.getPermissionsByUserId(user.getId());
 				user.setPermissions(permissions);
 				LoginContext.set(user);
 				SessionContext.set(claims.getId());

@@ -7,7 +7,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
-import com.aoexe.discuz.system.modular.user.entity.User;
+import com.aoexe.discuz.system.core.cache.CategoryCache;
+import com.aoexe.discuz.system.core.cache.UserCache;
+import com.aoexe.discuz.system.modular.category.model.entity.Category;
+import com.aoexe.discuz.system.modular.user.model.entity.User;
 
 /**
  * Redis配置类
@@ -17,15 +20,25 @@ import com.aoexe.discuz.system.modular.user.entity.User;
  */
 @Configuration
 public class RedisConfig {
-
+	
 	@Bean
-	public RedisTemplate<String, User> userRedisTemplate(RedisConnectionFactory factory){
-		RedisTemplate<String, User> redisTemplate = new RedisTemplate<>();
+	public UserCache userCache(RedisConnectionFactory factory){
+		return new UserCache(buildRedis(factory, User.class));
+	}
+	
+	@Bean
+	public CategoryCache categoryCache(RedisConnectionFactory factory) {
+		return new CategoryCache(buildRedis(factory, Category.class));
+	}
+	
+	private static <T> RedisTemplate<String, T> buildRedis(RedisConnectionFactory factory, Class<?> clazz) {
+		RedisTemplate<String, T> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
-		redisTemplate.setValueSerializer(new FastJsonRedisSerializer<>(User.class));
+		redisTemplate.setValueSerializer(new FastJsonRedisSerializer<>(clazz));
 		redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-		redisTemplate.setHashValueSerializer(new FastJson2JsonRedisSerializer<>(User.class));
+		redisTemplate.setHashValueSerializer(new FastJson2JsonRedisSerializer<>(clazz));
 		redisTemplate.setConnectionFactory(factory);
+		redisTemplate.afterPropertiesSet();
 		return redisTemplate;
 	}
 

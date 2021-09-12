@@ -1,6 +1,6 @@
 package com.aoexe.discuz.system.modular.post.service;
 
-import com.aoexe.discuz.system.modular.post.entity.PostUser;
+import com.aoexe.discuz.system.modular.post.model.entity.PostUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author chenyuxian
- * @since 2021-08-30
+ * @since 2021-09-12
  */
 public interface IPostUserService extends IService<PostUser> {
 

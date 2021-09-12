@@ -32,5 +32,10 @@ public interface AspectSort {
 	 * 数据源
 	 */
 	int DATA_SOURCE = -90;
+	
+	/**
+	 * 分布式锁
+	 */
+	int LOCK = -20;
 
 }
