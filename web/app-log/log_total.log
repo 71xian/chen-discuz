@@ -13469,3 +13469,21 @@ Caused by: java.lang.IllegalArgumentException: Value must not be null!
 2021-09-12 19:59:10.085  INFO 7176 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
 2021-09-12 19:59:10.707  INFO 7176 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
 2021-09-12 19:59:11.692  INFO 7176 --- [restartedMain] com.aoexe.discuz.web.WebApplication      : Started WebApplication in 13.345 seconds (JVM running for 13.971)
+2021-09-12 22:26:44.812  INFO 5684 --- [restartedMain] com.aoexe.discuz.web.WebApplication      : Starting WebApplication on PC-20210530PZZF with PID 5684 (E:\chen-discuz\web\target\classes started by Administrator in E:\chen-discuz\web)
+2021-09-12 22:26:44.815  INFO 5684 --- [restartedMain] com.aoexe.discuz.web.WebApplication      : The following profiles are active: dev
+2021-09-12 22:26:44.997  INFO 5684 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-09-12 22:26:44.998  INFO 5684 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-09-12 22:26:45.647  WARN 5684 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+2021-09-12 22:26:47.099  INFO 5684 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-09-12 22:26:47.102  INFO 5684 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-09-12 22:26:47.128  INFO 5684 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13ms. Found 0 Redis repository interfaces.
+2021-09-12 22:26:48.525  INFO 5684 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-09-12 22:26:48.539  INFO 5684 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-09-12 22:26:48.540  INFO 5684 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-09-12 22:26:48.687  INFO 5684 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-09-12 22:26:48.688  INFO 5684 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3690 ms
+2021-09-12 22:26:49.621  INFO 5684 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2021-09-12 22:26:53.607  INFO 5684 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-09-12 22:26:53.632  INFO 5684 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-09-12 22:26:54.127  INFO 5684 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2021-09-12 22:26:54.956  INFO 5684 --- [restartedMain] com.aoexe.discuz.web.WebApplication      : Started WebApplication in 11.002 seconds (JVM running for 11.768)
