@@ -33,8 +33,8 @@ import com.aoexe.discuz.system.modular.auth.model.param.RegisterParam;
 import com.aoexe.discuz.system.modular.auth.model.param.TokenParam;
 import com.aoexe.discuz.system.modular.auth.model.result.AuthResult;
 import com.aoexe.discuz.system.modular.auth.service.IAuthService;
-import com.aoexe.discuz.system.modular.config.service.IConfigService;
-import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
+import com.aoexe.discuz.system.modular.group.service.IGroupsService;
+import com.aoexe.discuz.system.modular.setting.service.ISettingsService;
 import com.aoexe.discuz.system.modular.user.model.entity.User;
 import com.aoexe.discuz.system.modular.user.service.IUserService;
 
@@ -51,10 +51,10 @@ public class AuthServiceImpl implements IAuthService {
 	private BCryptPasswordEncoder encoder;
 
 	@Autowired
-	private IDzqGroupService groupService;
+	private IGroupsService groupService;
 
 	@Autowired
-	private IConfigService configService;
+	private ISettingsService settingsService;
 
 	@Autowired
 	private UserCache userCache;
@@ -77,13 +77,13 @@ public class AuthServiceImpl implements IAuthService {
 		userService.save(user);
 
 		// 用户和角色组关联
-		groupService.createGroupUser(Long.valueOf(configService.getValueByKey("group_id")), user.getId());
+		groupService.createGroupUser(settingsService.getDefaultGroupId(), user.getId());
 
 		String uuid = SessionContext.get();
 		user.setPassword(null);
 		user.setPayPassword(null);
 		userCache.hset(user.getId().toString(), uuid, user);
-		String clientSecret = configService.getValueByKey("site_secret") + UUID.randomUUID().toString();
+		String clientSecret = settingsService.getSecret() + UUID.randomUUID().toString();
 		AuthResult result = buildAuthResult(user, uuid, clientSecret);
 		redisUtil.set(uuid, clientSecret, 7L, TimeUnit.DAYS);
 		return result;
@@ -107,7 +107,7 @@ public class AuthServiceImpl implements IAuthService {
 		user.setPassword(null);
 		user.setPayPassword(null);
 		userCache.hset(user.getId().toString(), uuid, user);
-		String clientSecret = configService.getValueByKey("site_secret") + UUID.randomUUID().toString();
+		String clientSecret = settingsService.getSecret() + UUID.randomUUID().toString();
 		AuthResult result = buildAuthResult(user, uuid, clientSecret);
 		redisUtil.set(uuid, clientSecret, 7L, TimeUnit.DAYS);
 		return result;
@@ -134,7 +134,7 @@ public class AuthServiceImpl implements IAuthService {
 			userCache.hremove(claims.getSubject(), claims.getId());
 			String uuid = SessionContext.get();
 			userCache.hset(claims.getSubject(), uuid, user);
-			String clientSecret = uuid + configService.getValueByKey("site_secret");
+			String clientSecret = uuid + settingsService.getSecret();
 			AuthResult result = buildAuthResult(user, uuid, clientSecret);
 			redisUtil.set(uuid, clientSecret, 7L, TimeUnit.DAYS);
 			return result;

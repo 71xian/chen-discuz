@@ -17,8 +17,8 @@ import com.aoexe.discuz.core.context.session.SessionContext;
 import com.aoexe.discuz.core.util.BCryptPasswordEncoder;
 import com.aoexe.discuz.core.util.BeanUtil;
 import com.aoexe.discuz.system.core.cache.UserCache;
-import com.aoexe.discuz.system.modular.config.service.IConfigService;
-import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
+import com.aoexe.discuz.system.modular.group.service.IGroupsService;
+import com.aoexe.discuz.system.modular.setting.service.ISettingsService;
 import com.aoexe.discuz.system.modular.user.mapper.UserMapper;
 import com.aoexe.discuz.system.modular.user.model.entity.User;
 import com.aoexe.discuz.system.modular.user.model.enums.StatusMap;
@@ -47,10 +47,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 	private BCryptPasswordEncoder encoder;
 
 	@Autowired
-	private IDzqGroupService groupService;
+	private IGroupsService groupService;
 
 	@Autowired
-	private IConfigService configService;
+	private ISettingsService settingsService;
 
 	@Autowired
 	private UserCache userCache;
@@ -101,7 +101,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 		updateById(user);
 		updateUserCache(user);
 		UserResult result = buildResult(user);
-		if (user.getUsernameBout() < Integer.valueOf(configService.getValueByKey("site_bound"))) {
+		if (user.getUsernameBout() < settingsService.getUsernameChanges()) {
 		}
 		return result;
 	}

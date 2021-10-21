@@ -5,12 +5,12 @@ import javax.validation.constraints.Null;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.aoexe.discuz.system.modular.group.model.entity.DzqGroup;
+import com.aoexe.discuz.system.modular.group.model.entity.Groups;
 
 import lombok.Data;
 
 @Data
-public class GroupParam extends DzqGroup{
+public class GroupParam extends Groups{
 
 	@Null
 	private Long id;

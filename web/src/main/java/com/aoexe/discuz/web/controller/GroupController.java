@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.aoexe.discuz.system.core.util.MinIOUtil;
-import com.aoexe.discuz.system.modular.group.model.entity.DzqGroup;
+import com.aoexe.discuz.system.modular.group.model.entity.Groups;
 import com.aoexe.discuz.system.modular.group.model.param.GroupParam;
 import com.aoexe.discuz.system.modular.group.model.result.GroupPaidResult;
 import com.aoexe.discuz.system.modular.group.model.result.GroupResult;
-import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
+import com.aoexe.discuz.system.modular.group.service.IGroupsService;
 import com.aoexe.discuz.system.modular.group.service.IGroupPaidUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -39,7 +39,7 @@ import io.swagger.annotations.ApiOperation;
 public class GroupController {
 
 	@Autowired
-	private IDzqGroupService groupService;
+	private IGroupsService groupService;
 
 	@Autowired
 	private IGroupPaidUserService groupPaidUsersService;
@@ -51,15 +51,15 @@ public class GroupController {
 
 	@PostMapping
 	@ApiOperation(value = "添加用户组", notes = "添加用户组")
-	public DzqGroup createGroup(@RequestBody GroupParam group) {
+	public Groups createGroup(@RequestBody GroupParam group) {
 		return groupService.create(group);
 	}
 
 	@PostMapping("{id}/icon")
 	@ApiOperation(value = "上传用户组图标", notes = "上传用户组图标")
-	public DzqGroup uploadIcon(@PathVariable("id") Long groupId, @RequestParam("icon") MultipartFile file){
+	public Groups uploadIcon(@PathVariable("id") Long groupId, @RequestParam("icon") MultipartFile file){
 		String key = "/icon" + groupId.toString() + "/" + file.getOriginalFilename();
-		DzqGroup group = groupService.updateIcon(groupId, key);
+		Groups group = groupService.updateIcon(groupId, key);
 		util.uploadObject(file, bucketName, key);
 		return group;
 	}
@@ -84,14 +84,14 @@ public class GroupController {
 
 	@PatchMapping("/{id}")
 	@ApiOperation(value = "修改用戶組", notes = "修改用户组")
-	public DzqGroup updateGroup(@PathVariable("id") Long groupId, @RequestBody GroupParam group) {
+	public Groups updateGroup(@PathVariable("id") Long groupId, @RequestBody GroupParam group) {
 		return groupService.update(groupId, group);
 	}
 
 	@PatchMapping
 	@ApiOperation(value = "批量修改用戶組", notes = "批量修改用戶組")
-	public List<DzqGroup> batchEditGroup(@RequestBody List<GroupParam> groups) {
-		List<DzqGroup> list = groupService.list();
+	public List<Groups> batchEditGroup(@RequestBody List<GroupParam> groups) {
+		List<Groups> list = groupService.list();
 		for (int i = 0; i < list.size(); i++) {
 			groupService.update(list.get(i).getId(), groups.get(i));
 		}
@@ -100,7 +100,7 @@ public class GroupController {
 
 	@GetMapping("/{id}")
 	@ApiOperation(value = "查询用户组", notes = "查询用户组")
-	public DzqGroup getGroup(@PathVariable("id") Long groupId) {
+	public Groups getGroup(@PathVariable("id") Long groupId) {
 		return groupService.getById(groupId);
 	}
 

@@ -4,23 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.aoexe.discuz.system.modular.config.service.IConfigService;
+import com.aoexe.discuz.system.modular.setting.service.ISettingsService;
 
 import io.minio.MinioClient;
 
 @Configuration
 public class MinIOConfig {
-	
+
 	@Autowired
-	private IConfigService configService;
-	
+	private ISettingsService settingsService;
+
 	@Bean
 	public MinioClient minioClient() {
-		String accessKey = configService.getValueByKey("minio_access_key");
-		String accessSecret = configService.getValueByKey("minio_access_secret");
-		return MinioClient.builder()
-				.endpoint("1.15.68.129", 9000, false)
-				.credentials(accessKey, accessSecret)
-				.build();
+		String accessKey = settingsService.getMinIOAccessKey();
+		String accessSecret = settingsService.getMinIOSecret();
+		return MinioClient.builder().endpoint("42.192.191.157", 9000, false).credentials(accessKey, accessSecret).build();
 	}
 }
