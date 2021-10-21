@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.excel.EasyExcel;
 import com.aoexe.discuz.system.core.util.MinIOUtil;
 import com.aoexe.discuz.system.modular.group.model.entity.GroupUser;
-import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
+import com.aoexe.discuz.system.modular.group.service.IGroupsService;
 import com.aoexe.discuz.system.modular.user.model.entity.DenyUser;
 import com.aoexe.discuz.system.modular.user.model.entity.User;
 import com.aoexe.discuz.system.modular.user.model.param.UserParam;
@@ -56,7 +56,7 @@ public class UserController {
 	private IUserService userService;
 	
 	@Autowired
-	private IDzqGroupService groupService;
+	private IGroupsService groupService;
 	
 	@Autowired
 	private IDenyUserService denyUserService;
@@ -140,9 +140,7 @@ public class UserController {
 	@GetMapping("{id}/deny")
 	@ApiOperation(value = "用户拉黑列表", notes = "用户拉黑列表")
 	public IPage<DenyUserResult> denyUserList(@PathVariable("id") Long userId, HttpServletRequest request) {
-		String current = request.getParameter("current");
-		String size = request.getParameter("size");
-		String sort = request.getParameter("sort");
+		
 		
 		Page<DenyUserResult> pages = new Page<>();
 		return denyUserService.selectPage(pages);

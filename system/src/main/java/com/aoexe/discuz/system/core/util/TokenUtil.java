@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.aoexe.discuz.core.base.exception.BaseException;
 import com.aoexe.discuz.core.constant.ResponseEnum;
-import com.aoexe.discuz.system.modular.config.service.IConfigService;
+import com.aoexe.discuz.system.modular.setting.service.ISettingsService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -31,12 +31,12 @@ public final class TokenUtil {
 	private String TOKEN_TYPE = "Bearer ";
 	
 	@Autowired
-	private IConfigService configService;
+	private ISettingsService settingsService;
 
 	public String buildAccessToken(Long userId, String uuid, Date date) {
 		return Jwts.builder().setSubject(userId.toString()).setId(uuid)
 				.setExpiration(Date.from(date.toInstant().plus(2, ChronoUnit.HOURS)))
-				.signWith(SignatureAlgorithm.HS512, configService.getValueByKey("site_secret")).compact();
+				.signWith(SignatureAlgorithm.HS512, settingsService.getSecret()).compact();
 	}
 
 	public String buildRefreshToken(Long userId, String uuid, Date date, String clientSecret) {
@@ -48,7 +48,7 @@ public final class TokenUtil {
 	public Claims getClaims(String token) {
 		Claims claims = null;
 		try {
-			claims = Jwts.parser().setSigningKey(configService.getValueByKey("site_secret")).parseClaimsJws(token).getBody();
+			claims = Jwts.parser().setSigningKey(settingsService.getSecret()).parseClaimsJws(token).getBody();
 		} catch (JwtException e) {
 			throw new BaseException(ResponseEnum.SESSION_TOKEN_EXPIRED);
 		}

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
+import com.aoexe.discuz.system.modular.group.service.IGroupsService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiOperation;
 public class PermissionController {
 
 	@Resource
-	private IDzqGroupService groupService;
+	private IGroupsService groupService;
 
 	@PostMapping("/{id}")
 	@ApiOperation(value = "修改用户组权限", notes = "修改用户组权限")

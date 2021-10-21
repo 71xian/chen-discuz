@@ -16,8 +16,8 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMappi
 
 import com.aoexe.discuz.core.annotion.Permission;
 import com.aoexe.discuz.core.util.RedisUtil;
-import com.aoexe.discuz.system.modular.config.service.IConfigService;
-import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
+import com.aoexe.discuz.system.modular.group.service.IGroupsService;
+import com.aoexe.discuz.system.modular.setting.service.ISettingsService;
 
 /**
  * 应用初始化配置
@@ -32,11 +32,11 @@ public class ApplicationStartUp implements ApplicationRunner {
 	private RequestMappingInfoHandlerMapping requestMappingInfoHandlerMapping;
 
 	@Autowired
-	private IDzqGroupService groupService;
+	private IGroupsService groupService;
 
 	@Autowired
-	private IConfigService configService;
-	
+	private ISettingsService settingsService;
+
 	@Autowired
 	private RedisUtil redisUtil;
 
@@ -44,9 +44,9 @@ public class ApplicationStartUp implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 		List<String> resources = getPermissions();
 		groupService.editPermissions(1L, resources);
-		configService.list().forEach(c -> {
-			if(c.getConfigValue() != null) {
-				redisUtil.set(c.getConfigKey(), c.getConfigValue(), 1L, TimeUnit.HOURS);				
+		settingsService.list().forEach(s -> {
+			if (!s.getValue().isEmpty()) {
+				redisUtil.set(s.getKey(), s.getValue(), 1L, TimeUnit.HOURS);
 			}
 		});
 	}

@@ -13,8 +13,8 @@ import com.aoexe.discuz.core.context.session.SessionContext;
 import com.aoexe.discuz.core.util.SpringUtil;
 import com.aoexe.discuz.system.core.cache.UserCache;
 import com.aoexe.discuz.system.core.util.TokenUtil;
-import com.aoexe.discuz.system.modular.group.service.IDzqGroupService;
-import com.aoexe.discuz.system.modular.group.service.impl.DzqGroupServiceImpl;
+import com.aoexe.discuz.system.modular.group.service.IGroupsService;
+import com.aoexe.discuz.system.modular.group.service.impl.GroupsServiceImpl;
 import com.aoexe.discuz.system.modular.user.model.entity.User;
 
 import io.jsonwebtoken.Claims;
@@ -29,7 +29,7 @@ public class TokenFilter implements Filter {
 
 	private UserCache userCache = SpringUtil.getBean(UserCache.class);
 
-	private IDzqGroupService groupService = SpringUtil.getBean(DzqGroupServiceImpl.class);
+	private IGroupsService groupService = SpringUtil.getBean(GroupsServiceImpl.class);
 
 	private TokenUtil tokenUtil = SpringUtil.getBean(TokenUtil.class);
 	
